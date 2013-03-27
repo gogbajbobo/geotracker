@@ -66,7 +66,7 @@
 - (void)setStatus:(NSString *)status {
     if (_status != status) {
         _status = status;
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"SessionStatusChanged" object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"sessionStatusChanged" object:self];
     }
 }
 
