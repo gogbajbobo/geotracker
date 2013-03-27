@@ -7,6 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C103A2516FF452100BC46B4 /* STGTDataModel.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 2C103A2416FF452100BC46B4 /* STGTDataModel.xcdatamodel */; };
+		2C103A2816FF457600BC46B4 /* STGTImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C103A2716FF457600BC46B4 /* STGTImage.m */; };
+		2C103A2B16FF457600BC46B4 /* STGTInterestImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C103A2A16FF457600BC46B4 /* STGTInterestImage.m */; };
+		2C103A2E16FF457600BC46B4 /* STGTInterest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C103A2D16FF457600BC46B4 /* STGTInterest.m */; };
+		2C103A3116FF457600BC46B4 /* STGTNetworkImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C103A3016FF457600BC46B4 /* STGTNetworkImage.m */; };
+		2C103A3416FF457600BC46B4 /* STGTSpotImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C103A3316FF457600BC46B4 /* STGTSpotImage.m */; };
+		2C103A3A16FF457600BC46B4 /* STGTLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C103A3916FF457600BC46B4 /* STGTLocation.m */; };
+		2C103A3D16FF457600BC46B4 /* STGTNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C103A3C16FF457600BC46B4 /* STGTNetwork.m */; };
+		2C103A4016FF457600BC46B4 /* STGTSpot.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C103A3F16FF457600BC46B4 /* STGTSpot.m */; };
+		2C103A4316FF457600BC46B4 /* STGTBatteryStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C103A4216FF457600BC46B4 /* STGTBatteryStatus.m */; };
+		2C103A4616FF457700BC46B4 /* STGTSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C103A4516FF457700BC46B4 /* STGTSettings.m */; };
+		2C103A4916FF457700BC46B4 /* STGTDatum.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C103A4816FF457700BC46B4 /* STGTDatum.m */; };
+		2C103A4B16FF467500BC46B4 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C103A4A16FF467500BC46B4 /* CoreData.framework */; };
+		2C103A4F17004F6100BC46B4 /* STGTSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C103A4D17004F3A00BC46B4 /* STGTSettingsController.m */; };
+		2C103A511700512500BC46B4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C103A501700512500BC46B4 /* MapKit.framework */; };
+		2C103A531700512C00BC46B4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C103A521700512C00BC46B4 /* CoreLocation.framework */; };
+		2C103A841700C75E00BC46B4 /* STGTTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C103A831700C75D00BC46B4 /* STGTTrack.m */; };
 		2C2ACA6216EE2453001E333A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C2ACA6116EE2453001E333A /* UIKit.framework */; };
 		2C2ACA6416EE2453001E333A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C2ACA6316EE2453001E333A /* Foundation.framework */; };
 		2C2ACA6616EE2453001E333A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C2ACA6516EE2453001E333A /* CoreGraphics.framework */; };
@@ -18,12 +35,16 @@
 		2C2ACA7816EE2453001E333A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C2ACA7716EE2453001E333A /* Default-568h@2x.png */; };
 		2C2ACA7B16EE2453001E333A /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C2ACA7916EE2453001E333A /* MainStoryboard_iPhone.storyboard */; };
 		2C2ACA7E16EE2453001E333A /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C2ACA7C16EE2453001E333A /* MainStoryboard_iPad.storyboard */; };
-		2C2ACA8116EE2453001E333A /* STGTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2ACA8016EE2453001E333A /* STGTViewController.m */; };
 		2C2ACA8916EE2453001E333A /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C2ACA8816EE2453001E333A /* SenTestingKit.framework */; };
 		2C2ACA8A16EE2453001E333A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C2ACA6116EE2453001E333A /* UIKit.framework */; };
 		2C2ACA8B16EE2453001E333A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C2ACA6316EE2453001E333A /* Foundation.framework */; };
 		2C2ACA9316EE2453001E333A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C2ACA9116EE2453001E333A /* InfoPlist.strings */; };
 		2C2ACA9616EE2453001E333A /* geotrackerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2ACA9516EE2453001E333A /* geotrackerTests.m */; };
+		2C2ACAA216EE24E5001E333A /* STGTSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2ACAA116EE24E5001E333A /* STGTSessionManager.m */; };
+		2C2ACAA516EE24F4001E333A /* STGTSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2ACAA416EE24F4001E333A /* STGTSession.m */; };
+		2C2ACAA816EE2719001E333A /* STGTManagedDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2ACAA716EE2719001E333A /* STGTManagedDocument.m */; };
+		2C2ACAAB16EE2741001E333A /* STGTSyncer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2ACAAA16EE2741001E333A /* STGTSyncer.m */; };
+		2C2ACAAE16EE2762001E333A /* STGTTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2ACAAD16EE2762001E333A /* STGTTracker.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +58,36 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2C103A2416FF452100BC46B4 /* STGTDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = STGTDataModel.xcdatamodel; sourceTree = "<group>"; };
+		2C103A2616FF457600BC46B4 /* STGTImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTImage.h; sourceTree = "<group>"; };
+		2C103A2716FF457600BC46B4 /* STGTImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTImage.m; sourceTree = "<group>"; };
+		2C103A2916FF457600BC46B4 /* STGTInterestImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTInterestImage.h; sourceTree = "<group>"; };
+		2C103A2A16FF457600BC46B4 /* STGTInterestImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTInterestImage.m; sourceTree = "<group>"; };
+		2C103A2C16FF457600BC46B4 /* STGTInterest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTInterest.h; sourceTree = "<group>"; };
+		2C103A2D16FF457600BC46B4 /* STGTInterest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTInterest.m; sourceTree = "<group>"; };
+		2C103A2F16FF457600BC46B4 /* STGTNetworkImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTNetworkImage.h; sourceTree = "<group>"; };
+		2C103A3016FF457600BC46B4 /* STGTNetworkImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTNetworkImage.m; sourceTree = "<group>"; };
+		2C103A3216FF457600BC46B4 /* STGTSpotImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTSpotImage.h; sourceTree = "<group>"; };
+		2C103A3316FF457600BC46B4 /* STGTSpotImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTSpotImage.m; sourceTree = "<group>"; };
+		2C103A3816FF457600BC46B4 /* STGTLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTLocation.h; sourceTree = "<group>"; };
+		2C103A3916FF457600BC46B4 /* STGTLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTLocation.m; sourceTree = "<group>"; };
+		2C103A3B16FF457600BC46B4 /* STGTNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTNetwork.h; sourceTree = "<group>"; };
+		2C103A3C16FF457600BC46B4 /* STGTNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTNetwork.m; sourceTree = "<group>"; };
+		2C103A3E16FF457600BC46B4 /* STGTSpot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTSpot.h; sourceTree = "<group>"; };
+		2C103A3F16FF457600BC46B4 /* STGTSpot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTSpot.m; sourceTree = "<group>"; };
+		2C103A4116FF457600BC46B4 /* STGTBatteryStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTBatteryStatus.h; sourceTree = "<group>"; };
+		2C103A4216FF457600BC46B4 /* STGTBatteryStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTBatteryStatus.m; sourceTree = "<group>"; };
+		2C103A4416FF457600BC46B4 /* STGTSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTSettings.h; sourceTree = "<group>"; };
+		2C103A4516FF457700BC46B4 /* STGTSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTSettings.m; sourceTree = "<group>"; };
+		2C103A4716FF457700BC46B4 /* STGTDatum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTDatum.h; sourceTree = "<group>"; };
+		2C103A4816FF457700BC46B4 /* STGTDatum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTDatum.m; sourceTree = "<group>"; };
+		2C103A4A16FF467500BC46B4 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		2C103A4C17004F3A00BC46B4 /* STGTSettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTSettingsController.h; sourceTree = "<group>"; };
+		2C103A4D17004F3A00BC46B4 /* STGTSettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTSettingsController.m; sourceTree = "<group>"; };
+		2C103A501700512500BC46B4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		2C103A521700512C00BC46B4 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		2C103A821700C75C00BC46B4 /* STGTTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTTrack.h; sourceTree = "<group>"; };
+		2C103A831700C75D00BC46B4 /* STGTTrack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTTrack.m; sourceTree = "<group>"; };
 		2C2ACA5D16EE2453001E333A /* geotracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = geotracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C2ACA6116EE2453001E333A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2C2ACA6316EE2453001E333A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -52,14 +103,24 @@
 		2C2ACA7716EE2453001E333A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		2C2ACA7A16EE2453001E333A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		2C2ACA7D16EE2453001E333A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
-		2C2ACA7F16EE2453001E333A /* STGTViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STGTViewController.h; sourceTree = "<group>"; };
-		2C2ACA8016EE2453001E333A /* STGTViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STGTViewController.m; sourceTree = "<group>"; };
 		2C2ACA8716EE2453001E333A /* geotrackerTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = geotrackerTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C2ACA8816EE2453001E333A /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		2C2ACA9016EE2453001E333A /* geotrackerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "geotrackerTests-Info.plist"; sourceTree = "<group>"; };
 		2C2ACA9216EE2453001E333A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2C2ACA9416EE2453001E333A /* geotrackerTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = geotrackerTests.h; sourceTree = "<group>"; };
 		2C2ACA9516EE2453001E333A /* geotrackerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = geotrackerTests.m; sourceTree = "<group>"; };
+		2C2ACAA016EE24E5001E333A /* STGTSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTSessionManager.h; sourceTree = "<group>"; };
+		2C2ACAA116EE24E5001E333A /* STGTSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTSessionManager.m; sourceTree = "<group>"; };
+		2C2ACAA316EE24F4001E333A /* STGTSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTSession.h; sourceTree = "<group>"; };
+		2C2ACAA416EE24F4001E333A /* STGTSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTSession.m; sourceTree = "<group>"; };
+		2C2ACAA616EE2719001E333A /* STGTManagedDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTManagedDocument.h; sourceTree = "<group>"; };
+		2C2ACAA716EE2719001E333A /* STGTManagedDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTManagedDocument.m; sourceTree = "<group>"; };
+		2C2ACAA916EE2741001E333A /* STGTSyncer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTSyncer.h; sourceTree = "<group>"; };
+		2C2ACAAA16EE2741001E333A /* STGTSyncer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTSyncer.m; sourceTree = "<group>"; };
+		2C2ACAAC16EE2762001E333A /* STGTTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTTracker.h; sourceTree = "<group>"; };
+		2C2ACAAD16EE2762001E333A /* STGTTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTTracker.m; sourceTree = "<group>"; };
+		2C2CB56316FF3D6600D682C5 /* STGTSessionManagement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STGTSessionManagement.h; sourceTree = "<group>"; };
+		2C2CB56516FF3EAA00D682C5 /* STGTRequestAuthenticatable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTRequestAuthenticatable.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +128,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C103A531700512C00BC46B4 /* CoreLocation.framework in Frameworks */,
+				2C103A511700512500BC46B4 /* MapKit.framework in Frameworks */,
+				2C103A4B16FF467500BC46B4 /* CoreData.framework in Frameworks */,
 				2C2ACA6216EE2453001E333A /* UIKit.framework in Frameworks */,
 				2C2ACA6416EE2453001E333A /* Foundation.framework in Frameworks */,
 				2C2ACA6616EE2453001E333A /* CoreGraphics.framework in Frameworks */,
@@ -108,6 +172,9 @@
 		2C2ACA6016EE2453001E333A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2C103A521700512C00BC46B4 /* CoreLocation.framework */,
+				2C103A501700512500BC46B4 /* MapKit.framework */,
+				2C103A4A16FF467500BC46B4 /* CoreData.framework */,
 				2C2ACA6116EE2453001E333A /* UIKit.framework */,
 				2C2ACA6316EE2453001E333A /* Foundation.framework */,
 				2C2ACA6516EE2453001E333A /* CoreGraphics.framework */,
@@ -119,12 +186,11 @@
 		2C2ACA6716EE2453001E333A /* geotracker */ = {
 			isa = PBXGroup;
 			children = (
+				2C2ACA9F16EE24A0001E333A /* Classes */,
 				2C2ACA7016EE2453001E333A /* STGTAppDelegate.h */,
 				2C2ACA7116EE2453001E333A /* STGTAppDelegate.m */,
 				2C2ACA7916EE2453001E333A /* MainStoryboard_iPhone.storyboard */,
 				2C2ACA7C16EE2453001E333A /* MainStoryboard_iPad.storyboard */,
-				2C2ACA7F16EE2453001E333A /* STGTViewController.h */,
-				2C2ACA8016EE2453001E333A /* STGTViewController.m */,
 				2C2ACA6816EE2453001E333A /* Supporting Files */,
 			);
 			path = geotracker;
@@ -161,6 +227,69 @@
 				2C2ACA9116EE2453001E333A /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2C2ACA9F16EE24A0001E333A /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				2C2CB56A16FF44DC00D682C5 /* DataModel */,
+				2C2CB56616FF3F1600D682C5 /* Protocols */,
+				2C2ACAA016EE24E5001E333A /* STGTSessionManager.h */,
+				2C2ACAA116EE24E5001E333A /* STGTSessionManager.m */,
+				2C2ACAA316EE24F4001E333A /* STGTSession.h */,
+				2C2ACAA416EE24F4001E333A /* STGTSession.m */,
+				2C2ACAA616EE2719001E333A /* STGTManagedDocument.h */,
+				2C2ACAA716EE2719001E333A /* STGTManagedDocument.m */,
+				2C103A4C17004F3A00BC46B4 /* STGTSettingsController.h */,
+				2C103A4D17004F3A00BC46B4 /* STGTSettingsController.m */,
+				2C2ACAA916EE2741001E333A /* STGTSyncer.h */,
+				2C2ACAAA16EE2741001E333A /* STGTSyncer.m */,
+				2C2ACAAC16EE2762001E333A /* STGTTracker.h */,
+				2C2ACAAD16EE2762001E333A /* STGTTracker.m */,
+			);
+			name = Classes;
+			path = geotracker/Classes;
+			sourceTree = SOURCE_ROOT;
+		};
+		2C2CB56616FF3F1600D682C5 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				2C2CB56516FF3EAA00D682C5 /* STGTRequestAuthenticatable.h */,
+				2C2CB56316FF3D6600D682C5 /* STGTSessionManagement.h */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		2C2CB56A16FF44DC00D682C5 /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				2C103A2416FF452100BC46B4 /* STGTDataModel.xcdatamodel */,
+				2C103A821700C75C00BC46B4 /* STGTTrack.h */,
+				2C103A831700C75D00BC46B4 /* STGTTrack.m */,
+				2C103A4716FF457700BC46B4 /* STGTDatum.h */,
+				2C103A4816FF457700BC46B4 /* STGTDatum.m */,
+				2C103A4416FF457600BC46B4 /* STGTSettings.h */,
+				2C103A4516FF457700BC46B4 /* STGTSettings.m */,
+				2C103A4116FF457600BC46B4 /* STGTBatteryStatus.h */,
+				2C103A4216FF457600BC46B4 /* STGTBatteryStatus.m */,
+				2C103A3E16FF457600BC46B4 /* STGTSpot.h */,
+				2C103A3F16FF457600BC46B4 /* STGTSpot.m */,
+				2C103A3B16FF457600BC46B4 /* STGTNetwork.h */,
+				2C103A3C16FF457600BC46B4 /* STGTNetwork.m */,
+				2C103A3816FF457600BC46B4 /* STGTLocation.h */,
+				2C103A3916FF457600BC46B4 /* STGTLocation.m */,
+				2C103A3216FF457600BC46B4 /* STGTSpotImage.h */,
+				2C103A3316FF457600BC46B4 /* STGTSpotImage.m */,
+				2C103A2F16FF457600BC46B4 /* STGTNetworkImage.h */,
+				2C103A3016FF457600BC46B4 /* STGTNetworkImage.m */,
+				2C103A2C16FF457600BC46B4 /* STGTInterest.h */,
+				2C103A2D16FF457600BC46B4 /* STGTInterest.m */,
+				2C103A2916FF457600BC46B4 /* STGTInterestImage.h */,
+				2C103A2A16FF457600BC46B4 /* STGTInterestImage.m */,
+				2C103A2616FF457600BC46B4 /* STGTImage.h */,
+				2C103A2716FF457600BC46B4 /* STGTImage.m */,
+			);
+			path = DataModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -277,7 +406,25 @@
 			files = (
 				2C2ACA6E16EE2453001E333A /* main.m in Sources */,
 				2C2ACA7216EE2453001E333A /* STGTAppDelegate.m in Sources */,
-				2C2ACA8116EE2453001E333A /* STGTViewController.m in Sources */,
+				2C2ACAA216EE24E5001E333A /* STGTSessionManager.m in Sources */,
+				2C2ACAA516EE24F4001E333A /* STGTSession.m in Sources */,
+				2C2ACAA816EE2719001E333A /* STGTManagedDocument.m in Sources */,
+				2C2ACAAB16EE2741001E333A /* STGTSyncer.m in Sources */,
+				2C2ACAAE16EE2762001E333A /* STGTTracker.m in Sources */,
+				2C103A2516FF452100BC46B4 /* STGTDataModel.xcdatamodel in Sources */,
+				2C103A2816FF457600BC46B4 /* STGTImage.m in Sources */,
+				2C103A2B16FF457600BC46B4 /* STGTInterestImage.m in Sources */,
+				2C103A2E16FF457600BC46B4 /* STGTInterest.m in Sources */,
+				2C103A3116FF457600BC46B4 /* STGTNetworkImage.m in Sources */,
+				2C103A3416FF457600BC46B4 /* STGTSpotImage.m in Sources */,
+				2C103A3A16FF457600BC46B4 /* STGTLocation.m in Sources */,
+				2C103A3D16FF457600BC46B4 /* STGTNetwork.m in Sources */,
+				2C103A4016FF457600BC46B4 /* STGTSpot.m in Sources */,
+				2C103A4316FF457600BC46B4 /* STGTBatteryStatus.m in Sources */,
+				2C103A4616FF457700BC46B4 /* STGTSettings.m in Sources */,
+				2C103A4916FF457700BC46B4 /* STGTDatum.m in Sources */,
+				2C103A4F17004F6100BC46B4 /* STGTSettingsController.m in Sources */,
+				2C103A841700C75E00BC46B4 /* STGTTrack.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,6 +609,7 @@
 				2C2ACA9B16EE2453001E333A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2C2ACA9C16EE2453001E333A /* Build configuration list for PBXNativeTarget "geotrackerTests" */ = {
 			isa = XCConfigurationList;
@@ -470,6 +618,7 @@
 				2C2ACA9E16EE2453001E333A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

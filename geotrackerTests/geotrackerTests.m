@@ -7,6 +7,7 @@
 //
 
 #import "geotrackerTests.h"
+#import "STGTSessionManager.h"
 
 @implementation geotrackerTests
 
@@ -24,9 +25,32 @@
     [super tearDown];
 }
 
-- (void)testExample
+- (void)testSessionManager
 {
-    STFail(@"Unit tests are not implemented yet in geotrackerTests");
+    STGTSessionManager *sessionManager = [STGTSessionManager sharedManager];
+    
+    [sessionManager startSessionForUID:@"1" authDelegate:nil];
+    NSUInteger count = 1;
+    STAssertEquals(sessionManager.sessions.count, count, @"");
+    
+    [sessionManager startSessionForUID:@"2" authDelegate:nil];
+    count = 2;
+    STAssertEquals(sessionManager.sessions.count, count, @"");
+
+    [sessionManager startSessionForUID:@"1" authDelegate:nil];
+    count = 2;
+    STAssertEquals(sessionManager.sessions.count, count, @"");
+    
+    sessionManager.currentSessionUID = @"1";
+    STAssertEquals(sessionManager.currentSessionUID, @"1", @"");
+
+    sessionManager.currentSessionUID = @"3";
+    STAssertEquals(sessionManager.currentSessionUID, @"1", @"");
+    STAssertTrue([sessionManager.currentSessionUID boolValue], @"");
+
+    sessionManager.currentSessionUID = nil;
+    STAssertFalse([sessionManager.currentSessionUID boolValue], @"");
+
 }
 
 @end
