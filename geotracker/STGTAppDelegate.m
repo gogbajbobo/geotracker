@@ -7,12 +7,16 @@
 //
 
 #import "STGTAppDelegate.h"
+#import "STGTSessionManager.h"
 
 @implementation STGTAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    [[STGTSessionManager sharedManager] startSessionForUID:@"1" authDelegate:nil settings:[NSDictionary dictionaryWithObjectsAndKeys:@"21.0", @"batteryCheckingFinishTime", nil]];
+    
     return YES;
 }
 							

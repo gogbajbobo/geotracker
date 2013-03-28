@@ -29,7 +29,7 @@
     if (uid) {
         STGTSession *session = [self.sessions objectForKey:uid];
         if (!session) {
-            session = [STGTSession initWithUID:uid authDelegate:authDelegate];
+            session = [STGTSession initWithUID:uid authDelegate:authDelegate settings:settings];
             session.manager = self;
             [self.sessions setValue:session forKey:uid];
             session.status = @"starting";

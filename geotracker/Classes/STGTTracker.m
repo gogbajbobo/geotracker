@@ -10,12 +10,14 @@
 #import "STGTSession.h"
 #import "STGTSettings.h"
 
-@interface STGTTracker()
+@interface STGTTracker() <CLLocationManagerDelegate>
 
-@property (nonatomic, strong) STGTSettings *settings;
+@property (nonatomic, strong) NSArray *settings;
 @property (nonatomic, strong) NSTimer *startTimer;
 @property (nonatomic, strong) NSTimer *finishTimer;
 @property (nonatomic) BOOL tracking;
+@property (nonatomic, strong) CLLocationManager *locationManager;
+@property (nonatomic, strong) CLLocation *lastLocation;
 
 @end
 
@@ -31,7 +33,14 @@
 
 - (void)customInit {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionStatusChanged:) name:@"sessionStatusChanged" object:self.session];
-    self.settings = [(STGTSession *)self.session settings];
+//    self.settings = [(STGTSession *)self.session settings];
+}
+
+- (NSArray *)settings {
+    if (!_settings) {
+//        _settings = [(STGTSession *)self.session settings];
+    }
+    return _settings;
 }
 
 - (void)sessionStatusChanged:(NSNotification *)notification {
@@ -44,11 +53,11 @@
 }
 
 - (void)initTimers {
-    if ([self.settings.trackerAutoStart boolValue]) {
-        [[NSRunLoop currentRunLoop] addTimer:self.startTimer forMode:NSDefaultRunLoopMode];
-        [[NSRunLoop currentRunLoop] addTimer:self.finishTimer forMode:NSDefaultRunLoopMode];
-        
-    }
+//    if ([self.settings.trackerAutoStart boolValue]) {
+//        [[NSRunLoop currentRunLoop] addTimer:self.startTimer forMode:NSDefaultRunLoopMode];
+//        [[NSRunLoop currentRunLoop] addTimer:self.finishTimer forMode:NSDefaultRunLoopMode];
+//        
+//    }
 }
 
 - (void)releaseTimers {
@@ -56,52 +65,52 @@
     [self.finishTimer invalidate];
 }
 
-- (NSTimer *)startTimer {
-    if (!_startTimer) {
-        if (self.settings.trackerStartTime) {
-            NSDate *startTime = [self dateFromNumber:self.settings.trackerStartTime];
-            _startTimer = [[NSTimer alloc] initWithFireDate:startTime interval:24*3600 target:self selector:@selector(startTracking:) userInfo:nil repeats:YES];
-        }
-    }
-    return _startTimer;
-}
+//- (NSTimer *)startTimer {
+//    if (!_startTimer) {
+//        if (self.settings.trackerStartTime) {
+//            NSDate *startTime = [self dateFromNumber:self.settings.trackerStartTime];
+//            _startTimer = [[NSTimer alloc] initWithFireDate:startTime interval:24*3600 target:self selector:@selector(startTracking:) userInfo:nil repeats:YES];
+//        }
+//    }
+//    return _startTimer;
+//}
 
-- (NSTimer *)finishTimer {
-    if (!_finishTimer) {
-        if (self.settings.trackerFinishTime) {
-            NSDate *finishTime = [self dateFromNumber:self.settings.trackerFinishTime];
-            _finishTimer = [[NSTimer alloc] initWithFireDate:finishTime interval:24*3600 target:self selector:@selector(stopTracking:) userInfo:nil repeats:YES];
-        }
-    }
-    return _finishTimer;
-}
+//- (NSTimer *)finishTimer {
+//    if (!_finishTimer) {
+//        if (self.settings.trackerFinishTime) {
+//            NSDate *finishTime = [self dateFromNumber:self.settings.trackerFinishTime];
+//            _finishTimer = [[NSTimer alloc] initWithFireDate:finishTime interval:24*3600 target:self selector:@selector(stopTracking:) userInfo:nil repeats:YES];
+//        }
+//    }
+//    return _finishTimer;
+//}
 
-- (void)checkTrackerAutoStart {
-    double startTime = [self.settings.trackerStartTime doubleValue];
-    double finishTime = [self.settings.trackerFinishTime doubleValue];
-    double currentTime = [self currentTimeInDouble];
-    if (startTime < finishTime) {
-        if (currentTime > startTime && currentTime < finishTime) {
-            if (!self.tracking) {
-                [self startTracking];
-            }
-        } else {
-            if (self.tracking) {
-                [self stopTracking];
-            }
-        }
-    } else {
-        if (currentTime < startTime && currentTime > finishTime) {
-            if (self.tracking) {
-                [self stopTracking];
-            }
-        } else {
-            if (!self.tracking) {
-                [self startTracking];
-            }
-        }
-    }
-}
+//- (void)checkTrackerAutoStart {
+//    double startTime = [self.settings.trackerStartTime doubleValue];
+//    double finishTime = [self.settings.trackerFinishTime doubleValue];
+//    double currentTime = [self currentTimeInDouble];
+//    if (startTime < finishTime) {
+//        if (currentTime > startTime && currentTime < finishTime) {
+//            if (!self.tracking) {
+//                [self startTracking];
+//            }
+//        } else {
+//            if (self.tracking) {
+//                [self stopTracking];
+//            }
+//        }
+//    } else {
+//        if (currentTime < startTime && currentTime > finishTime) {
+//            if (self.tracking) {
+//                [self stopTracking];
+//            }
+//        } else {
+//            if (!self.tracking) {
+//                [self startTracking];
+//            }
+//        }
+//    }
+//}
 
 - (NSDate *)dateFromNumber:(NSNumber *)time {
     NSDate *currentDate = [NSDate date];
@@ -131,6 +140,35 @@
 - (void)stopTracking {
     self.tracking = NO;
 }
+
+
+#pragma mark - CLLocationManager
+
+- (CLLocationManager *)locationManager {
+    if (!_locationManager) {
+        _locationManager = [[CLLocationManager alloc] init];
+        _locationManager.delegate = self;
+//        _locationManager.distanceFilter = [self.settings.distanceFilter doubleValue];
+//        _locationManager.desiredAccuracy = [self.settings.desiredAccuracy doubleValue];
+        self.locationManager.pausesLocationUpdatesAutomatically = NO;
+    }
+    return _locationManager;
+}
+
+//- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+//    
+//    CLLocation *newLocation = [locations lastObject];
+//    NSTimeInterval locationAge = -[newLocation.timestamp timeIntervalSinceNow];
+//    if (locationAge < 5.0 &&
+//        newLocation.horizontalAccuracy > 0 &&
+//        newLocation.horizontalAccuracy <= [self.settings.requiredAccuracy doubleValue]) {
+//        if (!self.lastLocation || [newLocation.timestamp timeIntervalSinceDate:self.lastLocation.timestamp] > [self.settings.timeFilter doubleValue]) {
+////        NSLog(@"addLocation");
+//        }
+//    }
+    
+//}
+
 
 
 @end

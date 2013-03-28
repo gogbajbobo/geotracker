@@ -22,7 +22,7 @@
 @property (weak, nonatomic) id <STGTSessionManager> manager;
 @property (strong, nonatomic) NSString *uid;
 @property (strong, nonatomic) NSString *status;
-@property (strong, nonatomic) STGTSettings *settings;
+//@property (strong, nonatomic) NSArray *settings;
 @property (nonatomic, strong) id <STGTRequestAuthenticatable> authDelegate;
 
 + (STGTSession *)initWithUID:(NSString *)uid authDelegate:(id <STGTRequestAuthenticatable>)authDelegate;

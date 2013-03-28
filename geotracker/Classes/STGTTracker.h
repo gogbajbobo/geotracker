@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 #import "STGTSessionManagement.h"
 #import "STGTManagedDocument.h"
 

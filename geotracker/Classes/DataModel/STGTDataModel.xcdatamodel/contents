@@ -42,23 +42,10 @@
         <relationship name="network" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="STGTNetwork" inverseName="image" inverseEntity="STGTNetwork" syncable="YES"/>
     </entity>
     <entity name="STGTSettings" representedClassName="STGTSettings" parentEntity="STGTDatum" syncable="YES">
-        <attribute name="checkingBattery" optional="YES" attributeType="Boolean" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="desiredAccuracy" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="distanceFilter" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="fetchLimit" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="localAccessToSettings" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="mapHeading" optional="YES" attributeType="Integer 16" defaultValueString="NO" syncable="YES"/>
-        <attribute name="mapType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="requiredAccuracy" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="syncInterval" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="syncServerURI" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="timeFilter" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="trackDetectionTime" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="trackerAutoStart" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="trackerFinishTime" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="trackerStartTime" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="trackScale" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="xmlNamespace" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="control" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="group" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="STGTSpot" representedClassName="STGTSpot" parentEntity="STGTDatum" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
@@ -85,7 +72,7 @@
         <element name="STGTLocation" positionX="-873" positionY="-126" width="128" height="163"/>
         <element name="STGTNetwork" positionX="-441" positionY="-315" width="128" height="88"/>
         <element name="STGTNetworkImage" positionX="-648" positionY="-432" width="128" height="58"/>
-        <element name="STGTSettings" positionX="-990" positionY="-567" width="128" height="298"/>
+        <element name="STGTSettings" positionX="-990" positionY="-567" width="128" height="103"/>
         <element name="STGTSpot" positionX="-452" positionY="-553" width="128" height="163"/>
         <element name="STGTSpotImage" positionX="-641" positionY="-522" width="128" height="58"/>
         <element name="STGTTrack" positionX="-1098" positionY="-153" width="128" height="58"/>
