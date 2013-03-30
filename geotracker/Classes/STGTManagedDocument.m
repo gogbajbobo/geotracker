@@ -38,14 +38,14 @@
     
     if (![[NSFileManager defaultManager] fileExistsAtPath:[document.fileURL path]]) {
         [document saveToURL:document.fileURL forSaveOperation:UIDocumentSaveForCreating completionHandler:^(BOOL success) {
-            //            [document closeWithCompletionHandler:^(BOOL success) {
-            //                [document openWithCompletionHandler:^(BOOL success) {
+            [document closeWithCompletionHandler:^(BOOL success) {
+                [document openWithCompletionHandler:^(BOOL success) {
             if (success) {
                 NSLog(@"document UIDocumentSaveForCreating success");
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"documentReady" object:document userInfo:[NSDictionary dictionaryWithObject:uid forKey:@"uid"]];
             }
-            //                }];
-            //            }];
+                }];
+            }];
         }];
     } else if (document.documentState == UIDocumentStateClosed) {
         [document openWithCompletionHandler:^(BOOL success) {

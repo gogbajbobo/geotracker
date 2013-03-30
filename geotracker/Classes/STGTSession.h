@@ -13,6 +13,7 @@
 #import "STGTSyncer.h"
 #import "STGTTracker.h"
 #import "STGTSettings.h"
+#import "STGTSettingsController.h"
 
 @interface STGTSession : NSObject <STGTSession>
 
@@ -22,8 +23,8 @@
 @property (weak, nonatomic) id <STGTSessionManager> manager;
 @property (strong, nonatomic) NSString *uid;
 @property (strong, nonatomic) NSString *status;
-//@property (strong, nonatomic) NSArray *settings;
 @property (nonatomic, strong) id <STGTRequestAuthenticatable> authDelegate;
+@property (nonatomic, strong) STGTSettingsController *settingsController;
 
 + (STGTSession *)initWithUID:(NSString *)uid authDelegate:(id <STGTRequestAuthenticatable>)authDelegate;
 + (STGTSession *)initWithUID:(NSString *)uid authDelegate:(id <STGTRequestAuthenticatable>)authDelegate settings:(NSDictionary *)settings;

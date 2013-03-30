@@ -16,9 +16,10 @@
 
 + (NSDictionary *)defaultSettings;
 
-- (void)updateSettingsWith:(NSDictionary *)newSettings;
++ (STGTSettingsController *)initWithSettings:(NSDictionary *)startSettings;
+- (NSArray *)currentSettings;
+- (NSMutableDictionary *)currentSettingsForGroup:(NSString *)group;
 
 @property (nonatomic, strong) id <STGTSession> session;
-@property (nonatomic, strong) NSArray *currentSettings;
 
 @end
