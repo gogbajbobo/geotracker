@@ -15,4 +15,6 @@
 
 + (STGTManagedDocument *)documentWithUID:(NSString *)uid;
 
+- (void)saveDocument;
+
 @end

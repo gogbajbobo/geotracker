@@ -15,7 +15,7 @@
 {
     // Override point for customization after application launch.
     
-    [[STGTSessionManager sharedManager] startSessionForUID:@"1" authDelegate:nil settings:[NSDictionary dictionaryWithObjectsAndKeys:@"https://sdfsdfsdfsdfsdf", @"syncServerURI", nil]];
+    [[STGTSessionManager sharedManager] startSessionForUID:@"1" authDelegate:nil settings:[NSDictionary dictionaryWithObjectsAndKeys:@"100", @"requiredAccuracy", nil]];
     
     return YES;
 }

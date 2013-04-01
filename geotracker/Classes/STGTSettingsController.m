@@ -8,6 +8,7 @@
 
 #import "STGTSettingsController.h"
 #import "STGTSettings.h"
+#import "STGTSession.h"
 
 @interface STGTSettingsController() <NSFetchedResultsControllerDelegate>
 
@@ -275,8 +276,6 @@
             } else {
                 [settingToCheck addObserver:self forKeyPath:@"value" options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld) context:nil];
                 if ([[self.startSettings allKeys] containsObject:settingName]) {
-                    NSLog(@"settingToCheck.value %@", settingToCheck.value);
-                    NSLog(@"[setting objectAtIndex:0] %@", [setting objectAtIndex:0]);
                     if (![settingToCheck.value isEqualToString:[setting objectAtIndex:0]]) {
                         settingToCheck.value = [setting objectAtIndex:0];
                         NSLog(@"new value");
@@ -285,7 +284,7 @@
             }
         }
     }
-//    NSLog(@"fetchedObjects1 %@", self.fetchedSettingsResultController.fetchedObjects);
+    [[(STGTSession *)self.session document] saveDocument];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {

@@ -29,6 +29,12 @@
     return self.myManagedObjectModel;
 }
 
+- (void)saveDocument {
+    [self saveToURL:self.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success) {
+        NSLog(@"UIDocumentSaveForOverwriting success");
+    }];
+}
+
 + (STGTManagedDocument *)documentWithUID:(NSString *)uid {
 
     NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
