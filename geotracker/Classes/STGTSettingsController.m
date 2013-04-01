@@ -12,11 +12,14 @@
 @interface STGTSettingsController() <NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedSettingsResultController;
-@property (nonatomic, strong) NSDictionary *startSettings;
+@property (nonatomic, strong) NSMutableDictionary *startSettings;
 
 @end
 
 @implementation STGTSettingsController
+
+
+#pragma mark - class methods
 
 + (NSDictionary *)defaultSettings {
     NSMutableDictionary *defaultSettings = [NSMutableDictionary dictionary];
@@ -34,7 +37,7 @@
     [defaultSettings setValue:trackerSettings forKey:@"tracker"];
     
     NSMutableDictionary *mapSettings = [NSMutableDictionary dictionary];
-    [mapSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d", MKUserTrackingModeNone], @"switch" , nil] forKey:@"mapHeading"];
+    [mapSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d", MKUserTrackingModeNone], @"segmentedControl" , nil] forKey:@"mapHeading"];
     [mapSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d", MKMapTypeStandard], @"segmentedControl" , nil] forKey:@"mapType"];
     [mapSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%f", 1.5], @"slider" , nil] forKey:@"trackScale"];
     
@@ -63,6 +66,130 @@
     return [defaultSettings copy];
 }
 
++ (NSString *)normalizeValue:(NSString *)value forKey:(NSString *)key {
+    if ([key isEqualToString:@"desiredAccuracy"]) {
+        double dValue = [value doubleValue];
+        if (dValue == -2 || dValue == -1 || dValue == 10 || dValue == 100 || dValue == 1000 || dValue == 3000) {
+            return [NSString stringWithFormat:@"%f", dValue];
+        }
+    } else if ([key isEqualToString:@"requiredAccuracy"]) {
+        if ([self isPositiveDouble:value]) {
+            return [NSString stringWithFormat:@"%f", [value doubleValue]];
+        }
+    } else if ([key isEqualToString:@"distanceFilter"]) {
+        double dValue = [value doubleValue];
+        if (dValue == -1 || dValue >= 0) {
+            return [NSString stringWithFormat:@"%f", dValue];
+        }
+        
+    } else if ([key isEqualToString:@"timeFilter"]) {
+        if ([self isPositiveDouble:value]) {
+            return [NSString stringWithFormat:@"%f", [value doubleValue]];
+        }
+        
+    } else if ([key isEqualToString:@"trackDetectionTime"]) {
+        if ([self isPositiveDouble:value]) {
+            return [NSString stringWithFormat:@"%f", [value doubleValue]];
+        }
+        
+    } else if ([key isEqualToString:@"trackerAutoStart"]) {
+        if ([self isBool:value]) {
+            return [NSString stringWithFormat:@"%d", [value boolValue]];
+        }
+        
+    } else if ([key isEqualToString:@"trackerStartTime"]) {
+        if ([self isValidTime:value]) {
+            return [NSString stringWithFormat:@"%f", [value doubleValue]];
+        }
+        
+    } else if ([key isEqualToString:@"trackerFinishTime"]) {
+        if ([self isValidTime:value]) {
+            return [NSString stringWithFormat:@"%f", [value doubleValue]];
+        }
+        
+    } else if ([key isEqualToString:@"mapHeading"]) {
+        double iValue = [value doubleValue];
+        if (iValue == 0 || iValue == 1 || iValue == 2) {
+            return [NSString stringWithFormat:@"%.f", iValue];
+        }
+        
+    } else if ([key isEqualToString:@"mapType"]) {
+        double iValue = [value doubleValue];
+        if (iValue == 0 || iValue == 1 || iValue == 2) {
+            return [NSString stringWithFormat:@"%.f", iValue];
+        }
+        
+    } else if ([key isEqualToString:@"fetchLimit"]) {
+        if ([self isPositiveDouble:value]) {
+            return [NSString stringWithFormat:@"%f", [value doubleValue]];
+        }
+        
+    } else if ([key isEqualToString:@"syncInterval"]) {
+        if ([self isPositiveDouble:value]) {
+            return [NSString stringWithFormat:@"%f", [value doubleValue]];
+        }
+        
+    } else if ([key isEqualToString:@"syncServerURI"]) {
+        if ([self isValidURI:value]) {
+            return value;
+        }
+        
+    } else if ([key isEqualToString:@"xmlNamespace"]) {
+        if ([self isValidURI:value]) {
+            return value;
+        }
+        
+    } else if ([key isEqualToString:@"localAccessToSettings"]) {
+        if ([self isBool:value]) {
+            return [NSString stringWithFormat:@"%d", [value boolValue]];
+        }
+        
+    } else if ([key isEqualToString:@"checkingBattery"]) {
+        if ([self isBool:value]) {
+            return [NSString stringWithFormat:@"%d", [value boolValue]];
+        }
+        
+    } else if ([key isEqualToString:@"batteryCheckingStartTime"]) {
+        if ([self isValidTime:value]) {
+            return [NSString stringWithFormat:@"%f", [value doubleValue]];
+        }
+        
+    } else if ([key isEqualToString:@"batteryCheckingFinishTime"]) {
+        if ([self isValidTime:value]) {
+            return [NSString stringWithFormat:@"%f", [value doubleValue]];
+        }
+        
+    }
+    return nil;
+}
+
+
++ (BOOL)isPositiveDouble:(NSString *)value {
+    return ([value doubleValue] > 0);
+}
+
++ (BOOL)isBool:(NSString *)value {
+    double dValue = [value doubleValue];
+    return (dValue == 0 || dValue == 1);
+}
+
++ (BOOL)isValidTime:(NSString *)value {
+    double dValue = [value doubleValue];
+    return (dValue >= 0 && dValue <= 24);
+}
+
++ (BOOL)isValidURI:(NSString *)value {
+    return ([value hasPrefix:@"http://"] || [value hasPrefix:@"https://"]);
+}
+
++ (STGTSettingsController *)initWithSettings:(NSDictionary *)startSettings {
+    STGTSettingsController *settingsController = [[STGTSettingsController alloc] init];
+    settingsController.startSettings = [startSettings mutableCopy];
+    return settingsController;
+}
+
+#pragma mark - instance methods
+
 - (id)init {
     self = [super init];
     if (self) {
@@ -73,12 +200,6 @@
 
 - (void)customInit {
 
-}
-
-+ (STGTSettingsController *)initWithSettings:(NSDictionary *)startSettings {
-    STGTSettingsController *settingsController = [[STGTSettingsController alloc] init];
-    settingsController.startSettings = startSettings;
-    return settingsController;
 }
 
 - (void)setSession:(id<STGTSession>)session {
@@ -96,9 +217,6 @@
     if (!_fetchedSettingsResultController) {
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"STGTSettings"];
         request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"ts" ascending:NO selector:@selector(compare:)]];
-//        NSLog(@"session %@", self.session);
-//        NSLog(@"document %@", self.session.document);
-//        NSLog(@"managedObjectContext %@", self.session.document.managedObjectContext);
         _fetchedSettingsResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.session.document.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
         _fetchedSettingsResultController.delegate = self;
     }
@@ -133,11 +251,16 @@
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.name == %@", settingName];
             STGTSettings *settingToCheck = [[[self currentSettings] filteredArrayUsingPredicate:predicate] lastObject];
 
-            NSArray *setting;
+            NSMutableArray *setting = [[settingsGroup valueForKey:settingName] mutableCopy];
+            
             if ([[self.startSettings allKeys] containsObject:settingName]) {
-                setting = [NSArray arrayWithObjects:[self.startSettings valueForKey:settingName], [[settingsGroup valueForKey:settingName] objectAtIndex:1], nil];
-            } else {
-                setting = [settingsGroup valueForKey:settingName];
+                NSString *nValue = [STGTSettingsController normalizeValue:[self.startSettings valueForKey:settingName] forKey:settingName];
+                if (nValue) {
+                    [setting replaceObjectAtIndex:0 withObject:nValue];
+                } else {
+                    NSLog(@"value is not correct %@", [self.startSettings valueForKey:settingName]);
+                    [self.startSettings removeObjectForKey:settingName];
+                }
             }
 
             if (!settingToCheck) {
@@ -147,9 +270,17 @@
                 newSetting.name = settingName;
                 newSetting.value = [setting objectAtIndex:0];
                 newSetting.control = [setting objectAtIndex:1];
+                [newSetting addObserver:self forKeyPath:@"value" options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld) context:nil];
+
             } else {
+                [settingToCheck addObserver:self forKeyPath:@"value" options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld) context:nil];
                 if ([[self.startSettings allKeys] containsObject:settingName]) {
-                    settingToCheck.value = [setting objectAtIndex:0];
+                    NSLog(@"settingToCheck.value %@", settingToCheck.value);
+                    NSLog(@"[setting objectAtIndex:0] %@", [setting objectAtIndex:0]);
+                    if (![settingToCheck.value isEqualToString:[setting objectAtIndex:0]]) {
+                        settingToCheck.value = [setting objectAtIndex:0];
+                        NSLog(@"new value");
+                    }
                 }
             }
         }
@@ -157,8 +288,17 @@
 //    NSLog(@"fetchedObjects1 %@", self.fetchedSettingsResultController.fetchedObjects);
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    NSLog(@"changeValueForObject %@", object);
+    NSLog(@"old value %@", [change valueForKey:NSKeyValueChangeOldKey]);
+    NSLog(@"new value %@", [change valueForKey:NSKeyValueChangeNewKey]);
+}
+
 #pragma mark - NSFetchedResultsController delegate
 
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+//    NSLog(@"controllerWillChangeContent");
+}
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
 //    NSLog(@"controllerDidChangeContent");

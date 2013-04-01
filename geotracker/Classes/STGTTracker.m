@@ -49,9 +49,8 @@
     if ([key isEqualToString:@"distanceFilter"] || [key isEqualToString:@"desiredAccuracy"]) {
         self.locationManager.distanceFilter = [[self.settings valueForKey:@"distanceFilter"] doubleValue];
         self.locationManager.desiredAccuracy = [[self.settings valueForKey:@"desiredAccuracy"] doubleValue];
-        NSLog(@"distanceFilter %f",[[self.settings valueForKey:@"distanceFilter"] doubleValue]);
     }
-    NSLog(@"self.settings %@", self.settings);
+//    NSLog(@"self.settings %@", self.settings);
 }
 
 - (void)sessionStatusChanged:(NSNotification *)notification {
@@ -80,7 +79,7 @@
     if (!_startTimer) {
         if ([self.settings valueForKey:@"trackerStartTime"]) {
             NSDate *startTime = [self dateFromNumber:[self.settings valueForKey:@"trackerStartTime"]];
-            _startTimer = [[NSTimer alloc] initWithFireDate:startTime interval:24*3600 target:self selector:@selector(startTracking:) userInfo:nil repeats:YES];
+            _startTimer = [[NSTimer alloc] initWithFireDate:startTime interval:24*3600 target:self selector:@selector(startTracking) userInfo:nil repeats:YES];
         }
     }
     return _startTimer;
@@ -90,7 +89,7 @@
     if (!_finishTimer) {
         if ([self.settings valueForKey:@"trackerFinishTime"]) {
             NSDate *finishTime = [self dateFromNumber:[self.settings valueForKey:@"trackerFinishTime"]];
-            _finishTimer = [[NSTimer alloc] initWithFireDate:finishTime interval:24*3600 target:self selector:@selector(stopTracking:) userInfo:nil repeats:YES];
+            _finishTimer = [[NSTimer alloc] initWithFireDate:finishTime interval:24*3600 target:self selector:@selector(stopTracking) userInfo:nil repeats:YES];
         }
     }
     return _finishTimer;
@@ -160,7 +159,6 @@
         _locationManager = [[CLLocationManager alloc] init];
         _locationManager.delegate = self;
         _locationManager.distanceFilter = [[self.settings valueForKey:@"distanceFilter"] doubleValue];
-        NSLog(@"distanceFilter %f", [[self.settings valueForKey:@"distanceFilter"] doubleValue]);
         _locationManager.desiredAccuracy = [[self.settings valueForKey:@"desiredAccuracy"] doubleValue];
         self.locationManager.pausesLocationUpdatesAutomatically = NO;
     }

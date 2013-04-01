@@ -46,19 +46,14 @@
 
 - (void)documentReady:(NSNotification *)notification {
     if ([[notification.userInfo valueForKey:@"uid"] isEqualToString:self.uid]) {
-//        self.settingsController = [[STGTSettingsController alloc] init];
-        self.settingsController = [STGTSettingsController initWithSettings:[NSDictionary dictionaryWithObjectsAndKeys:@"200", @"timeFilter", nil]];
+        self.settingsController = [STGTSettingsController initWithSettings:self.startSettings];
         self.settingsController.session = self;
-//        NSLog(@"currentSettings1 %@", self.settingsController.currentSettings);
-//        [self.settingsController updateSettingsWith:self.startSettings];
-//        NSLog(@"currentSettings2 %@", self.settingsController.currentSettings);
         self.tracker = [[STGTTracker alloc] init];
         self.tracker.session = self;
         self.syncer = [[STGTSyncer alloc] init];
         self.syncer.session = self;
         self.syncer.authDelegate = self.authDelegate;
         self.status = @"running";
-//        [self.settingsController updateSettingsWith:[NSDictionary dictionaryWithObjectsAndKeys:@"200", @"distanceFilter", nil]];
     }
 }
 
