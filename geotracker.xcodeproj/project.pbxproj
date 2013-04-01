@@ -17,7 +17,6 @@
 		2C103A3D16FF457600BC46B4 /* STGTNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C103A3C16FF457600BC46B4 /* STGTNetwork.m */; };
 		2C103A4016FF457600BC46B4 /* STGTSpot.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C103A3F16FF457600BC46B4 /* STGTSpot.m */; };
 		2C103A4316FF457600BC46B4 /* STGTBatteryStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C103A4216FF457600BC46B4 /* STGTBatteryStatus.m */; };
-		2C103A4916FF457700BC46B4 /* STGTDatum.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C103A4816FF457700BC46B4 /* STGTDatum.m */; };
 		2C103A4B16FF467500BC46B4 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C103A4A16FF467500BC46B4 /* CoreData.framework */; };
 		2C103A4F17004F6100BC46B4 /* STGTSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C103A4D17004F3A00BC46B4 /* STGTSettingsController.m */; };
 		2C103A511700512500BC46B4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C103A501700512500BC46B4 /* MapKit.framework */; };
@@ -45,6 +44,8 @@
 		2C2ACAA816EE2719001E333A /* STGTManagedDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2ACAA716EE2719001E333A /* STGTManagedDocument.m */; };
 		2C2ACAAB16EE2741001E333A /* STGTSyncer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2ACAAA16EE2741001E333A /* STGTSyncer.m */; };
 		2C2ACAAE16EE2762001E333A /* STGTTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2ACAAD16EE2762001E333A /* STGTTracker.m */; };
+		2CA1286D1709C88200FBD8F3 /* STGTDatum+Init.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CA1286C1709C88200FBD8F3 /* STGTDatum+Init.m */; };
+		2CA128711709D07D00FBD8F3 /* STGTDatum.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CA128701709D07D00FBD8F3 /* STGTDatum.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,8 +78,6 @@
 		2C103A3F16FF457600BC46B4 /* STGTSpot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTSpot.m; sourceTree = "<group>"; };
 		2C103A4116FF457600BC46B4 /* STGTBatteryStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTBatteryStatus.h; sourceTree = "<group>"; };
 		2C103A4216FF457600BC46B4 /* STGTBatteryStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTBatteryStatus.m; sourceTree = "<group>"; };
-		2C103A4716FF457700BC46B4 /* STGTDatum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTDatum.h; sourceTree = "<group>"; };
-		2C103A4816FF457700BC46B4 /* STGTDatum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTDatum.m; sourceTree = "<group>"; };
 		2C103A4A16FF467500BC46B4 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		2C103A4C17004F3A00BC46B4 /* STGTSettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTSettingsController.h; sourceTree = "<group>"; };
 		2C103A4D17004F3A00BC46B4 /* STGTSettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTSettingsController.m; sourceTree = "<group>"; };
@@ -121,6 +120,10 @@
 		2C2ACAAD16EE2762001E333A /* STGTTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTTracker.m; sourceTree = "<group>"; };
 		2C2CB56316FF3D6600D682C5 /* STGTSessionManagement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STGTSessionManagement.h; sourceTree = "<group>"; };
 		2C2CB56516FF3EAA00D682C5 /* STGTRequestAuthenticatable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTRequestAuthenticatable.h; sourceTree = "<group>"; };
+		2CA1286B1709C88200FBD8F3 /* STGTDatum+Init.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "STGTDatum+Init.h"; sourceTree = "<group>"; };
+		2CA1286C1709C88200FBD8F3 /* STGTDatum+Init.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "STGTDatum+Init.m"; sourceTree = "<group>"; };
+		2CA1286F1709D07D00FBD8F3 /* STGTDatum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTDatum.h; sourceTree = "<group>"; };
+		2CA128701709D07D00FBD8F3 /* STGTDatum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTDatum.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -264,12 +267,14 @@
 			isa = PBXGroup;
 			children = (
 				2C103A2416FF452100BC46B4 /* STGTDataModel.xcdatamodel */,
+				2CA1286F1709D07D00FBD8F3 /* STGTDatum.h */,
+				2CA128701709D07D00FBD8F3 /* STGTDatum.m */,
 				2C103AC317044C7900BC46B4 /* STGTSettings.h */,
 				2C103AC417044C7A00BC46B4 /* STGTSettings.m */,
 				2C103A821700C75C00BC46B4 /* STGTTrack.h */,
 				2C103A831700C75D00BC46B4 /* STGTTrack.m */,
-				2C103A4716FF457700BC46B4 /* STGTDatum.h */,
-				2C103A4816FF457700BC46B4 /* STGTDatum.m */,
+				2CA1286B1709C88200FBD8F3 /* STGTDatum+Init.h */,
+				2CA1286C1709C88200FBD8F3 /* STGTDatum+Init.m */,
 				2C103A4116FF457600BC46B4 /* STGTBatteryStatus.h */,
 				2C103A4216FF457600BC46B4 /* STGTBatteryStatus.m */,
 				2C103A3E16FF457600BC46B4 /* STGTSpot.h */,
@@ -421,10 +426,11 @@
 				2C103A3D16FF457600BC46B4 /* STGTNetwork.m in Sources */,
 				2C103A4016FF457600BC46B4 /* STGTSpot.m in Sources */,
 				2C103A4316FF457600BC46B4 /* STGTBatteryStatus.m in Sources */,
-				2C103A4916FF457700BC46B4 /* STGTDatum.m in Sources */,
 				2C103A4F17004F6100BC46B4 /* STGTSettingsController.m in Sources */,
 				2C103A841700C75E00BC46B4 /* STGTTrack.m in Sources */,
 				2C103AC517044C7B00BC46B4 /* STGTSettings.m in Sources */,
+				2CA1286D1709C88200FBD8F3 /* STGTDatum+Init.m in Sources */,
+				2CA128711709D07D00FBD8F3 /* STGTDatum.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

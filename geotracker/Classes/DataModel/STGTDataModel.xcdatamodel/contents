@@ -10,7 +10,7 @@
         <attribute name="sqts" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="sts" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="ts" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="xid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="xid" optional="YES" attributeType="Binary" syncable="YES"/>
     </entity>
     <entity name="STGTImage" representedClassName="STGTImage" isAbstract="YES" parentEntity="STGTDatum" syncable="YES">
         <attribute name="imageData" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
