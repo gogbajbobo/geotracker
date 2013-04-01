@@ -191,17 +191,17 @@
 
 #pragma mark - instance methods
 
-- (id)init {
-    self = [super init];
-    if (self) {
-        [self customInit];
-    }
-    return self;
-}
-
-- (void)customInit {
-
-}
+//- (id)init {
+//    self = [super init];
+//    if (self) {
+//        [self customInit];
+//    }
+//    return self;
+//}
+//
+//- (void)customInit {
+//
+//}
 
 - (void)setSession:(id<STGTSession>)session {
     _session = session;
@@ -288,9 +288,9 @@
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    NSLog(@"changeValueForObject %@", object);
-    NSLog(@"old value %@", [change valueForKey:NSKeyValueChangeOldKey]);
-    NSLog(@"new value %@", [change valueForKey:NSKeyValueChangeNewKey]);
+//    NSLog(@"changeValueForObject %@", object);
+//    NSLog(@"old value %@", [change valueForKey:NSKeyValueChangeOldKey]);
+//    NSLog(@"new value %@", [change valueForKey:NSKeyValueChangeNewKey]);
 }
 
 #pragma mark - NSFetchedResultsController delegate
@@ -308,7 +308,7 @@
 //    NSLog(@"controller didChangeObject");
     
     if ([anObject isKindOfClass:[STGTSettings class]]) {
-        NSLog(@"anObject %@", anObject);
+//        NSLog(@"anObject %@", anObject);
         [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"%@SettingsChange", [anObject valueForKey:@"group"]] object:anObject userInfo:[NSDictionary dictionaryWithObject:[anObject valueForKey:@"value"] forKey:[anObject valueForKey:@"name"]]];
     }
         
