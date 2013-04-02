@@ -8,6 +8,7 @@
 
 #import "geotrackerTests.h"
 #import "STGTSessionManager.h"
+#import "STGTSession.h"
 
 @implementation geotrackerTests
 
@@ -50,6 +51,16 @@
 
     sessionManager.currentSessionUID = nil;
     STAssertFalse([sessionManager.currentSessionUID boolValue], @"");
+
+    [sessionManager stopSessionForUID:@"2"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.status == %@", @"completed"];
+    NSArray *completedSessions = [[sessionManager.sessions allValues] filteredArrayUsingPredicate:predicate];
+    count = 1;
+    STAssertEquals(completedSessions.count, count, @"");
+    
+//    [sessionManager cleanCompletedSessions];
+//    count = 1;
+//    STAssertEquals(sessionManager.sessions.count, count, @"");
 
 }
 

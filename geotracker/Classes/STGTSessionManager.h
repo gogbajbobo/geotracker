@@ -20,7 +20,8 @@
 - (void)startSessionForUID:(NSString *)uid authDelegate:(id <STGTRequestAuthenticatable>)authDelegate settings:(NSDictionary *)settings;
 - (void)stopSessionForUID:(NSString *)uid;
 - (void)sessionCompletionFinished:(id <STGTSession>)session;
-- (void)cleanCompleteSessions;
+- (void)cleanCompletedSessions;
+- (void)removeSessionForUID:(NSString *)uid;
 
 + (STGTSessionManager *)sharedManager;
 

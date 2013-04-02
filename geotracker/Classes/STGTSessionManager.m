@@ -46,7 +46,7 @@
 
 - (void)stopSessionForUID:(NSString *)uid {
     STGTSession *session = [self.sessions objectForKey:uid];
-    if (session) {
+    if ([session.status isEqualToString:@"running"]) {
         session.status = @"finishing";
         if ([self.currentSessionUID isEqualToString:uid]) {
             self.currentSessionUID = nil;
@@ -59,8 +59,18 @@
     session.status = @"completed";
 }
 
-- (void)cleanCompleteSessions {
-    
+- (void)cleanCompletedSessions {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.status == %@", @"completed"];
+    NSArray *completedSessions = [[self.sessions allValues] filteredArrayUsingPredicate:predicate];
+    for (STGTSession *session in completedSessions) {
+        [session dismissSession];
+    }
+}
+
+- (void)removeSessionForUID:(NSString *)uid {
+    if ([[(STGTSession *)[self.sessions objectForKey:uid] status] isEqualToString:@"completed"]) {
+        [self.sessions removeObjectForKey:uid];
+    }
 }
 
 - (NSMutableDictionary *)sessions {

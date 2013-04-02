@@ -278,17 +278,16 @@
                 if ([[self.startSettings allKeys] containsObject:settingName]) {
                     if (![settingToCheck.value isEqualToString:[setting objectAtIndex:0]]) {
                         settingToCheck.value = [setting objectAtIndex:0];
-                        NSLog(@"new value");
+//                        NSLog(@"new value");
                     }
                 }
             }
         }
     }
-    [[(STGTSession *)self.session document] saveDocument];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-//    NSLog(@"changeValueForObject %@", object);
+//    NSLog(@"observeChangeValueForObject %@", object);
 //    NSLog(@"old value %@", [change valueForKey:NSKeyValueChangeOldKey]);
 //    NSLog(@"new value %@", [change valueForKey:NSKeyValueChangeNewKey]);
 }
@@ -301,6 +300,9 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
 //    NSLog(@"controllerDidChangeContent");
+    [[(STGTSession *)self.session document] saveDocument:^(BOOL success) {
+        //        NSLog(@"");
+    }];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {

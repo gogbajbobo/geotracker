@@ -49,6 +49,13 @@
     if ([key isEqualToString:@"distanceFilter"] || [key isEqualToString:@"desiredAccuracy"]) {
         self.locationManager.distanceFilter = [[self.settings valueForKey:@"distanceFilter"] doubleValue];
         self.locationManager.desiredAccuracy = [[self.settings valueForKey:@"desiredAccuracy"] doubleValue];
+    } else if ([key isEqualToString:@"trackerAutoStart"]) {
+        if ([[self.settings valueForKey:@"trackerAutoStart"] boolValue]) {
+            [self checkTrackerAutoStart];
+            [self initTimers];
+        } else {
+            [self releaseTimers];
+        }
     }
 //    NSLog(@"self.settings %@", self.settings);
 }
@@ -58,16 +65,16 @@
         [self releaseTimers];
         [self stopTracking];
     } else if ([[(STGTSession *)notification.object status] isEqualToString:@"running"]) {
-        [self initTimers];
+        if ([[self.settings valueForKey:@"trackerAutoStart"] boolValue]) {
+            [self checkTrackerAutoStart];
+            [self initTimers];
+        }
     }
 }
 
 - (void)initTimers {
-    if ([[self.settings valueForKey:@"trackerAutoStart"] boolValue]) {
-        [[NSRunLoop currentRunLoop] addTimer:self.startTimer forMode:NSDefaultRunLoopMode];
-        [[NSRunLoop currentRunLoop] addTimer:self.finishTimer forMode:NSDefaultRunLoopMode];
-        
-    }
+    [[NSRunLoop currentRunLoop] addTimer:self.startTimer forMode:NSDefaultRunLoopMode];
+    [[NSRunLoop currentRunLoop] addTimer:self.finishTimer forMode:NSDefaultRunLoopMode];
 }
 
 - (void)releaseTimers {
@@ -79,6 +86,10 @@
     if (!_startTimer) {
         if ([self.settings valueForKey:@"trackerStartTime"]) {
             NSDate *startTime = [self dateFromNumber:[self.settings valueForKey:@"trackerStartTime"]];
+            if ([startTime compare:[NSDate date]] == NSOrderedAscending) {
+                startTime = [NSDate dateWithTimeInterval:24*3600 sinceDate:startTime];
+            }
+//            NSLog(@"startTime %@", startTime);
             _startTimer = [[NSTimer alloc] initWithFireDate:startTime interval:24*3600 target:self selector:@selector(startTracking) userInfo:nil repeats:YES];
         }
     }
@@ -89,6 +100,10 @@
     if (!_finishTimer) {
         if ([self.settings valueForKey:@"trackerFinishTime"]) {
             NSDate *finishTime = [self dateFromNumber:[self.settings valueForKey:@"trackerFinishTime"]];
+            if ([finishTime compare:[NSDate date]] == NSOrderedAscending) {
+                finishTime = [NSDate dateWithTimeInterval:24*3600 sinceDate:finishTime];
+            }
+//            NSLog(@"finishTime %@", finishTime);
             _finishTimer = [[NSTimer alloc] initWithFireDate:finishTime interval:24*3600 target:self selector:@selector(stopTracking) userInfo:nil repeats:YES];
         }
     }
@@ -127,6 +142,7 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterShortStyle];
     double seconds = [time doubleValue] * 3600;
+    currentDate = [dateFormatter dateFromString:[dateFormatter stringFromDate:currentDate]];
     return [NSDate dateWithTimeInterval:seconds sinceDate:currentDate];
 }
 
@@ -144,10 +160,12 @@
 
 
 - (void)startTracking {
+//    NSLog(@"startTracking %@", [NSDate date]);
     self.tracking = YES;
 }
 
 - (void)stopTracking {
+//    NSLog(@"stopTracking %@", [NSDate date]);
     self.tracking = NO;
 }
 

@@ -15,7 +15,17 @@
 {
     // Override point for customization after application launch.
     
-    [[STGTSessionManager sharedManager] startSessionForUID:@"1" authDelegate:nil settings:[NSDictionary dictionaryWithObjectsAndKeys:@"100", @"requiredAccuracy", nil]];
+    [[STGTSessionManager sharedManager] startSessionForUID:@"1" authDelegate:nil settings:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d", YES], @"trackerAutoStart", @"10.0", @"trackerStartTime", @"16.9", @"trackerFinishTime", nil]];
+
+//    [[STGTSessionManager sharedManager] startSessionForUID:@"2" authDelegate:nil settings:[NSDictionary dictionaryWithObjectsAndKeys:@"10", @"requiredAccuracy", nil]];
+//    [[STGTSessionManager sharedManager] stopSessionForUID:@"2"];
+//    [[STGTSessionManager sharedManager] cleanCompletedSessions];
+    
+//    NSLog(@"state1 %d", UIDocumentStateNormal);
+//    NSLog(@"state2 %d", UIDocumentStateClosed);
+//    NSLog(@"state3 %d", UIDocumentStateInConflict);
+//    NSLog(@"state4 %d", UIDocumentStateSavingError);
+//    NSLog(@"state5 %d", UIDocumentStateEditingDisabled);
     
     return YES;
 }

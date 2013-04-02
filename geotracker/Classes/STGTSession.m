@@ -41,7 +41,28 @@
 }
 
 - (void)completeSession {
-    [self.manager sessionCompletionFinished:self];
+    if (self.document) {
+        if (self.document.documentState == UIDocumentStateNormal) {
+            [self.document saveDocument:^(BOOL success) {
+                if (success) {
+                    [self.manager sessionCompletionFinished:self];
+                }
+            }];
+        }
+    }
+}
+
+- (void)dismissSession {
+    if ([self.status isEqualToString:@"completed"]) {
+        if (self.document) {
+            if (self.document.documentState != UIDocumentStateClosed) {
+                [self.document closeWithCompletionHandler:^(BOOL success) {
+                    [self.document.managedObjectContext reset];
+                    [(STGTSessionManager *)self.manager removeSessionForUID:self.uid];
+                }];
+            }
+        }
+    }
 }
 
 - (void)documentReady:(NSNotification *)notification {

@@ -29,10 +29,17 @@
     return self.myManagedObjectModel;
 }
 
-- (void)saveDocument {
-    [self saveToURL:self.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success) {
-        NSLog(@"UIDocumentSaveForOverwriting success");
-    }];
+- (void)saveDocument:(void (^)(BOOL success))completionHandler {
+    if (self.documentState == UIDocumentStateNormal) {
+//        NSLog(@"fileURL %@", self.fileURL);
+        [self saveToURL:self.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success) {
+            NSLog(@"UIDocumentSaveForOverwriting success");
+            completionHandler(YES);
+        }];
+    } else {
+        NSLog(@"fileURL %@", self.fileURL);
+        NSLog(@"cannot save document: documentState = %d", self.documentState);
+    }
 }
 
 + (STGTManagedDocument *)documentWithUID:(NSString *)uid {
