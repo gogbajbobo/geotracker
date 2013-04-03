@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "geotracker/Classes/STGTTracker.m"
-         timestampString = "386244520.468047"
+         timestampString = "386608849.74013"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "47"
-         endingLineNumber = "47"
+         startingLineNumber = "55"
+         endingLineNumber = "55"
          landmarkName = "-trackerSettingsChange:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,7 +21,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "geotracker/Classes/STGTSession.m"
-         timestampString = "386525240.116098"
+         timestampString = "386609001.167061"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "77"
@@ -43,7 +43,7 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "Yes"
          filePath = "geotracker/Classes/STGTSessionManager.m"
@@ -65,7 +65,7 @@
          </Actions>
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "Yes"
          filePath = "geotracker/Classes/STGTSessionManager.m"
@@ -87,7 +87,7 @@
          </Actions>
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "Yes"
          filePath = "geotracker/Classes/STGTSessionManager.m"
@@ -113,11 +113,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "geotracker/Classes/STGTTracker.m"
-         timestampString = "386597859.930689"
+         timestampString = "386608849.74013"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "35"
-         endingLineNumber = "35"
+         startingLineNumber = "38"
+         endingLineNumber = "38"
          landmarkName = "-customInit"
          landmarkType = "5">
       </FileBreakpoint>
@@ -126,11 +126,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "geotracker/Classes/STGTTracker.m"
-         timestampString = "386599913.980142"
+         timestampString = "386608849.74013"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "68"
-         endingLineNumber = "68"
+         startingLineNumber = "76"
+         endingLineNumber = "76"
          landmarkName = "-sessionStatusChanged:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -139,11 +139,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "geotracker/Classes/STGTTracker.m"
-         timestampString = "386599913.980142"
+         timestampString = "386608849.74013"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "93"
-         endingLineNumber = "93"
+         startingLineNumber = "103"
+         endingLineNumber = "103"
          landmarkName = "-startTimer"
          landmarkType = "5">
       </FileBreakpoint>
@@ -152,11 +152,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "geotracker/Classes/STGTTracker.m"
-         timestampString = "386599913.980142"
+         timestampString = "386608849.74013"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "107"
-         endingLineNumber = "107"
+         startingLineNumber = "117"
+         endingLineNumber = "117"
          landmarkName = "-finishTimer"
          landmarkType = "5">
       </FileBreakpoint>
@@ -165,11 +165,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "geotracker/Classes/STGTTracker.m"
-         timestampString = "386599913.980142"
+         timestampString = "386608849.74013"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "141"
-         endingLineNumber = "141"
+         startingLineNumber = "151"
+         endingLineNumber = "151"
          landmarkName = "-dateFromNumber:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -178,11 +178,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "geotracker/Classes/STGTTracker.m"
-         timestampString = "386599913.980142"
+         timestampString = "386608849.74013"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "114"
-         endingLineNumber = "114"
+         startingLineNumber = "124"
+         endingLineNumber = "124"
          landmarkName = "-checkTrackerAutoStart"
          landmarkType = "5">
       </FileBreakpoint>
@@ -191,11 +191,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "geotracker/Classes/STGTTracker.m"
-         timestampString = "386599913.980142"
+         timestampString = "386608849.74013"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "163"
-         endingLineNumber = "163"
+         startingLineNumber = "177"
+         endingLineNumber = "177"
          landmarkName = "-startTracking"
          landmarkType = "5">
       </FileBreakpoint>
@@ -204,12 +204,38 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "geotracker/Classes/STGTTracker.m"
-         timestampString = "386599913.980142"
+         timestampString = "386608849.74013"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "168"
-         endingLineNumber = "168"
+         startingLineNumber = "187"
+         endingLineNumber = "187"
          landmarkName = "-stopTracking"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "geotracker/Classes/STGTTracker.m"
+         timestampString = "386609001.167061"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "227"
+         endingLineNumber = "227"
+         landmarkName = "-addLocation:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "geotracker/Classes/DataModel/STGTDatum+Init.m"
+         timestampString = "386669566.07891"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "26"
+         endingLineNumber = "26"
+         landmarkName = "-awakeFromInsert"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
