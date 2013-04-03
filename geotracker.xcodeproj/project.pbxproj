@@ -33,6 +33,7 @@
 		2C2ACAA816EE2719001E333A /* STGTManagedDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2ACAA716EE2719001E333A /* STGTManagedDocument.m */; };
 		2C2ACAAB16EE2741001E333A /* STGTSyncer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2ACAAA16EE2741001E333A /* STGTSyncer.m */; };
 		2C2ACAAE16EE2762001E333A /* STGTTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2ACAAD16EE2762001E333A /* STGTTracker.m */; };
+		2C3B88AE170C547B0045EC6D /* STGTLocationTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B88AD170C547B0045EC6D /* STGTLocationTracker.m */; };
 		2CA1286D1709C88200FBD8F3 /* STGTDatum+Init.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CA1286C1709C88200FBD8F3 /* STGTDatum+Init.m */; };
 		2CA128E6170B23E500FBD8F3 /* STGTSpotImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CA128E5170B23E500FBD8F3 /* STGTSpotImage.m */; };
 		2CA128E9170B23E500FBD8F3 /* STGTDatum.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CA128E8170B23E500FBD8F3 /* STGTDatum.m */; };
@@ -98,6 +99,8 @@
 		2C2ACAAD16EE2762001E333A /* STGTTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTTracker.m; sourceTree = "<group>"; };
 		2C2CB56316FF3D6600D682C5 /* STGTSessionManagement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STGTSessionManagement.h; sourceTree = "<group>"; };
 		2C2CB56516FF3EAA00D682C5 /* STGTRequestAuthenticatable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTRequestAuthenticatable.h; sourceTree = "<group>"; };
+		2C3B88AC170C547B0045EC6D /* STGTLocationTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTLocationTracker.h; sourceTree = "<group>"; };
+		2C3B88AD170C547B0045EC6D /* STGTLocationTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTLocationTracker.m; sourceTree = "<group>"; };
 		2CA1286B1709C88200FBD8F3 /* STGTDatum+Init.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "STGTDatum+Init.h"; sourceTree = "<group>"; };
 		2CA1286C1709C88200FBD8F3 /* STGTDatum+Init.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "STGTDatum+Init.m"; sourceTree = "<group>"; };
 		2CA128E4170B23E500FBD8F3 /* STGTSpotImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTSpotImage.h; sourceTree = "<group>"; };
@@ -249,6 +252,8 @@
 				2C2ACAAA16EE2741001E333A /* STGTSyncer.m */,
 				2C2ACAAC16EE2762001E333A /* STGTTracker.h */,
 				2C2ACAAD16EE2762001E333A /* STGTTracker.m */,
+				2C3B88AC170C547B0045EC6D /* STGTLocationTracker.h */,
+				2C3B88AD170C547B0045EC6D /* STGTLocationTracker.m */,
 			);
 			name = Classes;
 			path = geotracker/Classes;
@@ -431,6 +436,7 @@
 				2CA12901170B23E700FBD8F3 /* STGTNetworkImage.m in Sources */,
 				2CA12904170B23E700FBD8F3 /* STGTSettings.m in Sources */,
 				2CA12907170B23E700FBD8F3 /* STGTBatteryStatus.m in Sources */,
+				2C3B88AE170C547B0045EC6D /* STGTLocationTracker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

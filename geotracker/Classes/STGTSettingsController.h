@@ -12,7 +12,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "STGTSessionManagement.h"
 
-@interface STGTSettingsController : NSObject
+@interface STGTSettingsController : NSObject <STGTSettingsController>
 
 + (NSDictionary *)defaultSettings;
 

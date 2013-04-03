@@ -69,8 +69,8 @@
     if ([[notification.userInfo valueForKey:@"uid"] isEqualToString:self.uid]) {
         self.settingsController = [STGTSettingsController initWithSettings:self.startSettings];
         self.settingsController.session = self;
-        self.tracker = [[STGTTracker alloc] init];
-        self.tracker.session = self;
+        self.locationTracker = [[STGTLocationTracker alloc] init];
+        self.locationTracker.session = self;
         self.syncer = [[STGTSyncer alloc] init];
         self.syncer.session = self;
         self.syncer.authDelegate = self.authDelegate;

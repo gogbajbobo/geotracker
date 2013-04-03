@@ -15,9 +15,18 @@
 
 @property (strong, nonatomic) STGTManagedDocument *document;
 @property (nonatomic, strong) id <STGTSession> session;
+@property (nonatomic, strong) NSMutableDictionary *settings;
+@property (nonatomic, strong) NSTimer *startTimer;
+@property (nonatomic, strong) NSTimer *finishTimer;
+@property (nonatomic) BOOL tracking;
+@property (nonatomic) BOOL trackerAutoStart;
+@property (nonatomic) double trackerStartTime;
+@property (nonatomic) double trackerFinishTime;
+@property (nonatomic, strong) NSString *group;
 
+- (void)customInit;
 - (void)startTracking;
 - (void)stopTracking;
-
+- (void)trackerSettingsChange:(NSNotification *)notification;
 
 @end

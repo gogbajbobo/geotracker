@@ -35,7 +35,7 @@
     [trackerSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%f", 8.0], @"slider" , nil] forKey:@"trackerStartTime"];
     [trackerSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%f", 20.0], @"slider" , nil] forKey:@"trackerFinishTime"];
     
-    [defaultSettings setValue:trackerSettings forKey:@"tracker"];
+    [defaultSettings setValue:trackerSettings forKey:@"locationTracker"];
     
     NSMutableDictionary *mapSettings = [NSMutableDictionary dictionary];
     [mapSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d", MKUserTrackingModeNone], @"segmentedControl" , nil] forKey:@"mapHeading"];
@@ -58,11 +58,11 @@
     [defaultSettings setValue:generalSettings forKey:@"general"];
     
     NSMutableDictionary *batterySettings = [NSMutableDictionary dictionary];
-    [batterySettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d", YES], @"switch" , nil] forKey:@"checkingBattery"];
-    [batterySettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%f", 8.0], @"slider" , nil] forKey:@"batteryCheckingStartTime"];
-    [batterySettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%f", 20.0], @"slider" , nil] forKey:@"batteryCheckingFinishTime"];
+    [batterySettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d", YES], @"switch" , nil] forKey:@"trackerAutoStart"];
+    [batterySettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%f", 8.0], @"slider" , nil] forKey:@"trackerStartTime"];
+    [batterySettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%f", 20.0], @"slider" , nil] forKey:@"trackerFinishTime"];
     
-    [defaultSettings setValue:batterySettings forKey:@"battery"];
+    [defaultSettings setValue:batterySettings forKey:@"batteryTracker"];
     
     return [defaultSettings copy];
 }
@@ -145,22 +145,8 @@
             return [NSString stringWithFormat:@"%d", [value boolValue]];
         }
         
-    } else if ([key isEqualToString:@"checkingBattery"]) {
-        if ([self isBool:value]) {
-            return [NSString stringWithFormat:@"%d", [value boolValue]];
-        }
-        
-    } else if ([key isEqualToString:@"batteryCheckingStartTime"]) {
-        if ([self isValidTime:value]) {
-            return [NSString stringWithFormat:@"%f", [value doubleValue]];
-        }
-        
-    } else if ([key isEqualToString:@"batteryCheckingFinishTime"]) {
-        if ([self isValidTime:value]) {
-            return [NSString stringWithFormat:@"%f", [value doubleValue]];
-        }
-        
     }
+    
     return nil;
 }
 
