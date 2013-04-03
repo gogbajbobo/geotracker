@@ -22,9 +22,28 @@
 @property (nonatomic, strong) CLLocation *lastLocation;
 @property (nonatomic, strong) STGTTrack *currentTrack;
 
+@property (nonatomic) CLLocationAccuracy desiredAccuracy;
+@property (nonatomic) double requiredAccuracy;
+@property (nonatomic) CLLocationDistance distanceFilter;
+@property (nonatomic) NSTimeInterval timeFilter;
+@property (nonatomic) NSTimeInterval trackDetectionTime;
+@property (nonatomic) BOOL trackerAutoStart;
+@property (nonatomic) double trackerStartTime;
+@property (nonatomic) double trackerFinishTime;
+
 @end
 
 @implementation STGTTracker
+
+@synthesize desiredAccuracy = _desiredAccuracy;
+@synthesize requiredAccuracy = _requiredAccuracy;
+@synthesize distanceFilter = _distanceFilter;
+@synthesize timeFilter = _timeFilter;
+@synthesize trackDetectionTime = _trackDetectionTime;
+@synthesize trackerAutoStart = _trackerAutoStart;
+@synthesize trackerStartTime = _trackerStartTime;
+@synthesize trackerFinishTime = _trackerFinishTime;
+
 
 - (id)init {
     self = [super init];
@@ -52,18 +71,33 @@
 }
 
 - (void)trackerSettingsChange:(NSNotification *)notification {
+    
     [self.settings addEntriesFromDictionary:notification.userInfo];
     NSString *key = [[notification.userInfo allKeys] lastObject];
-    if ([key isEqualToString:@"distanceFilter"] || [key isEqualToString:@"desiredAccuracy"]) {
-        self.locationManager.distanceFilter = [[self.settings valueForKey:@"distanceFilter"] doubleValue];
-        self.locationManager.desiredAccuracy = [[self.settings valueForKey:@"desiredAccuracy"] doubleValue];
+    if ([key isEqualToString:@"distanceFilter"]) {
+        self.distanceFilter = [[notification.userInfo valueForKey:key] doubleValue];
+        
+    } else if ([key isEqualToString:@"desiredAccuracy"]) {
+        self.desiredAccuracy = [[notification.userInfo valueForKey:key] doubleValue];
+        
+    } else if ([key isEqualToString:@"requiredAccuracy"]) {
+        self.requiredAccuracy = [[notification.userInfo valueForKey:key] doubleValue];
+        
+    } else if ([key isEqualToString:@"timeFilter"]) {
+        self.timeFilter = [[notification.userInfo valueForKey:key] doubleValue];
+        
+    } else if ([key isEqualToString:@"trackDetectionTime"]) {
+        self.trackDetectionTime = [[notification.userInfo valueForKey:key] doubleValue];
+        
     } else if ([key isEqualToString:@"trackerAutoStart"]) {
-        if ([[self.settings valueForKey:@"trackerAutoStart"] boolValue]) {
-            [self checkTrackerAutoStart];
-            [self initTimers];
-        } else {
-            [self releaseTimers];
-        }
+        self.trackerAutoStart = [[notification.userInfo valueForKey:key] boolValue];
+        
+    } else if ([key isEqualToString:@"trackerStartTime"]) {
+        self.trackerStartTime = [[notification.userInfo valueForKey:key] doubleValue];
+        
+    } else if ([key isEqualToString:@"trackerFinishTime"]) {
+        self.trackerFinishTime = [[notification.userInfo valueForKey:key] doubleValue];
+        
     }
 //    NSLog(@"self.settings %@", self.settings);
 }
@@ -73,10 +107,107 @@
         [self releaseTimers];
         [self stopTracking];
     } else if ([[(STGTSession *)notification.object status] isEqualToString:@"running"]) {
-        if ([[self.settings valueForKey:@"trackerAutoStart"] boolValue]) {
-            [self checkTrackerAutoStart];
-            [self initTimers];
-        }
+        [self checkTrackerAutoStart];
+    }
+}
+
+#pragma mark - tracker settings
+
+- (CLLocationAccuracy) desiredAccuracy {
+    if (!_desiredAccuracy) {
+        _desiredAccuracy = [[self.settings valueForKey:@"desiredAccuracy"] doubleValue];
+    }
+    return _desiredAccuracy;
+}
+
+- (void)setDesiredAccuracy:(CLLocationAccuracy)desiredAccuracy {
+    if (_desiredAccuracy != desiredAccuracy) {
+        _desiredAccuracy = desiredAccuracy;
+        self.locationManager.desiredAccuracy = _desiredAccuracy;
+    }
+}
+
+
+- (double)requiredAccuracy {
+    if (!_requiredAccuracy) {
+        _requiredAccuracy = [[self.settings valueForKey:@"requiredAccuracy"] doubleValue];
+    }
+    return _requiredAccuracy;
+}
+
+
+- (CLLocationDistance)distanceFilter {
+    if (!_distanceFilter) {
+        _distanceFilter = [[self.settings valueForKey:@"distanceFilter"] doubleValue];
+    }
+    return _distanceFilter;
+}
+
+- (void)setDistanceFilter:(CLLocationDistance)distanceFilter {
+    if (_distanceFilter != distanceFilter) {
+        _distanceFilter = distanceFilter;
+        self.locationManager.distanceFilter = _distanceFilter;
+    }
+}
+
+
+- (NSTimeInterval)timeFilter {
+    if (!_timeFilter) {
+        _timeFilter = [[self.settings valueForKey:@"timeFilter"] doubleValue];
+    }
+    return _timeFilter;
+}
+
+
+- (NSTimeInterval)trackDetectionTime {
+    if (!_trackDetectionTime) {
+        _trackDetectionTime = [[self.settings valueForKey:@"trackDetectionTime"] doubleValue];
+    }
+    return _trackDetectionTime;
+}
+
+
+- (BOOL)trackerAutoStart {
+    if (!_trackerAutoStart) {
+        _trackerAutoStart = [[self.settings valueForKey:@"trackerAutoStart"] boolValue];
+    }
+    return _trackerAutoStart;
+}
+
+- (void)setTrackerAutoStart:(BOOL)trackerAutoStart {
+    if (_trackerAutoStart != trackerAutoStart) {
+        _trackerAutoStart = trackerAutoStart;
+        [self checkTrackerAutoStart];
+    }
+}
+
+
+- (double)trackerStartTime {
+    if (!_trackerStartTime) {
+        _trackerStartTime = [[self.settings valueForKey:@"trackerStartTime"] doubleValue];
+    }
+    return _trackerStartTime;
+}
+
+- (void)setTrackerStartTime:(double)trackerStartTime {
+    if (_trackerStartTime != trackerStartTime) {
+        _trackerStartTime = trackerStartTime;
+        [self checkTrackerAutoStart];
+    }
+}
+
+
+- (double)trackerFinishTime {
+    if (!_trackerFinishTime) {
+        _trackerFinishTime = [[self.settings valueForKey:@"trackerFinishTime"] doubleValue];
+    }
+    return _trackerFinishTime;
+}
+
+- (void)setTrackerFinishTime:(double)trackerFinishTime {
+    if (_trackerFinishTime != trackerFinishTime) {
+        _trackerFinishTime = trackerFinishTime;
+        [self checkTrackerAutoStart];
     }
 }
 
@@ -94,8 +225,8 @@
 
 - (NSTimer *)startTimer {
     if (!_startTimer) {
-        if ([self.settings valueForKey:@"trackerStartTime"]) {
-            NSDate *startTime = [self dateFromNumber:[self.settings valueForKey:@"trackerStartTime"]];
+        if (self.trackerStartTime) {
+            NSDate *startTime = [self dateFromDouble:self.trackerStartTime];
             if ([startTime compare:[NSDate date]] == NSOrderedAscending) {
                 startTime = [NSDate dateWithTimeInterval:24*3600 sinceDate:startTime];
             }
@@ -108,8 +239,8 @@
 
 - (NSTimer *)finishTimer {
     if (!_finishTimer) {
-        if ([self.settings valueForKey:@"trackerFinishTime"]) {
-            NSDate *finishTime = [self dateFromNumber:[self.settings valueForKey:@"trackerFinishTime"]];
+        if (self.trackerFinishTime) {
+            NSDate *finishTime = [self dateFromDouble:self.trackerFinishTime];
             if ([finishTime compare:[NSDate date]] == NSOrderedAscending) {
                 finishTime = [NSDate dateWithTimeInterval:24*3600 sinceDate:finishTime];
             }
@@ -121,11 +252,25 @@
 }
 
 - (void)checkTrackerAutoStart {
-    double startTime = [[self.settings valueForKey:@"trackerStartTime"] doubleValue];
-    double finishTime = [[self.settings valueForKey:@"trackerFinishTime"] doubleValue];
+    if (self.trackerAutoStart) {
+        if (self.trackerStartTime && self.trackerFinishTime) {
+            [self releaseTimers];
+            [self checkTimeForTracking];
+            [self initTimers];
+        } else {
+            [self releaseTimers];
+            self.trackerAutoStart = NO;
+            NSLog(@"trackerStartTime OR trackerFinishTime not set");
+        }
+    } else {
+        [self releaseTimers];
+    }
+}
+
+- (void)checkTimeForTracking {
     double currentTime = [self currentTimeInDouble];
-    if (startTime < finishTime) {
-        if (currentTime > startTime && currentTime < finishTime) {
+    if (self.trackerStartTime < self.trackerFinishTime) {
+        if (currentTime > self.trackerStartTime && currentTime < self.trackerFinishTime) {
             if (!self.tracking) {
                 [self startTracking];
             }
@@ -135,7 +280,7 @@
             }
         }
     } else {
-        if (currentTime < startTime && currentTime > finishTime) {
+        if (currentTime < self.trackerStartTime && currentTime > self.trackerFinishTime) {
             if (self.tracking) {
                 [self stopTracking];
             }
@@ -147,11 +292,11 @@
     }
 }
 
-- (NSDate *)dateFromNumber:(NSNumber *)time {
+- (NSDate *)dateFromDouble:(double)time {
     NSDate *currentDate = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterShortStyle];
-    double seconds = [time doubleValue] * 3600;
+    double seconds = time * 3600;
     currentDate = [dateFormatter dateFromString:[dateFormatter stringFromDate:currentDate]];
     return [NSDate dateWithTimeInterval:seconds sinceDate:currentDate];
 }
@@ -171,7 +316,7 @@
 #pragma mark - tracking
 
 - (void)startTracking {
-//    NSLog(@"startTracking %@", [NSDate date]);
+    NSLog(@"startTracking %@", [NSDate date]);
     if ([[(STGTSession *)self.session status] isEqualToString:@"running"]) {
         [[self locationManager] startUpdatingLocation];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"trackerStart" object:self];
@@ -180,7 +325,7 @@
 }
 
 - (void)stopTracking {
-//    NSLog(@"stopTracking %@", [NSDate date]);
+    NSLog(@"stopTracking %@", [NSDate date]);
     [[self locationManager] stopUpdatingLocation];
     self.locationManager.delegate = nil;
     self.locationManager = nil;
@@ -195,8 +340,8 @@
     if (!_locationManager) {
         _locationManager = [[CLLocationManager alloc] init];
         _locationManager.delegate = self;
-        _locationManager.distanceFilter = [[self.settings valueForKey:@"distanceFilter"] doubleValue];
-        _locationManager.desiredAccuracy = [[self.settings valueForKey:@"desiredAccuracy"] doubleValue];
+        _locationManager.distanceFilter = self.distanceFilter;
+        _locationManager.desiredAccuracy = self.desiredAccuracy;
         self.locationManager.pausesLocationUpdatesAutomatically = NO;
     }
     return _locationManager;
@@ -208,8 +353,8 @@
     NSTimeInterval locationAge = -[newLocation.timestamp timeIntervalSinceNow];
     if (locationAge < 5.0 &&
         newLocation.horizontalAccuracy > 0 &&
-        newLocation.horizontalAccuracy <= [[self.settings valueForKey:@"requiredAccuracy"] doubleValue]) {
-        if (!self.lastLocation || [newLocation.timestamp timeIntervalSinceDate:self.lastLocation.timestamp] > [[self.settings valueForKey:@"timeFilter"] doubleValue]) {
+        newLocation.horizontalAccuracy <= self.requiredAccuracy) {
+        if (!self.lastLocation || [newLocation.timestamp timeIntervalSinceDate:self.lastLocation.timestamp] > self.timeFilter) {
             [self addLocation:newLocation];
         }
     }
@@ -224,9 +369,9 @@
         [self startNewTrack];
     }
     NSDate *timestamp = currentLocation.timestamp;
-    if ([currentLocation.timestamp timeIntervalSinceDate:self.lastLocation.timestamp] > [[self.settings valueForKey:@"trackDetectionTime"] doubleValue] && self.currentTrack.locations.count != 0) {
+    if ([currentLocation.timestamp timeIntervalSinceDate:self.lastLocation.timestamp] > self.trackDetectionTime && self.currentTrack.locations.count != 0) {
         [self startNewTrack];
-        if ([currentLocation distanceFromLocation:self.lastLocation] < (2 * [[self.settings valueForKey:@"distanceFilter"] doubleValue])) {
+        if ([currentLocation distanceFromLocation:self.lastLocation] < (2 * self.distanceFilter)) {
             NSDate *ts = [NSDate date];
             STGTLocation *location = (STGTLocation *)[NSEntityDescription insertNewObjectForEntityForName:@"STGTLocation" inManagedObjectContext:self.document.managedObjectContext];
             [location setLatitude:[NSNumber numberWithDouble:self.lastLocation.coordinate.latitude]];
@@ -268,7 +413,9 @@
     
 //    NSLog(@"location %@", location);
     [self.document saveDocument:^(BOOL success) {
-        NSLog(@"addLocation success");
+        if (success) {
+            NSLog(@"save newLocation success");
+        }
     }];
 
 }

@@ -33,8 +33,12 @@
     if (self.documentState == UIDocumentStateNormal) {
 //        NSLog(@"fileURL %@", self.fileURL);
         [self saveToURL:self.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success) {
-            NSLog(@"UIDocumentSaveForOverwriting success");
-            completionHandler(YES);
+            if (success) {
+//                NSLog(@"UIDocumentSaveForOverwriting success");
+                completionHandler(YES);
+            } else {
+                NSLog(@"UIDocumentSaveForOverwriting not success");
+            }
         }];
     } else {
         NSLog(@"fileURL %@", self.fileURL);
@@ -51,19 +55,21 @@
     
     if (![[NSFileManager defaultManager] fileExistsAtPath:[document.fileURL path]]) {
         [document saveToURL:document.fileURL forSaveOperation:UIDocumentSaveForCreating completionHandler:^(BOOL success) {
-            [document closeWithCompletionHandler:^(BOOL success) {
-                [document openWithCompletionHandler:^(BOOL success) {
+//            [document closeWithCompletionHandler:^(BOOL success) {
+//                [document openWithCompletionHandler:^(BOOL success) {
             if (success) {
                 NSLog(@"document UIDocumentSaveForCreating success");
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"documentReady" object:document userInfo:[NSDictionary dictionaryWithObject:uid forKey:@"uid"]];
             }
-                }];
-            }];
+//                }];
+//            }];
         }];
     } else if (document.documentState == UIDocumentStateClosed) {
         [document openWithCompletionHandler:^(BOOL success) {
-            NSLog(@"document openWithCompletionHandler success");
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"documentReady" object:document userInfo:[NSDictionary dictionaryWithObject:uid forKey:@"uid"]];
+            if (success) {
+                NSLog(@"document openWithCompletionHandler success");
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"documentReady" object:document userInfo:[NSDictionary dictionaryWithObject:uid forKey:@"uid"]];
+            }
         }];
     } else if (document.documentState == UIDocumentStateNormal) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"documentReady" object:document userInfo:[NSDictionary dictionaryWithObject:uid forKey:@"uid"]];
