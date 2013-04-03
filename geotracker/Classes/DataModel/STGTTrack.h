@@ -2,7 +2,7 @@
 //  STGTTrack.h
 //  geotracker
 //
-//  Created by Maxim Grigoriev on 3/25/13.
+//  Created by Maxim Grigoriev on 4/2/13.
 //  Copyright (c) 2013 Maxim Grigoriev. All rights reserved.
 //
 
@@ -14,6 +14,8 @@
 
 @interface STGTTrack : STGTDatum
 
+@property (nonatomic, retain) NSDate * finishTime;
+@property (nonatomic, retain) NSDate * startTime;
 @property (nonatomic, retain) NSSet *locations;
 @end
 

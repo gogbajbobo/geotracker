@@ -22,9 +22,24 @@
 - (void)awakeFromInsert {
     
 //    NSLog(@"awakeFromInsert");
-    [self setPrimitiveValue:[self newXid] forKey:@"xid"];
-    NSDate *ts = [NSDate date];
-    [self setPrimitiveValue:ts forKey:@"cts"];
+    
+    if (self.managedObjectContext.parentContext) {
+        [self setPrimitiveValue:[self newXid] forKey:@"xid"];
+        
+        NSDate *ts = [NSDate date];
+        [self setPrimitiveValue:ts forKey:@"cts"];
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSNumber *largestId = [defaults objectForKey:@"largestId"];
+        if (!largestId) {
+            largestId = [NSNumber numberWithInt:1];
+        } else {
+            largestId = [NSNumber numberWithInt:[largestId integerValue]+1];
+        }
+        [self setPrimitiveValue:largestId forKey:@"id"];
+        [defaults setObject:largestId forKey:@"largestId"];
+        [defaults synchronize];
+    }
     
 }
 

@@ -2,7 +2,7 @@
 //  STGTDatum.h
 //  geotracker
 //
-//  Created by Maxim Grigoriev on 4/1/13.
+//  Created by Maxim Grigoriev on 4/2/13.
 //  Copyright (c) 2013 Maxim Grigoriev. All rights reserved.
 //
 
@@ -18,5 +18,6 @@
 @property (nonatomic, retain) NSDate * sts;
 @property (nonatomic, retain) NSDate * ts;
 @property (nonatomic, retain) NSData * xid;
+@property (nonatomic, retain) NSNumber * id;
 
 @end

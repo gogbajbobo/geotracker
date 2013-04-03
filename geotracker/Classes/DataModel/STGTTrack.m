@@ -2,7 +2,7 @@
 //  STGTTrack.m
 //  geotracker
 //
-//  Created by Maxim Grigoriev on 3/25/13.
+//  Created by Maxim Grigoriev on 4/2/13.
 //  Copyright (c) 2013 Maxim Grigoriev. All rights reserved.
 //
 
@@ -12,6 +12,8 @@
 
 @implementation STGTTrack
 
+@dynamic finishTime;
+@dynamic startTime;
 @dynamic locations;
 
 @end

@@ -301,7 +301,9 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
 //    NSLog(@"controllerDidChangeContent");
     [[(STGTSession *)self.session document] saveDocument:^(BOOL success) {
-        //        NSLog(@"");
+        if (success) {
+            NSLog(@"save settings success");
+        }
     }];
 }
 

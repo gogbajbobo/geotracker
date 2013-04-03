@@ -9,6 +9,8 @@
 #import "STGTTracker.h"
 #import "STGTSession.h"
 #import "STGTSettings.h"
+#import "STGTTrack.h"
+#import "STGTLocation.h"
 
 @interface STGTTracker() <CLLocationManagerDelegate>
 
@@ -18,6 +20,7 @@
 @property (nonatomic) BOOL tracking;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) CLLocation *lastLocation;
+@property (nonatomic, strong) STGTTrack *currentTrack;
 
 @end
 
@@ -34,6 +37,11 @@
 - (void)customInit {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionStatusChanged:) name:@"sessionStatusChanged" object:self.session];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(trackerSettingsChange:) name:@"trackerSettingsChange" object:[(STGTSession *)self.session settingsController]];
+}
+
+- (void)setSession:(id<STGTSession>)session {
+    _session = session;
+    self.document = [(STGTSession *)session document];
 }
 
 - (NSMutableDictionary *)settings {
@@ -71,6 +79,8 @@
         }
     }
 }
+
+#pragma mark - timers
 
 - (void)initTimers {
     [[NSRunLoop currentRunLoop] addTimer:self.startTimer forMode:NSDefaultRunLoopMode];
@@ -158,14 +168,23 @@
     return currentTime;
 }
 
+#pragma mark - tracking
 
 - (void)startTracking {
 //    NSLog(@"startTracking %@", [NSDate date]);
-    self.tracking = YES;
+    if ([[(STGTSession *)self.session status] isEqualToString:@"running"]) {
+        [[self locationManager] startUpdatingLocation];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"trackerStart" object:self];
+        self.tracking = YES;
+    }
 }
 
 - (void)stopTracking {
 //    NSLog(@"stopTracking %@", [NSDate date]);
+    [[self locationManager] stopUpdatingLocation];
+    self.locationManager.delegate = nil;
+    self.locationManager = nil;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"trackerStop" object:self];
     self.tracking = NO;
 }
 
@@ -191,12 +210,80 @@
         newLocation.horizontalAccuracy > 0 &&
         newLocation.horizontalAccuracy <= [[self.settings valueForKey:@"requiredAccuracy"] doubleValue]) {
         if (!self.lastLocation || [newLocation.timestamp timeIntervalSinceDate:self.lastLocation.timestamp] > [[self.settings valueForKey:@"timeFilter"] doubleValue]) {
-//        NSLog(@"addLocation");
+            [self addLocation:newLocation];
         }
     }
 
 }
 
+#pragma mark - track management
+
+- (void)addLocation:(CLLocation *)currentLocation {
+//    NSLog(@"addLocation %@", [NSDate date]);
+    if (!self.currentTrack) {
+        [self startNewTrack];
+    }
+    NSDate *timestamp = currentLocation.timestamp;
+    if ([currentLocation.timestamp timeIntervalSinceDate:self.lastLocation.timestamp] > [[self.settings valueForKey:@" trackDetectionTime"] doubleValue] && self.currentTrack.locations.count != 0) {
+        [self startNewTrack];
+        if ([currentLocation distanceFromLocation:self.lastLocation] < (2 * [[self.settings valueForKey:@"distanceFilter"] doubleValue])) {
+            NSDate *ts = [NSDate date];
+            STGTLocation *location = (STGTLocation *)[NSEntityDescription insertNewObjectForEntityForName:@"STGTLocation" inManagedObjectContext:self.document.managedObjectContext];
+            [location setLatitude:[NSNumber numberWithDouble:self.lastLocation.coordinate.latitude]];
+            [location setLongitude:[NSNumber numberWithDouble:self.lastLocation.coordinate.longitude]];
+            [location setHorizontalAccuracy:[NSNumber numberWithDouble:self.lastLocation.horizontalAccuracy]];
+            [location setSpeed:[NSNumber numberWithDouble:-1]];
+            [location setCourse:[NSNumber numberWithDouble:-1]];
+            [location setAltitude:[NSNumber numberWithDouble:self.lastLocation.altitude]];
+            [location setVerticalAccuracy:[NSNumber numberWithDouble:self.lastLocation.verticalAccuracy]];
+            [self.currentTrack setStartTime:ts];
+            [self.currentTrack addLocationsObject:location];
+            //            NSLog(@"copy lastLocation to new Track as first location");
+        } else {
+            //            NSLog(@"no");
+            self.lastLocation = currentLocation;
+        }
+        timestamp = [NSDate date];
+    }
+    
+    STGTLocation *location = (STGTLocation *)[NSEntityDescription insertNewObjectForEntityForName:@"STGTLocation" inManagedObjectContext:self.document.managedObjectContext];
+    CLLocationCoordinate2D coordinate = [currentLocation coordinate];
+    [location setLatitude:[NSNumber numberWithDouble:coordinate.latitude]];
+    [location setLongitude:[NSNumber numberWithDouble:coordinate.longitude]];
+    [location setHorizontalAccuracy:[NSNumber numberWithDouble:currentLocation.horizontalAccuracy]];
+    [location setSpeed:[NSNumber numberWithDouble:currentLocation.speed]];
+    [location setCourse:[NSNumber numberWithDouble:currentLocation.course]];
+    [location setAltitude:[NSNumber numberWithDouble:currentLocation.altitude]];
+    [location setVerticalAccuracy:[NSNumber numberWithDouble:currentLocation.verticalAccuracy]];
+    
+    if (self.currentTrack.locations.count == 0) {
+        self.currentTrack.startTime = timestamp;
+    }
+    self.currentTrack.finishTime = timestamp;
+    [self.currentTrack addLocationsObject:location];
+    
+    //    NSLog(@"currentLocation %@",currentLocation);
+    
+    self.lastLocation = currentLocation;
+    
+//    NSLog(@"location %@", location);
+    [self.document saveDocument:^(BOOL success) {
+        NSLog(@"addLocation success");
+    }];
+
+}
+
+- (void)startNewTrack {
+    STGTTrack *track = (STGTTrack *)[NSEntityDescription insertNewObjectForEntityForName:@"STGTTrack" inManagedObjectContext:self.document.managedObjectContext];
+    track.startTime = [NSDate date];
+    self.currentTrack = track;
+//    NSLog(@"track %@", track);
+    [self.document saveDocument:^(BOOL success) {
+        if (success) {
+            NSLog(@"save newTrack success");
+        }
+    }];
+}
 
 
 @end

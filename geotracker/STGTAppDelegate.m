@@ -14,8 +14,18 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+
+    NSDictionary *sessionSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+                                     @"1", @"trackerAutoStart",
+                                     @"10.0", @"trackerStartTime",
+                                     @"20.0", @"trackerFinishTime",
+                                     @"10", @"desiredAccuracy",
+                                     @"10", @"requiredAccuracy",
+                                     @"-1", @"distanceFilter",
+                                     @"2", @"timeFilter",
+                                     nil];
     
-    [[STGTSessionManager sharedManager] startSessionForUID:@"1" authDelegate:nil settings:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d", YES], @"trackerAutoStart", @"10.0", @"trackerStartTime", @"16.9", @"trackerFinishTime", nil]];
+    [[STGTSessionManager sharedManager] startSessionForUID:@"1" authDelegate:nil settings:sessionSettings];
 
 //    [[STGTSessionManager sharedManager] startSessionForUID:@"2" authDelegate:nil settings:[NSDictionary dictionaryWithObjectsAndKeys:@"10", @"requiredAccuracy", nil]];
 //    [[STGTSessionManager sharedManager] stopSessionForUID:@"2"];
