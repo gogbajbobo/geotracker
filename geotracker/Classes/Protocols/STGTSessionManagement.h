@@ -28,6 +28,8 @@
 
 + (id <STGTSession>)initWithUID:(NSString *)uid authDelegate:(id)authDelegate settings:(NSDictionary *)settings;
 - (void)completeSession;
+- (void)dismissSession;
+- (void)settingsLoadComplete;
 
 @property (strong, nonatomic) UIManagedDocument *document;
 @property (nonatomic, strong) id <STGTSettingsController> settingsController;

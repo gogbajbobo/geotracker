@@ -32,5 +32,6 @@
 + (STGTSession *)initWithUID:(NSString *)uid authDelegate:(id <STGTRequestAuthenticatable>)authDelegate settings:(NSDictionary *)settings;
 - (void)completeSession;
 - (void)dismissSession;
+- (void)settingsLoadComplete;
 
 @end

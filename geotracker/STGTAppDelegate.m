@@ -19,7 +19,7 @@
                                      @"1", @"batteryTrackerAutoStart",
                                      @"10.0", @"batteryTrackerStartTime",
                                      @"20.0", @"batteryTrackerFinishTime",
-                                     @"1", @"locationTrackerAutoStart",
+                                     @"0", @"locationTrackerAutoStart",
                                      @"10.0", @"locationTrackerStartTime",
                                      @"20.0", @"locationTrackerFinishTime",
                                      @"10", @"desiredAccuracy",
