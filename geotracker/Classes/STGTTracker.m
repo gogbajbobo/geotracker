@@ -40,6 +40,7 @@
 - (NSMutableDictionary *)settings {
     if (!_settings) {
         _settings = [[(id <STGTSession>)self.session settingsController] currentSettingsForGroup:self.group];
+//        NSLog(@"settings for %@: %@", self.group, _settings);
     }
     return _settings;
 }
@@ -49,6 +50,7 @@
     [self.settings addEntriesFromDictionary:notification.userInfo];
     NSString *key = [[notification.userInfo allKeys] lastObject];
 
+//    NSLog(@"%@ %@", [notification.userInfo valueForKey:key], key);
     if ([key hasSuffix:@"TrackerAutoStart"]) {
         self.trackerAutoStart = [[notification.userInfo valueForKey:key] boolValue];
         
@@ -75,7 +77,7 @@
 
 - (BOOL)trackerAutoStart {
     if (!_trackerAutoStart) {
-        _trackerAutoStart = [[self.settings valueForKey:[NSString stringWithFormat:@"%@trackerAutoStart", self.group]] boolValue];
+        _trackerAutoStart = [[self.settings valueForKey:[NSString stringWithFormat:@"%@TrackerAutoStart", self.group]] boolValue];
     }
     return _trackerAutoStart;
 }
@@ -90,7 +92,7 @@
 
 - (double)trackerStartTime {
     if (!_trackerStartTime) {
-        _trackerStartTime = [[self.settings valueForKey:[NSString stringWithFormat:@"%@trackerStartTime", self.group]] doubleValue];
+        _trackerStartTime = [[self.settings valueForKey:[NSString stringWithFormat:@"%@TrackerStartTime", self.group]] doubleValue];
     }
     return _trackerStartTime;
 }
@@ -105,7 +107,7 @@
 
 - (double)trackerFinishTime {
     if (!_trackerFinishTime) {
-        _trackerFinishTime = [[self.settings valueForKey:[NSString stringWithFormat:@"%@trackerFinishTime", self.group]] doubleValue];
+        _trackerFinishTime = [[self.settings valueForKey:[NSString stringWithFormat:@"%@TrackerFinishTime", self.group]] doubleValue];
     }
     return _trackerFinishTime;
 }
