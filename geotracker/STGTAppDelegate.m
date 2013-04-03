@@ -16,9 +16,12 @@
     // Override point for customization after application launch.
 
     NSDictionary *sessionSettings = [NSDictionary dictionaryWithObjectsAndKeys:
-                                     @"1", @"trackerAutoStart",
-                                     @"10.0", @"trackerStartTime",
-                                     @"20.0", @"trackerFinishTime",
+                                     @"1", @"batteryTrackerAutoStart",
+                                     @"10.0", @"batteryTrackerStartTime",
+                                     @"20.0", @"batteryTrackerFinishTime",
+                                     @"1", @"locationTrackerAutoStart",
+                                     @"10.0", @"locationTrackerStartTime",
+                                     @"20.0", @"locationTrackerFinishTime",
                                      @"10", @"desiredAccuracy",
                                      @"10", @"requiredAccuracy",
                                      @"-1", @"distanceFilter",
@@ -26,16 +29,6 @@
                                      nil];
     
     [[STGTSessionManager sharedManager] startSessionForUID:@"1" authDelegate:nil settings:sessionSettings];
-
-//    [[STGTSessionManager sharedManager] startSessionForUID:@"2" authDelegate:nil settings:[NSDictionary dictionaryWithObjectsAndKeys:@"10", @"requiredAccuracy", nil]];
-//    [[STGTSessionManager sharedManager] stopSessionForUID:@"2"];
-//    [[STGTSessionManager sharedManager] cleanCompletedSessions];
-    
-//    NSLog(@"state1 %d", UIDocumentStateNormal);
-//    NSLog(@"state2 %d", UIDocumentStateClosed);
-//    NSLog(@"state3 %d", UIDocumentStateInConflict);
-//    NSLog(@"state4 %d", UIDocumentStateSavingError);
-//    NSLog(@"state5 %d", UIDocumentStateEditingDisabled);
     
     return YES;
 }

@@ -71,6 +71,8 @@
         self.settingsController.session = self;
         self.locationTracker = [[STGTLocationTracker alloc] init];
         self.locationTracker.session = self;
+        self.batteryTracker = [[STGTBatteryTracker alloc] init];
+        self.batteryTracker.session = self;
         self.syncer = [[STGTSyncer alloc] init];
         self.syncer.session = self;
         self.syncer.authDelegate = self.authDelegate;

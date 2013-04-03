@@ -35,7 +35,7 @@
 
 
 - (void)customInit {
-    self.group = @"locationTracker";
+    self.group = @"location";
     [super customInit];
 }
 

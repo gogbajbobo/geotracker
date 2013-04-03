@@ -31,11 +31,11 @@
     [trackerSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%f", 50.0], @"slider" , nil] forKey:@"distanceFilter"];
     [trackerSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%f", 20.0], @"slider" , nil] forKey:@"timeFilter"];
     [trackerSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%f", 300.0], @"slider" , nil] forKey:@"trackDetectionTime"];
-    [trackerSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d", NO], @"switch" , nil] forKey:@"trackerAutoStart"];
-    [trackerSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%f", 8.0], @"slider" , nil] forKey:@"trackerStartTime"];
-    [trackerSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%f", 20.0], @"slider" , nil] forKey:@"trackerFinishTime"];
+    [trackerSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d", NO], @"switch" , nil] forKey:@"locationTrackerAutoStart"];
+    [trackerSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%f", 8.0], @"slider" , nil] forKey:@"locationTrackerStartTime"];
+    [trackerSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%f", 20.0], @"slider" , nil] forKey:@"locationTrackerFinishTime"];
     
-    [defaultSettings setValue:trackerSettings forKey:@"locationTracker"];
+    [defaultSettings setValue:trackerSettings forKey:@"location"];
     
     NSMutableDictionary *mapSettings = [NSMutableDictionary dictionary];
     [mapSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d", MKUserTrackingModeNone], @"segmentedControl" , nil] forKey:@"mapHeading"];
@@ -58,11 +58,11 @@
     [defaultSettings setValue:generalSettings forKey:@"general"];
     
     NSMutableDictionary *batterySettings = [NSMutableDictionary dictionary];
-    [batterySettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d", YES], @"switch" , nil] forKey:@"trackerAutoStart"];
-    [batterySettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%f", 8.0], @"slider" , nil] forKey:@"trackerStartTime"];
-    [batterySettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%f", 20.0], @"slider" , nil] forKey:@"trackerFinishTime"];
+    [batterySettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d", YES], @"switch" , nil] forKey:@"batteryTrackerAutoStart"];
+    [batterySettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%f", 8.0], @"slider" , nil] forKey:@"batteryTrackerStartTime"];
+    [batterySettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%f", 20.0], @"slider" , nil] forKey:@"batteryTrackerFinishTime"];
     
-    [defaultSettings setValue:batterySettings forKey:@"batteryTracker"];
+    [defaultSettings setValue:batterySettings forKey:@"battery"];
     
     return [defaultSettings copy];
 }
@@ -93,17 +93,17 @@
             return [NSString stringWithFormat:@"%f", [value doubleValue]];
         }
         
-    } else if ([key isEqualToString:@"trackerAutoStart"]) {
+    } else if ([key hasSuffix:@"TrackerAutoStart"]) {
         if ([self isBool:value]) {
             return [NSString stringWithFormat:@"%d", [value boolValue]];
         }
         
-    } else if ([key isEqualToString:@"trackerStartTime"]) {
+    } else if ([key hasSuffix:@"TrackerStartTime"]) {
         if ([self isValidTime:value]) {
             return [NSString stringWithFormat:@"%f", [value doubleValue]];
         }
         
-    } else if ([key isEqualToString:@"trackerFinishTime"]) {
+    } else if ([key hasSuffix:@"TrackerFinishTime"]) {
         if ([self isValidTime:value]) {
             return [NSString stringWithFormat:@"%f", [value doubleValue]];
         }

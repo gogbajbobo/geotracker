@@ -12,6 +12,7 @@
 #import "STGTManagedDocument.h"
 #import "STGTSyncer.h"
 #import "STGTLocationTracker.h"
+#import "STGTBatteryTracker.h"
 #import "STGTSettings.h"
 #import "STGTSettingsController.h"
 
@@ -20,6 +21,7 @@
 @property (strong, nonatomic) STGTManagedDocument *document;
 @property (strong, nonatomic) STGTSyncer *syncer;
 @property (strong, nonatomic) STGTLocationTracker *locationTracker;
+@property (strong, nonatomic) STGTBatteryTracker *batteryTracker;
 @property (weak, nonatomic) id <STGTSessionManager> manager;
 @property (strong, nonatomic) NSString *uid;
 @property (strong, nonatomic) NSString *status;

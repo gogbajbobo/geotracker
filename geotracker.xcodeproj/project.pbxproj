@@ -47,6 +47,7 @@
 		2CA12901170B23E700FBD8F3 /* STGTNetworkImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CA12900170B23E700FBD8F3 /* STGTNetworkImage.m */; };
 		2CA12904170B23E700FBD8F3 /* STGTSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CA12903170B23E700FBD8F3 /* STGTSettings.m */; };
 		2CA12907170B23E700FBD8F3 /* STGTBatteryStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CA12906170B23E700FBD8F3 /* STGTBatteryStatus.m */; };
+		2CE75FC1170C630600807B27 /* STGTBatteryTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE75FC0170C630600807B27 /* STGTBatteryTracker.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -127,6 +128,8 @@
 		2CA12903170B23E700FBD8F3 /* STGTSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTSettings.m; sourceTree = "<group>"; };
 		2CA12905170B23E700FBD8F3 /* STGTBatteryStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTBatteryStatus.h; sourceTree = "<group>"; };
 		2CA12906170B23E700FBD8F3 /* STGTBatteryStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTBatteryStatus.m; sourceTree = "<group>"; };
+		2CE75FBF170C630600807B27 /* STGTBatteryTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTBatteryTracker.h; sourceTree = "<group>"; };
+		2CE75FC0170C630600807B27 /* STGTBatteryTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTBatteryTracker.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,6 +257,8 @@
 				2C2ACAAD16EE2762001E333A /* STGTTracker.m */,
 				2C3B88AC170C547B0045EC6D /* STGTLocationTracker.h */,
 				2C3B88AD170C547B0045EC6D /* STGTLocationTracker.m */,
+				2CE75FBF170C630600807B27 /* STGTBatteryTracker.h */,
+				2CE75FC0170C630600807B27 /* STGTBatteryTracker.m */,
 			);
 			name = Classes;
 			path = geotracker/Classes;
@@ -437,6 +442,7 @@
 				2CA12904170B23E700FBD8F3 /* STGTSettings.m in Sources */,
 				2CA12907170B23E700FBD8F3 /* STGTBatteryStatus.m in Sources */,
 				2C3B88AE170C547B0045EC6D /* STGTLocationTracker.m in Sources */,
+				2CE75FC1170C630600807B27 /* STGTBatteryTracker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

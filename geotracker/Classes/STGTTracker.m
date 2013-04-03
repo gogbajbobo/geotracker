@@ -49,13 +49,13 @@
     [self.settings addEntriesFromDictionary:notification.userInfo];
     NSString *key = [[notification.userInfo allKeys] lastObject];
 
-    if ([key isEqualToString:@"trackerAutoStart"]) {
+    if ([key hasSuffix:@"TrackerAutoStart"]) {
         self.trackerAutoStart = [[notification.userInfo valueForKey:key] boolValue];
         
-    } else if ([key isEqualToString:@"trackerStartTime"]) {
+    } else if ([key hasSuffix:@"TrackerStartTime"]) {
         self.trackerStartTime = [[notification.userInfo valueForKey:key] doubleValue];
         
-    } else if ([key isEqualToString:@"trackerFinishTime"]) {
+    } else if ([key hasSuffix:@"TrackerFinishTime"]) {
         self.trackerFinishTime = [[notification.userInfo valueForKey:key] doubleValue];
         
     }
@@ -75,7 +75,7 @@
 
 - (BOOL)trackerAutoStart {
     if (!_trackerAutoStart) {
-        _trackerAutoStart = [[self.settings valueForKey:@"trackerAutoStart"] boolValue];
+        _trackerAutoStart = [[self.settings valueForKey:[NSString stringWithFormat:@"%@trackerAutoStart", self.group]] boolValue];
     }
     return _trackerAutoStart;
 }
@@ -90,7 +90,7 @@
 
 - (double)trackerStartTime {
     if (!_trackerStartTime) {
-        _trackerStartTime = [[self.settings valueForKey:@"trackerStartTime"] doubleValue];
+        _trackerStartTime = [[self.settings valueForKey:[NSString stringWithFormat:@"%@trackerStartTime", self.group]] doubleValue];
     }
     return _trackerStartTime;
 }
@@ -105,7 +105,7 @@
 
 - (double)trackerFinishTime {
     if (!_trackerFinishTime) {
-        _trackerFinishTime = [[self.settings valueForKey:@"trackerFinishTime"] doubleValue];
+        _trackerFinishTime = [[self.settings valueForKey:[NSString stringWithFormat:@"%@trackerFinishTime", self.group]] doubleValue];
     }
     return _trackerFinishTime;
 }
@@ -221,16 +221,16 @@
 #pragma mark - tracking
 
 - (void)startTracking {
-    NSLog(@"startTracking %@", [NSDate date]);
+    NSLog(@"%@ startTracking %@", self.group, [NSDate date]);
     if ([[(id <STGTSession>)self.session status] isEqualToString:@"running"]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"%@Start", self.group] object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"%@TrackingStart", self.group] object:self];
         self.tracking = YES;
     }
 }
 
 - (void)stopTracking {
-    NSLog(@"stopTracking %@", [NSDate date]);
-    [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"%@Stop", self.group] object:self];
+    NSLog(@"%@ stopTracking %@", self.group, [NSDate date]);
+    [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"%@TrackingStop", self.group] object:self];
     self.tracking = NO;
 }
 
