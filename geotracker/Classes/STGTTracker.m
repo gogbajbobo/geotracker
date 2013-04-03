@@ -224,7 +224,7 @@
         [self startNewTrack];
     }
     NSDate *timestamp = currentLocation.timestamp;
-    if ([currentLocation.timestamp timeIntervalSinceDate:self.lastLocation.timestamp] > [[self.settings valueForKey:@" trackDetectionTime"] doubleValue] && self.currentTrack.locations.count != 0) {
+    if ([currentLocation.timestamp timeIntervalSinceDate:self.lastLocation.timestamp] > [[self.settings valueForKey:@"trackDetectionTime"] doubleValue] && self.currentTrack.locations.count != 0) {
         [self startNewTrack];
         if ([currentLocation distanceFromLocation:self.lastLocation] < (2 * [[self.settings valueForKey:@"distanceFilter"] doubleValue])) {
             NSDate *ts = [NSDate date];
