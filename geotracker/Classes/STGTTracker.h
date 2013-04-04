@@ -8,13 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-#import "STGTSessionManagement.h"
-#import "STGTManagedDocument.h"
+#import "STSessionManagement.h"
+#import "STManagedDocument.h"
 
 @interface STGTTracker : NSObject
 
-@property (strong, nonatomic) STGTManagedDocument *document;
-@property (nonatomic, strong) id <STGTSession> session;
+@property (strong, nonatomic) STManagedDocument *document;
+@property (nonatomic, strong) id <STSession> session;
 @property (nonatomic, strong) NSMutableDictionary *settings;
 @property (nonatomic, strong) NSTimer *startTimer;
 @property (nonatomic, strong) NSTimer *finishTimer;

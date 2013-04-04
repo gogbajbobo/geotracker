@@ -6,32 +6,32 @@
 //  Copyright (c) 2013 Maxim Grigoriev. All rights reserved.
 //
 
-#import "STGTSession.h"
+#import "STSession.h"
 #import "STGTTracker.h"
-#import "STGTSyncer.h"
+#import "STSyncer.h"
 
-@interface STGTSession()
+@interface STSession()
 
 @property (nonatomic, strong) NSDictionary *startSettings;
 
 @end
 
 
-@implementation STGTSession
+@implementation STSession
 
-+ (STGTSession *)initWithUID:(NSString *)uid authDelegate:(id <STGTRequestAuthenticatable>)authDelegate {
++ (STSession *)initWithUID:(NSString *)uid authDelegate:(id <STRequestAuthenticatable>)authDelegate {
     return [self initWithUID:uid authDelegate:authDelegate settings:nil];
 }
 
-+ (STGTSession *)initWithUID:(NSString *)uid authDelegate:(id<STGTRequestAuthenticatable>)authDelegate settings:(NSDictionary *)settings {
++ (STSession *)initWithUID:(NSString *)uid authDelegate:(id<STRequestAuthenticatable>)authDelegate settings:(NSDictionary *)settings {
 
     if (uid) {
-        STGTSession *session = [[STGTSession alloc] init];
+        STSession *session = [[STSession alloc] init];
         session.uid = uid;
         session.startSettings = settings;
         session.authDelegate = authDelegate;
         [[NSNotificationCenter defaultCenter] addObserver:session selector:@selector(documentReady:) name:@"documentReady" object:nil];
-        session.document = [STGTManagedDocument documentWithUID:session.uid];
+        session.document = [STManagedDocument documentWithUID:session.uid];
         return session;
     } else {
         NSLog(@"no uid");
@@ -58,7 +58,7 @@
             if (self.document.documentState != UIDocumentStateClosed) {
                 [self.document closeWithCompletionHandler:^(BOOL success) {
                     [self.document.managedObjectContext reset];
-                    [(STGTSessionManager *)self.manager removeSessionForUID:self.uid];
+                    [(STSessionManager *)self.manager removeSessionForUID:self.uid];
                 }];
             }
         }
@@ -77,13 +77,13 @@
     self.locationTracker.session = self;
     self.batteryTracker = [[STGTBatteryTracker alloc] init];
     self.batteryTracker.session = self;
-    self.syncer = [[STGTSyncer alloc] init];
+    self.syncer = [[STSyncer alloc] init];
     self.syncer.session = self;
     self.syncer.authDelegate = self.authDelegate;
     self.status = @"running";    
 }
 
-- (void)setAuthDelegate:(id<STGTRequestAuthenticatable>)authDelegate {
+- (void)setAuthDelegate:(id<STRequestAuthenticatable>)authDelegate {
     if (_authDelegate != authDelegate) {
         _authDelegate = authDelegate;
         self.syncer.authDelegate = _authDelegate;

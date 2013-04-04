@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
-#import "STGTSessionManagement.h"
+#import "STSessionManagement.h"
 
 @interface STGTSettingsController : NSObject <STGTSettingsController>
 
@@ -20,6 +20,6 @@
 - (NSArray *)currentSettings;
 - (NSMutableDictionary *)currentSettingsForGroup:(NSString *)group;
 
-@property (nonatomic, strong) id <STGTSession> session;
+@property (nonatomic, strong) id <STSession> session;
 
 @end

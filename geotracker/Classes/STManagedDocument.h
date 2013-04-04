@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
-@interface STGTManagedDocument : UIManagedDocument
+@interface STManagedDocument : UIManagedDocument
 
 @property(nonatomic, strong, readonly) NSManagedObjectModel *myManagedObjectModel;
 
-+ (STGTManagedDocument *)documentWithUID:(NSString *)uid;
++ (STManagedDocument *)documentWithUID:(NSString *)uid;
 
 - (void)saveDocument:(void (^)(BOOL success))completionHandler;
 

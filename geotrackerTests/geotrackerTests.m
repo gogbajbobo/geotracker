@@ -7,8 +7,8 @@
 //
 
 #import "geotrackerTests.h"
-#import "STGTSessionManager.h"
-#import "STGTSession.h"
+#import "STSessionManager.h"
+#import "STSession.h"
 
 @implementation geotrackerTests
 
@@ -28,7 +28,7 @@
 
 - (void)testSessionManager
 {
-    STGTSessionManager *sessionManager = [STGTSessionManager sharedManager];
+    STSessionManager *sessionManager = [STSessionManager sharedManager];
     
     [sessionManager startSessionForUID:@"1" authDelegate:nil];
     NSUInteger count = 1;

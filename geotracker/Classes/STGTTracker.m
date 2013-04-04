@@ -29,17 +29,17 @@
 
 - (void)customInit {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionStatusChanged:) name:@"sessionStatusChanged" object:self.session];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(trackerSettingsChange:) name:[NSString stringWithFormat:@"%@SettingsChange", self.group] object:[(id <STGTSession>)self.session settingsController]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(trackerSettingsChange:) name:[NSString stringWithFormat:@"%@SettingsChange", self.group] object:[(id <STSession>)self.session settingsController]];
 }
 
-- (void)setSession:(id<STGTSession>)session {
+- (void)setSession:(id<STSession>)session {
     _session = session;
-    self.document = (STGTManagedDocument *)[(id <STGTSession>)session document];
+    self.document = (STManagedDocument *)[(id <STSession>)session document];
 }
 
 - (NSMutableDictionary *)settings {
     if (!_settings) {
-        _settings = [[(id <STGTSession>)self.session settingsController] currentSettingsForGroup:self.group];
+        _settings = [[(id <STSession>)self.session settingsController] currentSettingsForGroup:self.group];
 //        NSLog(@"settings for %@: %@", self.group, _settings);
     }
     return _settings;
@@ -65,10 +65,10 @@
 }
 
 - (void)sessionStatusChanged:(NSNotification *)notification {
-    if ([[(id <STGTSession>)notification.object status] isEqualToString:@"finishing"]) {
+    if ([[(id <STSession>)notification.object status] isEqualToString:@"finishing"]) {
         [self releaseTimers];
         [self stopTracking];
-    } else if ([[(id <STGTSession>)notification.object status] isEqualToString:@"running"]) {
+    } else if ([[(id <STSession>)notification.object status] isEqualToString:@"running"]) {
         [self checkTrackerAutoStart];
     }
 }
@@ -224,7 +224,7 @@
 
 - (void)startTracking {
     NSLog(@"%@ startTracking %@", self.group, [NSDate date]);
-    if ([[(id <STGTSession>)self.session status] isEqualToString:@"running"]) {
+    if ([[(id <STSession>)self.session status] isEqualToString:@"running"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"%@TrackingStart", self.group] object:self];
         self.tracking = YES;
     }

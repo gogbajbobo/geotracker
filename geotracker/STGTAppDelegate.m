@@ -7,7 +7,7 @@
 //
 
 #import "STGTAppDelegate.h"
-#import "STGTSessionManager.h"
+#import "STSessionManager.h"
 
 @implementation STGTAppDelegate
 
@@ -28,7 +28,7 @@
                                      @"2", @"timeFilter",
                                      nil];
     
-    [[STGTSessionManager sharedManager] startSessionForUID:@"1" authDelegate:nil settings:sessionSettings];
+    [[STSessionManager sharedManager] startSessionForUID:@"1" authDelegate:nil settings:sessionSettings];
     
     return YES;
 }

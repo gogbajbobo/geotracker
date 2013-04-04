@@ -8,7 +8,7 @@
 
 #import "STGTSettingsController.h"
 #import "STGTSettings.h"
-#import "STGTSession.h"
+#import "STSession.h"
 
 @interface STGTSettingsController() <NSFetchedResultsControllerDelegate>
 
@@ -189,7 +189,7 @@
 //
 //}
 
-- (void)setSession:(id<STGTSession>)session {
+- (void)setSession:(id<STSession>)session {
     _session = session;
 
     NSError *error;
@@ -287,7 +287,7 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
 //    NSLog(@"controllerDidChangeContent");
-    [[(STGTSession *)self.session document] saveDocument:^(BOOL success) {
+    [[(STSession *)self.session document] saveDocument:^(BOOL success) {
         if (success) {
             NSLog(@"save settings success");
         }

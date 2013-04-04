@@ -6,12 +6,12 @@
 //  Copyright (c) 2013 Maxim Grigoriev. All rights reserved.
 //
 
-#import "STGTSessionManager.h"
-#import "STGTSession.h"
+#import "STSessionManager.h"
+#import "STSession.h"
 
-@implementation STGTSessionManager
+@implementation STSessionManager
 
-+ (STGTSessionManager *)sharedManager {
++ (STSessionManager *)sharedManager {
     static dispatch_once_t pred = 0;
     __strong static id _sharedManager = nil;
     dispatch_once(&pred, ^{
@@ -20,16 +20,16 @@
     return _sharedManager;
 }
 
-- (void)startSessionForUID:(NSString *)uid authDelegate:(id <STGTRequestAuthenticatable>)authDelegate {
+- (void)startSessionForUID:(NSString *)uid authDelegate:(id <STRequestAuthenticatable>)authDelegate {
     [self startSessionForUID:uid authDelegate:authDelegate settings:nil];
 }
 
-- (void)startSessionForUID:(NSString *)uid authDelegate:(id<STGTRequestAuthenticatable>)authDelegate settings:(NSDictionary *)settings {
+- (void)startSessionForUID:(NSString *)uid authDelegate:(id<STRequestAuthenticatable>)authDelegate settings:(NSDictionary *)settings {
 
     if (uid) {
-        STGTSession *session = [self.sessions objectForKey:uid];
+        STSession *session = [self.sessions objectForKey:uid];
         if (!session) {
-            session = [STGTSession initWithUID:uid authDelegate:authDelegate settings:settings];
+            session = [STSession initWithUID:uid authDelegate:authDelegate settings:settings];
             session.manager = self;
             [self.sessions setValue:session forKey:uid];
             session.status = @"starting";
@@ -45,7 +45,7 @@
 }
 
 - (void)stopSessionForUID:(NSString *)uid {
-    STGTSession *session = [self.sessions objectForKey:uid];
+    STSession *session = [self.sessions objectForKey:uid];
     if ([session.status isEqualToString:@"running"]) {
         session.status = @"finishing";
         if ([self.currentSessionUID isEqualToString:uid]) {
@@ -55,20 +55,20 @@
     }
 }
 
-- (void)sessionCompletionFinished:(STGTSession *)session {
+- (void)sessionCompletionFinished:(STSession *)session {
     session.status = @"completed";
 }
 
 - (void)cleanCompletedSessions {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.status == %@", @"completed"];
     NSArray *completedSessions = [[self.sessions allValues] filteredArrayUsingPredicate:predicate];
-    for (STGTSession *session in completedSessions) {
+    for (STSession *session in completedSessions) {
         [session dismissSession];
     }
 }
 
 - (void)removeSessionForUID:(NSString *)uid {
-    if ([[(STGTSession *)[self.sessions objectForKey:uid] status] isEqualToString:@"completed"]) {
+    if ([[(STSession *)[self.sessions objectForKey:uid] status] isEqualToString:@"completed"]) {
         [self.sessions removeObjectForKey:uid];
     }
 }

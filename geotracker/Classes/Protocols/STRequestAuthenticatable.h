@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol STGTRequestAuthenticatable <NSObject>
+@protocol STRequestAuthenticatable <NSObject>
 
 - (NSURLRequest *) authenticateRequest:(NSURLRequest *)request;
 

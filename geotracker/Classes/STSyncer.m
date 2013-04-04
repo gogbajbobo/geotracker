@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Maxim Grigoriev. All rights reserved.
 //
 
-#import "STGTSyncer.h"
+#import "STSyncer.h"
 
-@implementation STGTSyncer
+@implementation STSyncer
 
 - (id)init {
     self = [super init];

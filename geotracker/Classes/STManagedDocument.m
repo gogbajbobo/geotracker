@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Maxim Grigoriev. All rights reserved.
 //
 
-#import "STGTManagedDocument.h"
+#import "STManagedDocument.h"
 
-@implementation STGTManagedDocument
+@implementation STManagedDocument
 @synthesize myManagedObjectModel = _myManagedObjectModel;
 
 - (NSManagedObjectModel *)myManagedObjectModel {
@@ -46,11 +46,11 @@
     }
 }
 
-+ (STGTManagedDocument *)documentWithUID:(NSString *)uid {
++ (STManagedDocument *)documentWithUID:(NSString *)uid {
 
     NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
     url = [url URLByAppendingPathComponent:[NSString stringWithFormat:@"STGT_%@.%@", uid, @"sqlite"]];
-    STGTManagedDocument *document = [[STGTManagedDocument alloc] initWithFileURL:url];
+    STManagedDocument *document = [[STManagedDocument alloc] initWithFileURL:url];
     document.persistentStoreOptions = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption, [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
     
     if (![[NSFileManager defaultManager] fileExistsAtPath:[document.fileURL path]]) {

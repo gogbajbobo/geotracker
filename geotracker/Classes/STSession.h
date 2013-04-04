@@ -7,29 +7,29 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "STGTSessionManagement.h"
-#import "STGTSessionManager.h"
-#import "STGTManagedDocument.h"
-#import "STGTSyncer.h"
+#import "STSessionManagement.h"
+#import "STSessionManager.h"
+#import "STManagedDocument.h"
+#import "STSyncer.h"
 #import "STGTLocationTracker.h"
 #import "STGTBatteryTracker.h"
 #import "STGTSettings.h"
 #import "STGTSettingsController.h"
 
-@interface STGTSession : NSObject <STGTSession>
+@interface STSession : NSObject <STSession>
 
-@property (strong, nonatomic) STGTManagedDocument *document;
-@property (strong, nonatomic) STGTSyncer *syncer;
+@property (strong, nonatomic) STManagedDocument *document;
+@property (strong, nonatomic) STSyncer *syncer;
 @property (strong, nonatomic) STGTLocationTracker *locationTracker;
 @property (strong, nonatomic) STGTBatteryTracker *batteryTracker;
-@property (weak, nonatomic) id <STGTSessionManager> manager;
+@property (weak, nonatomic) id <STSessionManager> manager;
 @property (strong, nonatomic) NSString *uid;
 @property (strong, nonatomic) NSString *status;
-@property (nonatomic, strong) id <STGTRequestAuthenticatable> authDelegate;
+@property (nonatomic, strong) id <STRequestAuthenticatable> authDelegate;
 @property (nonatomic, strong) STGTSettingsController *settingsController;
 
-+ (STGTSession *)initWithUID:(NSString *)uid authDelegate:(id <STGTRequestAuthenticatable>)authDelegate;
-+ (STGTSession *)initWithUID:(NSString *)uid authDelegate:(id <STGTRequestAuthenticatable>)authDelegate settings:(NSDictionary *)settings;
++ (STSession *)initWithUID:(NSString *)uid authDelegate:(id <STRequestAuthenticatable>)authDelegate;
++ (STSession *)initWithUID:(NSString *)uid authDelegate:(id <STRequestAuthenticatable>)authDelegate settings:(NSDictionary *)settings;
 - (void)completeSession;
 - (void)dismissSession;
 - (void)settingsLoadComplete;

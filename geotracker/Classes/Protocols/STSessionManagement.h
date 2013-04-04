@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol STGTSessionManager <NSObject>
+@protocol STSessionManager <NSObject>
 
 - (void)startSessionForUID:(NSString *)uid authDelegate:(id)authDelegate settings:(NSDictionary *)settings;
 - (void)stopSessionForUID:(NSString *)uid;
@@ -24,9 +24,9 @@
 @end
 
 
-@protocol STGTSession <NSObject>
+@protocol STSession <NSObject>
 
-+ (id <STGTSession>)initWithUID:(NSString *)uid authDelegate:(id)authDelegate settings:(NSDictionary *)settings;
++ (id <STSession>)initWithUID:(NSString *)uid authDelegate:(id)authDelegate settings:(NSDictionary *)settings;
 - (void)completeSession;
 - (void)dismissSession;
 - (void)settingsLoadComplete;
