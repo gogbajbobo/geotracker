@@ -48,6 +48,9 @@
 		2CA12904170B23E700FBD8F3 /* STGTSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CA12903170B23E700FBD8F3 /* STGTSettings.m */; };
 		2CA12907170B23E700FBD8F3 /* STGTBatteryStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CA12906170B23E700FBD8F3 /* STGTBatteryStatus.m */; };
 		2CE75FC1170C630600807B27 /* STGTBatteryTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE75FC0170C630600807B27 /* STGTBatteryTracker.m */; };
+		2CE75FCA170DB98F00807B27 /* STGTMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE75FC9170DB98F00807B27 /* STGTMainViewController.m */; };
+		2CE75FCD170DBBA400807B27 /* STGTRoundedCornerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE75FCC170DBBA400807B27 /* STGTRoundedCornerView.m */; };
+		2CE75FCF170DBC1E00807B27 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CE75FCE170DBC1E00807B27 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -130,6 +133,11 @@
 		2CA12906170B23E700FBD8F3 /* STGTBatteryStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTBatteryStatus.m; sourceTree = "<group>"; };
 		2CE75FBF170C630600807B27 /* STGTBatteryTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTBatteryTracker.h; sourceTree = "<group>"; };
 		2CE75FC0170C630600807B27 /* STGTBatteryTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTBatteryTracker.m; sourceTree = "<group>"; };
+		2CE75FC8170DB98F00807B27 /* STGTMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTMainViewController.h; sourceTree = "<group>"; };
+		2CE75FC9170DB98F00807B27 /* STGTMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTMainViewController.m; sourceTree = "<group>"; };
+		2CE75FCB170DBBA400807B27 /* STGTRoundedCornerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTRoundedCornerView.h; sourceTree = "<group>"; };
+		2CE75FCC170DBBA400807B27 /* STGTRoundedCornerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTRoundedCornerView.m; sourceTree = "<group>"; };
+		2CE75FCE170DBC1E00807B27 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +145,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CE75FCF170DBC1E00807B27 /* QuartzCore.framework in Frameworks */,
 				2C103A531700512C00BC46B4 /* CoreLocation.framework in Frameworks */,
 				2C103A511700512500BC46B4 /* MapKit.framework in Frameworks */,
 				2C103A4B16FF467500BC46B4 /* CoreData.framework in Frameworks */,
@@ -181,6 +190,7 @@
 		2C2ACA6016EE2453001E333A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2CE75FCE170DBC1E00807B27 /* QuartzCore.framework */,
 				2C103A521700512C00BC46B4 /* CoreLocation.framework */,
 				2C103A501700512500BC46B4 /* MapKit.framework */,
 				2C103A4A16FF467500BC46B4 /* CoreData.framework */,
@@ -259,6 +269,10 @@
 				2C3B88AD170C547B0045EC6D /* STGTLocationTracker.m */,
 				2CE75FBF170C630600807B27 /* STGTBatteryTracker.h */,
 				2CE75FC0170C630600807B27 /* STGTBatteryTracker.m */,
+				2CE75FC8170DB98F00807B27 /* STGTMainViewController.h */,
+				2CE75FC9170DB98F00807B27 /* STGTMainViewController.m */,
+				2CE75FCB170DBBA400807B27 /* STGTRoundedCornerView.h */,
+				2CE75FCC170DBBA400807B27 /* STGTRoundedCornerView.m */,
 			);
 			name = Classes;
 			path = geotracker/Classes;
@@ -352,7 +366,7 @@
 		2C2ACA5416EE2453001E333A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = STGT;
+				CLASSPREFIX = ST;
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Maxim Grigoriev";
 			};
@@ -443,6 +457,8 @@
 				2CA12907170B23E700FBD8F3 /* STGTBatteryStatus.m in Sources */,
 				2C3B88AE170C547B0045EC6D /* STGTLocationTracker.m in Sources */,
 				2CE75FC1170C630600807B27 /* STGTBatteryTracker.m in Sources */,
+				2CE75FCA170DB98F00807B27 /* STGTMainViewController.m in Sources */,
+				2CE75FCD170DBBA400807B27 /* STGTRoundedCornerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

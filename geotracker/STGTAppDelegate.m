@@ -16,10 +16,10 @@
     // Override point for customization after application launch.
 
     NSDictionary *sessionSettings = [NSDictionary dictionaryWithObjectsAndKeys:
-                                     @"1", @"batteryTrackerAutoStart",
+                                     @"0", @"batteryTrackerAutoStart",
                                      @"10.0", @"batteryTrackerStartTime",
                                      @"20.0", @"batteryTrackerFinishTime",
-                                     @"1", @"locationTrackerAutoStart",
+                                     @"0", @"locationTrackerAutoStart",
                                      @"10.0", @"locationTrackerStartTime",
                                      @"20.0", @"locationTrackerFinishTime",
                                      @"10", @"desiredAccuracy",
@@ -58,6 +58,10 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
+    [[STSessionManager sharedManager] cleanCompletedSessions];
 }
 
 @end
