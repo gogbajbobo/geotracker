@@ -120,6 +120,14 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="geo.png" id="Q6Y-ix-75G">
+                                        <rect key="frame" x="79" y="10" width="24" height="24"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="battery.png" id="FZm-JH-uPi">
+                                        <rect key="frame" x="79" y="34" width="24" height="24"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.71764707569999997" green="0.79215693470000004" blue="0.90196084980000002" alpha="1" colorSpace="deviceRGB"/>
                             </view>
@@ -151,6 +159,17 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="ok.png" id="kBR-6j-qJd">
+                                        <rect key="frame" x="79" y="34" width="24" height="24"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="100" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="W5G-gH-Qqd">
+                                        <rect key="frame" x="79" y="10" width="24" height="24"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.71764707569999997" green="0.79215693470000004" blue="0.90196084980000002" alpha="1" colorSpace="deviceRGB"/>
                             </view>
@@ -158,6 +177,18 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="QHv-1w-nFe"/>
+                    <connections>
+                        <outlet property="batteryIndicatorView" destination="FZm-JH-uPi" id="f5w-Uy-b9N"/>
+                        <outlet property="geoIndicatorView" destination="Q6Y-ix-75G" id="kkO-91-cbD"/>
+                        <outlet property="infoButton" destination="EEz-uT-fyT" id="9wY-Ia-vJN"/>
+                        <outlet property="logButton" destination="itW-Q5-2Ei" id="viu-oV-nPc"/>
+                        <outlet property="settingsButton" destination="xWl-vk-RX7" id="oDh-zD-Rw3"/>
+                        <outlet property="spotsButton" destination="QZe-Wr-66c" id="gcd-3V-NXt"/>
+                        <outlet property="startButton" destination="6Ha-A0-DvG" id="GE8-bm-yav"/>
+                        <outlet property="syncButton" destination="gdL-W8-lSk" id="t4t-Dm-u5n"/>
+                        <outlet property="syncIndicatorView" destination="kBR-6j-qJd" id="MAf-3l-hzh"/>
+                        <outlet property="syncLabel" destination="W5G-gH-Qqd" id="YcU-A2-7Iw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Vu-K9-DEJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -182,6 +213,11 @@
             <point key="canvasLocation" x="84" y="260"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="battery.png" width="144" height="144"/>
+        <image name="geo.png" width="144" height="144"/>
+        <image name="ok.png" width="144" height="144"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

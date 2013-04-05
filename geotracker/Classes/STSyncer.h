@@ -15,5 +15,6 @@
 
 @property (nonatomic, strong) id <STRequestAuthenticatable> authDelegate;
 @property (nonatomic, strong) id <STSession> session;
+@property (nonatomic) BOOL syncing;
 
 @end

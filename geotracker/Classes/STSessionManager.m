@@ -37,7 +37,7 @@
             session.authDelegate = authDelegate;
             session.status = @"running";
         }
-        //    self.currentSessionUID = uid;
+        self.currentSessionUID = uid;
     } else {
         NSLog(@"no uid");
     }

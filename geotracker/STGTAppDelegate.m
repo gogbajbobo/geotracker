@@ -26,6 +26,7 @@
                                      @"10", @"requiredAccuracy",
                                      @"-1", @"distanceFilter",
                                      @"2", @"timeFilter",
+                                     @"1", @"localAccessToSettings",
                                      nil];
     
     [[STSessionManager sharedManager] startSessionForUID:@"1" authDelegate:nil settings:sessionSettings];
