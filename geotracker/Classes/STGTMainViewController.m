@@ -22,6 +22,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *batteryIndicatorView;
 @property (weak, nonatomic) IBOutlet UIImageView *syncIndicatorView;
 @property (weak, nonatomic) IBOutlet UILabel *syncLabel;
+@property (weak, nonatomic) IBOutlet UILabel *currentTrackInfo;
+@property (weak, nonatomic) IBOutlet UILabel *currentTrackStartTime;
+@property (weak, nonatomic) IBOutlet UILabel *todaySummary;
 
 @property (nonatomic, strong) STSession *currentSession;
 
@@ -39,8 +42,19 @@
     return _currentSession;
 }
 
-#pragma mark - view behavior
+#pragma mark - buttons
 
+- (IBAction)startButtonPressed:(id)sender {
+    if (self.currentSession.locationTracker.tracking) {
+        [self.currentSession.locationTracker stopTracking];
+    } else {
+        [self.currentSession.locationTracker startTracking];
+    }
+}
+
+
+
+#pragma mark - view behavior
 
 - (void)locationTrackingStart {
     [self.startButton setImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateNormal];
@@ -76,6 +90,10 @@
     }];
 }
 
+- (void)trackControllerDidChangeContent {
+    NSLog(@"summaryInfo %@", self.trackController.summaryInfo);
+    NSLog(@"currentTrackInfo %@", self.trackController.currentTrackInfo);
+}
 
 #pragma mark - init view
 
@@ -86,6 +104,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationTrackingStop) name:@"locationTrackingStop" object:self.currentSession.locationTracker];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(batteryTrackingStart) name:@"batteryTrackingStart" object:self.currentSession.locationTracker];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(batteryTrackingStop) name:@"batteryTrackingStop" object:self.currentSession.locationTracker];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(trackControllerDidChangeContent) name:@"trackControllerDidChangeContent" object:self.trackController];
+
     [self initButtonsImage];
     [self initIndicators];
     [self checkSessionState];
@@ -143,6 +163,11 @@
     if (currentSessionUID) {
         self.currentSession = [[[STSessionManager sharedManager] sessions] objectForKey:currentSessionUID];
         [self checkSessionState];
+        if (!self.trackController) {
+            self.trackController = [[STGTTrackController alloc] init];
+        }
+        self.trackController.document = self.currentSession.document;
+
     } else {
         self.currentSession = nil;
         [self disableButtons];
@@ -180,6 +205,7 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"locationTrackingStop" object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"batteryTrackingStart" object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"batteryTrackingStop" object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"trackControllerDidChangeContent" object:nil];
 
         self.view = nil;
     }

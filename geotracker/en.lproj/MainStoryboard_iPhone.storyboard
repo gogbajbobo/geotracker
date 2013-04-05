@@ -107,6 +107,9 @@
                                         <state key="highlighted">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="startButtonPressed:" destination="ybq-Oy-8hZ" eventType="touchUpInside" id="REa-mF-FL2"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="EEz-uT-fyT">
                                         <rect key="frame" x="114" y="10" width="52" height="48"/>
@@ -179,6 +182,8 @@
                     <navigationItem key="navigationItem" id="QHv-1w-nFe"/>
                     <connections>
                         <outlet property="batteryIndicatorView" destination="FZm-JH-uPi" id="f5w-Uy-b9N"/>
+                        <outlet property="currentTrackInfo" destination="so3-1a-onN" id="Rlc-uC-SQQ"/>
+                        <outlet property="currentTrackStartTime" destination="m1T-Tg-MrL" id="pte-rd-ayi"/>
                         <outlet property="geoIndicatorView" destination="Q6Y-ix-75G" id="kkO-91-cbD"/>
                         <outlet property="infoButton" destination="EEz-uT-fyT" id="9wY-Ia-vJN"/>
                         <outlet property="logButton" destination="itW-Q5-2Ei" id="viu-oV-nPc"/>
@@ -187,7 +192,8 @@
                         <outlet property="startButton" destination="6Ha-A0-DvG" id="GE8-bm-yav"/>
                         <outlet property="syncButton" destination="gdL-W8-lSk" id="t4t-Dm-u5n"/>
                         <outlet property="syncIndicatorView" destination="kBR-6j-qJd" id="MAf-3l-hzh"/>
-                        <outlet property="syncLabel" destination="W5G-gH-Qqd" id="YcU-A2-7Iw"/>
+                        <outlet property="syncLabel" destination="m1T-Tg-MrL" id="fr8-Jr-r9e"/>
+                        <outlet property="todaySummary" destination="VHh-B7-r4Z" id="Qq7-3M-gBH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Vu-K9-DEJ" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "STGTTrackController.h"
 
 @interface STGTMainViewController : UIViewController
+
+@property (nonatomic, strong) STGTTrackController *trackController;
 
 @end
