@@ -194,6 +194,7 @@
                         <outlet property="syncIndicatorView" destination="kBR-6j-qJd" id="MAf-3l-hzh"/>
                         <outlet property="syncLabel" destination="m1T-Tg-MrL" id="fr8-Jr-r9e"/>
                         <outlet property="todaySummary" destination="VHh-B7-r4Z" id="Qq7-3M-gBH"/>
+                        <outlet property="todaySummaryLabel" destination="OvB-hh-vh3" id="NaU-2b-UQ6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Vu-K9-DEJ" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -19,10 +19,10 @@
 @implementation STGTTrackController
 
 - (void)setDocument:(STManagedDocument *)document {
+    
     _document = document;
-
-    NSLog(@"_document.managedObjectContext %@", _document.managedObjectContext);
-
+    
+    self.resultsController = nil;
     NSError *error;
     if (![self.resultsController performFetch:&error]) {
         NSLog(@"performFetch error %@", error);
@@ -34,7 +34,6 @@
 
 - (NSFetchedResultsController *)resultsController {
     if (!_resultsController) {
-        NSLog(@"self.document.managedObjectContext %@", self.document.managedObjectContext);
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"STGTTrack"];
         request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"startTime" ascending:NO selector:@selector(compare:)]];
         _resultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.document.managedObjectContext sectionNameKeyPath:@"dayAsString" cacheName:nil];
@@ -63,6 +62,9 @@
             CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:[previousLocation.latitude doubleValue] longitude:[previousLocation.longitude doubleValue]];
             CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:[location.latitude doubleValue] longitude:[location.longitude doubleValue]];
             overallDistance = overallDistance + [loc1 distanceFromLocation:loc2];
+            if (overallDistance < 0) {
+                overallDistance = 0;
+            }
         }
     }
     
@@ -99,7 +101,10 @@
             } else {
                 CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:[previousLocation.latitude doubleValue] longitude:[previousLocation.longitude doubleValue]];
                 CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:[location.latitude doubleValue] longitude:[location.longitude doubleValue]];
-                overallDistance = overallDistance + [loc1 distanceFromLocation:loc2];
+                overallDistance = overallDistance + [loc2 distanceFromLocation:loc1];
+                if (overallDistance < 0) {
+                    overallDistance = 0;
+                }
             }
         }
         

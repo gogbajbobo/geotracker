@@ -16,7 +16,7 @@
     // Override point for customization after application launch.
 
     NSDictionary *sessionSettings = [NSDictionary dictionaryWithObjectsAndKeys:
-                                     @"1", @"batteryTrackerAutoStart",
+                                     @"0", @"batteryTrackerAutoStart",
                                      @"10.0", @"batteryTrackerStartTime",
                                      @"20.0", @"batteryTrackerFinishTime",
                                      @"0", @"locationTrackerAutoStart",

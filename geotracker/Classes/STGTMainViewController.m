@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *currentTrackInfo;
 @property (weak, nonatomic) IBOutlet UILabel *currentTrackStartTime;
 @property (weak, nonatomic) IBOutlet UILabel *todaySummary;
+@property (weak, nonatomic) IBOutlet UILabel *todaySummaryLabel;
 
 @property (nonatomic, strong) STSession *currentSession;
 
@@ -92,6 +93,8 @@
 
 - (void)trackControllerDidChangeContent {
     NSLog(@"summaryInfo %@", self.trackController.summaryInfo);
+    self.currentTrackStartTime.text = [NSString stringWithFormat:@"%@", [self.trackController.currentTrackInfo valueForKey:@"startTime"]];
+    self.currentTrackInfo.text = [NSString stringWithFormat:@"%@ km, %@ km/h", [self.trackController.currentTrackInfo valueForKey:@"overallDistance"], [self.trackController.currentTrackInfo valueForKey:@"averageSpeed"]];
     NSLog(@"currentTrackInfo %@", self.trackController.currentTrackInfo);
 }
 
@@ -127,11 +130,18 @@
     self.batteryIndicatorView.alpha = 0;
     self.syncIndicatorView.alpha = 0;
     self.syncLabel.text = @"";
+    self.todaySummaryLabel.text = NSLocalizedString(@"TODAY SUMMARY", @"");
 }
 
 - (void)checkSessionState {
     
     if ([self.currentSession.status isEqualToString:@"running"]) {
+
+        if (!self.trackController) {
+            self.trackController = [[STGTTrackController alloc] init];
+        }
+        self.trackController.document = self.currentSession.document;
+
         self.settingsButton.enabled = [[[self.currentSession.settingsController currentSettingsForGroup:@"general"] valueForKey:@"localAccessToSettings"] boolValue];
         self.spotsButton.enabled = YES;
         self.infoButton.enabled = YES;
@@ -163,11 +173,6 @@
     if (currentSessionUID) {
         self.currentSession = [[[STSessionManager sharedManager] sessions] objectForKey:currentSessionUID];
         [self checkSessionState];
-        if (!self.trackController) {
-            self.trackController = [[STGTTrackController alloc] init];
-        }
-        self.trackController.document = self.currentSession.document;
-
     } else {
         self.currentSession = nil;
         [self disableButtons];
