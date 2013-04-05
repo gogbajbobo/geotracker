@@ -84,7 +84,7 @@
     if ([[self.sessions allKeys] containsObject:currentSessionUID] || !currentSessionUID) {
         if (_currentSessionUID != currentSessionUID) {
             _currentSessionUID = currentSessionUID;
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"CurrentSessionChanged" object:[self.sessions objectForKey:_currentSessionUID]];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"currentSessionChanged" object:[self.sessions objectForKey:_currentSessionUID]];
         }
     }
 }

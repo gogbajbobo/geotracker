@@ -23,13 +23,42 @@
 @property (weak, nonatomic) IBOutlet UIImageView *syncIndicatorView;
 @property (weak, nonatomic) IBOutlet UILabel *syncLabel;
 
+@property (nonatomic, strong) STSession *currentSession;
+
 
 @end
 
 @implementation STGTMainViewController
 
 
+- (STSession *)currentSession {
+    if (!_currentSession) {
+        NSString *currentSessionUID = [[STSessionManager sharedManager] currentSessionUID];
+        _currentSession = [[[STSessionManager sharedManager] sessions] objectForKey:currentSessionUID];
+    }
+    return _currentSession;
+}
 
+#pragma mark - view behavior
+
+
+- (void)locationTrackingStart {
+    [self.startButton setImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateNormal];
+    [self startAnimationOfView:self.geoIndicatorView];
+}
+
+- (void)locationTrackingStop {
+    [self.startButton setImage:[UIImage imageNamed:@"start.png"] forState:UIControlStateNormal];
+    [self stopAnimationOfView:self.geoIndicatorView];
+}
+
+- (void)batteryTrackingStart {
+    [self startAnimationOfView:self.batteryIndicatorView];
+}
+
+- (void)batteryTrackingStop {
+    [self stopAnimationOfView:self.batteryIndicatorView];
+}
 
 - (void)startAnimationOfView:(UIView *)view {
     [UIView animateWithDuration:1.0 delay:0.0 options:(UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat) animations:^{
@@ -51,7 +80,12 @@
 #pragma mark - init view
 
 - (void)initView {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkSessionState) name:@"sessionStatusChanged" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(currentSessionChanged:) name:@"currentSessionChanged" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkSessionState) name:@"sessionStatusChanged" object:self.currentSession];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationTrackingStart) name:@"locationTrackingStart" object:self.currentSession.locationTracker];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationTrackingStop) name:@"locationTrackingStop" object:self.currentSession.locationTracker];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(batteryTrackingStart) name:@"batteryTrackingStart" object:self.currentSession.locationTracker];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(batteryTrackingStop) name:@"batteryTrackingStop" object:self.currentSession.locationTracker];
     [self initButtonsImage];
     [self initIndicators];
     [self checkSessionState];
@@ -65,9 +99,6 @@
     [self.syncButton setImage:[UIImage imageNamed:@"sync.png"] forState:UIControlStateNormal];
     [self.startButton setImage:[UIImage imageNamed:@"start.png"] forState:UIControlStateNormal];
     [self.logButton setImage:[UIImage imageNamed:@"log.png"] forState:UIControlStateNormal];
-    
-//    [self startAnimationOfView:self.geoIndicatorView];
-//    [self startAnimationOfView:self.batteryIndicatorView];
 
 }
 
@@ -79,18 +110,19 @@
 }
 
 - (void)checkSessionState {
-    NSString *currentSessionUID = [[STSessionManager sharedManager] currentSessionUID];
-    if (currentSessionUID) {
-        STSession *currentSession = [[[STSessionManager sharedManager] sessions] objectForKey:currentSessionUID];
-        if ([currentSession.status isEqualToString:@"running"]) {
-            self.settingsButton.enabled = [[[currentSession.settingsController currentSettingsForGroup:@"general"] valueForKey:@"localAccessToSettings"] boolValue];
-            self.spotsButton.enabled = YES;
-            self.infoButton.enabled = YES;
-            self.syncButton.enabled = !currentSession.syncer.syncing;
-            self.startButton.enabled = !currentSession.locationTracker.trackerAutoStart;
-            self.logButton.enabled = YES;
-        } else {
-            [self disableButtons];
+    
+    if ([self.currentSession.status isEqualToString:@"running"]) {
+        self.settingsButton.enabled = [[[self.currentSession.settingsController currentSettingsForGroup:@"general"] valueForKey:@"localAccessToSettings"] boolValue];
+        self.spotsButton.enabled = YES;
+        self.infoButton.enabled = YES;
+        self.logButton.enabled = YES;
+        self.syncButton.enabled = !self.currentSession.syncer.syncing;
+        self.startButton.enabled = !self.currentSession.locationTracker.trackerAutoStart;
+        if (self.currentSession.locationTracker.tracking) {
+            [self locationTrackingStart];
+        }
+        if (self.currentSession.batteryTracker.tracking) {
+            [self batteryTrackingStart];
         }
     } else {
         [self disableButtons];
@@ -104,6 +136,17 @@
     self.syncButton.enabled = NO;
     self.startButton.enabled = NO;
     self.logButton.enabled = NO;    
+}
+     
+- (void)currentSessionChanged:(NSNotification *)notification {
+    NSString *currentSessionUID = [[STSessionManager sharedManager] currentSessionUID];
+    if (currentSessionUID) {
+        self.currentSession = [[[STSessionManager sharedManager] sessions] objectForKey:currentSessionUID];
+        [self checkSessionState];
+    } else {
+        self.currentSession = nil;
+        [self disableButtons];
+    }
 }
 
 #pragma mark - view lifecycle
@@ -131,6 +174,13 @@
 {
     [super didReceiveMemoryWarning];
     if ([self isViewLoaded] && [self.view window] == nil) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"currentSessionChanged" object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"sessionStatusChanged" object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"locationTrackingStart" object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"locationTrackingStop" object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"batteryTrackingStart" object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"batteryTrackingStop" object:nil];
+
         self.view = nil;
     }
 }
