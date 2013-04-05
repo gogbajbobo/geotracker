@@ -21,11 +21,11 @@
 @property (weak, nonatomic) IBOutlet UIImageView *geoIndicatorView;
 @property (weak, nonatomic) IBOutlet UIImageView *batteryIndicatorView;
 @property (weak, nonatomic) IBOutlet UIImageView *syncIndicatorView;
-@property (weak, nonatomic) IBOutlet UILabel *syncLabel;
 @property (weak, nonatomic) IBOutlet UILabel *currentTrackInfo;
 @property (weak, nonatomic) IBOutlet UILabel *currentTrackStartTime;
 @property (weak, nonatomic) IBOutlet UILabel *todaySummary;
 @property (weak, nonatomic) IBOutlet UILabel *todaySummaryLabel;
+@property (weak, nonatomic) IBOutlet UILabel *syncLabel;
 
 @property (nonatomic, strong) STSession *currentSession;
 
@@ -94,7 +94,7 @@
 - (void)trackControllerDidChangeContent {
     NSLog(@"summaryInfo %@", self.trackController.summaryInfo);
     self.currentTrackStartTime.text = [NSString stringWithFormat:@"%@", [self.trackController.currentTrackInfo valueForKey:@"startTime"]];
-    self.currentTrackInfo.text = [NSString stringWithFormat:@"%@ km, %@ km/h", [self.trackController.currentTrackInfo valueForKey:@"overallDistance"], [self.trackController.currentTrackInfo valueForKey:@"averageSpeed"]];
+    self.currentTrackInfo.text = [NSString stringWithFormat:@"%@ %@, %@ %@", [self.trackController.currentTrackInfo valueForKey:@"overallDistance"], NSLocalizedString(@"KM", @""), [self.trackController.currentTrackInfo valueForKey:@"averageSpeed"], NSLocalizedString(@"KM/H", @"")];
     NSLog(@"currentTrackInfo %@", self.trackController.currentTrackInfo);
 }
 
@@ -131,6 +131,9 @@
     self.syncIndicatorView.alpha = 0;
     self.syncLabel.text = @"";
     self.todaySummaryLabel.text = NSLocalizedString(@"TODAY SUMMARY", @"");
+    self.todaySummary.text = @"";
+    self.currentTrackInfo.text = @"";
+    self.currentTrackStartTime.text = @"";
 }
 
 - (void)checkSessionState {

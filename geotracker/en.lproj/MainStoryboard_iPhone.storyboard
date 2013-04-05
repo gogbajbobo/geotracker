@@ -192,7 +192,7 @@
                         <outlet property="startButton" destination="6Ha-A0-DvG" id="GE8-bm-yav"/>
                         <outlet property="syncButton" destination="gdL-W8-lSk" id="t4t-Dm-u5n"/>
                         <outlet property="syncIndicatorView" destination="kBR-6j-qJd" id="MAf-3l-hzh"/>
-                        <outlet property="syncLabel" destination="m1T-Tg-MrL" id="fr8-Jr-r9e"/>
+                        <outlet property="syncLabel" destination="W5G-gH-Qqd" id="Auv-4P-bKR"/>
                         <outlet property="todaySummary" destination="VHh-B7-r4Z" id="Qq7-3M-gBH"/>
                         <outlet property="todaySummaryLabel" destination="OvB-hh-vh3" id="NaU-2b-UQ6"/>
                     </connections>
@@ -225,6 +225,31 @@
         <image name="geo.png" width="144" height="144"/>
         <image name="ok.png" width="144" height="144"/>
     </resources>
+    <classes>
+        <class className="STGTMainViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/STGTMainViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="startButtonPressed:"/>
+                <relationship kind="outlet" name="batteryIndicatorView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="currentTrackInfo" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="currentTrackStartTime" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="geoIndicatorView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="infoButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="logButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="settingsButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="spotsButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="startButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="syncButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="syncIndicatorView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="syncLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="todaySummary" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="todaySummaryLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="STGTRoundedCornerView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/STGTRoundedCornerView.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
