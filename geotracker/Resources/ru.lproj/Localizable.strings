@@ -7,26 +7,7 @@
 */
 
 "TODAY SUMMARY" = "Данные за сегодня";
-
-"CLEAR DATABASE" = "Очистка базы данных";
-"OBJECT TO DELETE" = "Что вы хотите удалить?";
-"ONLY TRACKS" = "Только треки";
-"ALL DATA" = "Все данные";
-"STOP TRACKING" = "Остановить геотрекинг";
-"STOP TRACKING FOR CLEAR" = "Вы должны остановть геотрекинг перед началом очистки";
-"WAIT FOR SYNCING COMPLETE" = "Дождитесь завершения синхронизации";
-"CANT DELETE ALL DATA" = "Вы не можете удалить все данные";
-"YES" = "Да";
-"NO" = "Нет";
-"WARNING" = "Внимание";
-"OK" = "Ok";
-"CANCEL" = "Отмена";
-"START" = "Старт";
-"STOP" = "Стоп";
-"SETTINGS" = "Настройки";
-"SYNC" = "Синхр.";
-"TRACKER" = "Трекер";
-"ADD NEW TRACK" = "Новый трек";
+"START AT" = "Время старта";
 
 "KM" = "км";
 "M" = "м";
@@ -40,71 +21,91 @@
 "2TRACKS" = "трека";
 "5TRACKS" = "треков";
 
-"NO ACTIVE SESSION" = "Нет активной сессии";
-
-"NO CONNECTION" = "Нет соединения";
-"NO TOKEN" = "Нет токена";
-"SYNC FAIL" = "Сбой синхронизации";
-"RESPONSE ERROR" = "Ошибка ответа сервера";
-"SYNC ERROR" = "Ошибка синхронизации";
-
-"UNTITLED" = "без названия";
-"ADD NEW SPOT" = "Добавить метку…";
-"MAP" = "Карта";
-"SATELLITE" = "Спутник";
-"HYBRID" = "Гибрид";
-"HEADING" = "Компас";
-"TRACK NUMBER" = "Номер трека";
-
-"GENERAL" = "Общие настройки";
-"SYNCER" = "Синхронизация";
-"AUTHSERVICE" = "Аутентификация";
-"BATTERY" = "Батарея";
-
-"uid" = "Пользователь: ID";
-"localAccessToSettings" = "локальный доступ";
-"desiredAccuracy" = "желаемая точность, м";
-"requiredAccuracy" = "требуемая точность, м";
-"distanceFilter" = "шаг слежения, м";
-"timeFilter" = "фильтр времени, с";
-"trackDetectionTime" = "время автоотсечки, с";
-"trackerAutoStart" = "автостарт";
-"trackerStartTime" = "время запуска";
-"trackerFinishTime" = "время остановки";
-"fetchLimit" = "количество объектов";
-"syncInterval" = "интервал, с";
-"syncServerURI" = "syncServerURI";
-"xmlNamespace" = "xmlNamespace";
-"mapHeading" = "компас";
-"mapType" = "вид";
-"trackScale" = "масштаб треков";
-"checkingBattery" = "следить за батареей";
-
-"SPOT" = "Метка";
-"SPOT INFO" = "Информация:";
-"SPOT LABEL" = "Имя метки";
-"ADD PHOTO TO SPOT" = "Добавляю фотографию к метке…";
-"INTERESTS" = "Интересы:";
-"NETWORKS" = "Сети:";
-"DELETE SPOT" = "Удалить метку";
-"SOURCE SELECT" = "Источник фото";
-"CHOOSE SOURCE" = "Выберите источник фотографии";
-"CAMERA" = "Камера";
-"PHOTO LIBRARY" = "Фото библиотека";
-
-"DELETE PHOTO" = "Удалить фото";
-"R U SURE" = "Вы уверены?";
-"MANAGE PHOTOS" = "Управление фотографиями";
-"CHOOSE ACTION" = "Выберите действие";
-"ADD NEW PHOTO" = "Добавить новое фото";
-"SET AS AVATAR" = "Сделать фото ключевым";
-"OF" = "из";
-
-"CHOOSE SOURCE 2" = "Выберите источник картинки";
-"INTEREST NAME" = "Название интереса";
-"NETWORK NAME" = "Имя сети";
-
-"FILTER SPOT" = "Поиск метки";
-"INTERESTS 2" = "Интересы";
-"NETWORKS 2" = "Сети";
-"ADDRESS SEARCH" = "Поиск по адресу";
+//"CLEAR DATABASE" = "Очистка базы данных";
+//"OBJECT TO DELETE" = "Что вы хотите удалить?";
+//"ONLY TRACKS" = "Только треки";
+//"ALL DATA" = "Все данные";
+//"STOP TRACKING" = "Остановить геотрекинг";
+//"STOP TRACKING FOR CLEAR" = "Вы должны остановть геотрекинг перед началом очистки";
+//"WAIT FOR SYNCING COMPLETE" = "Дождитесь завершения синхронизации";
+//"CANT DELETE ALL DATA" = "Вы не можете удалить все данные";
+//"YES" = "Да";
+//"NO" = "Нет";
+//"WARNING" = "Внимание";
+//"OK" = "Ok";
+//"CANCEL" = "Отмена";
+//"START" = "Старт";
+//"STOP" = "Стоп";
+//"SETTINGS" = "Настройки";
+//"SYNC" = "Синхр.";
+//"TRACKER" = "Трекер";
+//"ADD NEW TRACK" = "Новый трек";
+//
+//"NO ACTIVE SESSION" = "Нет активной сессии";
+//
+//"NO CONNECTION" = "Нет соединения";
+//"NO TOKEN" = "Нет токена";
+//"SYNC FAIL" = "Сбой синхронизации";
+//"RESPONSE ERROR" = "Ошибка ответа сервера";
+//"SYNC ERROR" = "Ошибка синхронизации";
+//
+//"UNTITLED" = "без названия";
+//"ADD NEW SPOT" = "Добавить метку…";
+//"MAP" = "Карта";
+//"SATELLITE" = "Спутник";
+//"HYBRID" = "Гибрид";
+//"HEADING" = "Компас";
+//"TRACK NUMBER" = "Номер трека";
+//
+//"GENERAL" = "Общие настройки";
+//"SYNCER" = "Синхронизация";
+//"AUTHSERVICE" = "Аутентификация";
+//"BATTERY" = "Батарея";
+//
+//"uid" = "Пользователь: ID";
+//"localAccessToSettings" = "локальный доступ";
+//"desiredAccuracy" = "желаемая точность, м";
+//"requiredAccuracy" = "требуемая точность, м";
+//"distanceFilter" = "шаг слежения, м";
+//"timeFilter" = "фильтр времени, с";
+//"trackDetectionTime" = "время автоотсечки, с";
+//"trackerAutoStart" = "автостарт";
+//"trackerStartTime" = "время запуска";
+//"trackerFinishTime" = "время остановки";
+//"fetchLimit" = "количество объектов";
+//"syncInterval" = "интервал, с";
+//"syncServerURI" = "syncServerURI";
+//"xmlNamespace" = "xmlNamespace";
+//"mapHeading" = "компас";
+//"mapType" = "вид";
+//"trackScale" = "масштаб треков";
+//"checkingBattery" = "следить за батареей";
+//
+//"SPOT" = "Метка";
+//"SPOT INFO" = "Информация:";
+//"SPOT LABEL" = "Имя метки";
+//"ADD PHOTO TO SPOT" = "Добавляю фотографию к метке…";
+//"INTERESTS" = "Интересы:";
+//"NETWORKS" = "Сети:";
+//"DELETE SPOT" = "Удалить метку";
+//"SOURCE SELECT" = "Источник фото";
+//"CHOOSE SOURCE" = "Выберите источник фотографии";
+//"CAMERA" = "Камера";
+//"PHOTO LIBRARY" = "Фото библиотека";
+//
+//"DELETE PHOTO" = "Удалить фото";
+//"R U SURE" = "Вы уверены?";
+//"MANAGE PHOTOS" = "Управление фотографиями";
+//"CHOOSE ACTION" = "Выберите действие";
+//"ADD NEW PHOTO" = "Добавить новое фото";
+//"SET AS AVATAR" = "Сделать фото ключевым";
+//"OF" = "из";
+//
+//"CHOOSE SOURCE 2" = "Выберите источник картинки";
+//"INTEREST NAME" = "Название интереса";
+//"NETWORK NAME" = "Имя сети";
+//
+//"FILTER SPOT" = "Поиск метки";
+//"INTERESTS 2" = "Интересы";
+//"NETWORKS 2" = "Сети";
+//"ADDRESS SEARCH" = "Поиск по адресу";

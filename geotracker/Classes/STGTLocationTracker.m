@@ -127,6 +127,28 @@
     return _trackDetectionTime;
 }
 
+- (STGTTrack *)currentTrack {
+    if (!_currentTrack) {
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"STGTTrack"];
+        request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"startTime" ascending:NO selector:@selector(compare:)]];
+        NSError *error;
+        _currentTrack = [[self.document.managedObjectContext executeFetchRequest:request error:&error] objectAtIndex:0];
+    }
+    return _currentTrack;
+}
+
+- (CLLocation *)lastLocation {
+    if (!_lastLocation) {
+        NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"cts" ascending:NO selector:@selector(compare:)]];
+        STGTLocation *lastLocation = [[self.currentTrack.locations sortedArrayUsingDescriptors:sortDescriptors] objectAtIndex:0];
+        if (lastLocation) {
+            CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([lastLocation.latitude doubleValue], [lastLocation.longitude doubleValue]);
+            _lastLocation = [[CLLocation alloc] initWithCoordinate:coordinate altitude:[lastLocation.altitude doubleValue] horizontalAccuracy:[lastLocation.horizontalAccuracy doubleValue] verticalAccuracy:[lastLocation.verticalAccuracy doubleValue] course:[lastLocation.course doubleValue] speed:[lastLocation.speed doubleValue] timestamp:lastLocation.cts];
+        }
+    }
+    return _lastLocation;
+}
+
 #pragma mark - tracking
 
 - (void)startTracking {

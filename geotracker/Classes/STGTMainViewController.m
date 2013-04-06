@@ -92,15 +92,59 @@
 }
 
 - (void)trackControllerDidChangeContent {
-    NSLog(@"summaryInfo %@", self.trackController.summaryInfo);
-    self.currentTrackStartTime.text = [NSString stringWithFormat:@"%@", [self.trackController.currentTrackInfo valueForKey:@"startTime"]];
-    self.currentTrackInfo.text = [NSString stringWithFormat:@"%@ %@, %@ %@", [self.trackController.currentTrackInfo valueForKey:@"overallDistance"], NSLocalizedString(@"KM", @""), [self.trackController.currentTrackInfo valueForKey:@"averageSpeed"], NSLocalizedString(@"KM/H", @"")];
-    NSLog(@"currentTrackInfo %@", self.trackController.currentTrackInfo);
+
+    [self updateLabels];
+    
+}
+
+- (void)updateLabels {
+    
+    NSDateFormatter *startDateFormatter = [[NSDateFormatter alloc] init];
+    [startDateFormatter setDateStyle:NSDateFormatterShortStyle];
+    [startDateFormatter setTimeStyle:NSDateFormatterMediumStyle];
+    
+    double overallDistance = [[self.trackController.currentTrackInfo valueForKey:@"overallDistance"] doubleValue];
+    double averageSpeed = [[self.trackController.currentTrackInfo valueForKey:@"averageSpeed"] doubleValue];
+    NSDate *startDate = [self.trackController.currentTrackInfo valueForKey:@"startTime"];
+    
+    if (!startDate) {
+        self.currentTrackStartTime.text = @"";
+    } else {
+        self.currentTrackStartTime.text = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"START AT", @""), [startDateFormatter stringFromDate:startDate]];
+    }
+    self.currentTrackInfo.text = [NSString stringWithFormat:@"%.2f %@, %.1f %@", overallDistance/1000, NSLocalizedString(@"KM", @""), averageSpeed, NSLocalizedString(@"KM/H", @"")];
+
+    overallDistance = [[self.trackController.summaryInfo valueForKey:@"overallDistance"] doubleValue];
+    averageSpeed = [[self.trackController.summaryInfo valueForKey:@"averageSpeed"] doubleValue];
+    int numberOfTracks = [[self.trackController.summaryInfo valueForKey:@"numberOfTracks"] intValue];
+    
+    NSString *keyString;
+    if (numberOfTracks >= 11 && numberOfTracks <= 19) {
+        keyString = @"5TRACKS";
+    } else {
+        int switchNumber = numberOfTracks % 10;
+        switch (switchNumber) {
+            case 1:
+                keyString = @"1TRACKS";
+                break;
+            case 2:
+            case 3:
+            case 4:
+                keyString = @"2TRACKS";
+                break;
+            default:
+                keyString = @"5TRACKS";
+                break;
+        }
+    }
+
+    self.todaySummary.text = [NSString stringWithFormat:@"%.2f %@, %.1f %@, %d %@", overallDistance/1000, NSLocalizedString(@"KM", @""), averageSpeed, NSLocalizedString(@"KM/H", @""), numberOfTracks, NSLocalizedString(keyString, @"")];
 }
 
 #pragma mark - init view
 
 - (void)initView {
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(currentSessionChanged:) name:@"currentSessionChanged" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkSessionState) name:@"sessionStatusChanged" object:self.currentSession];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationTrackingStart) name:@"locationTrackingStart" object:self.currentSession.locationTracker];
@@ -112,6 +156,7 @@
     [self initButtonsImage];
     [self initIndicators];
     [self checkSessionState];
+
 }
 
 - (void)initButtonsImage {
@@ -157,6 +202,7 @@
         if (self.currentSession.batteryTracker.tracking) {
             [self batteryTrackingStart];
         }
+        [self updateLabels];
     } else {
         [self disableButtons];
     }

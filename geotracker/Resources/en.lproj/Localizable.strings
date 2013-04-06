@@ -7,26 +7,7 @@
 */
 
 "TODAY SUMMARY" = "Today summary";
-
-"CLEAR DATABASE" = "Clear database";
-"OBJECT TO DELETE" = "Choose objects to delete:";
-"CANCEL" = "Cancel";
-"ONLY TRACKS" = "Only tracks";
-"ALL DATA" = "All data";
-"STOP TRACKING" = "Stop tracking";
-"NO" = "No";
-"YES" = "Yes";
-"STOP" = "Stop";
-"WARNING" = "Warning";
-"OK" = "Ok";
-"STOP TRACKING FOR CLEAR" = "You should stop locations tracking for clear procedure";
-"WAIT FOR SYNCING COMPLETE" = "Wait for syncing complete";
-"CANT DELETE ALL DATA" = "You can not delete all data";
-"START" = "Start";
-"SETTINGS" = "Settings";
-"SYNC" = "Sync";
-"TRACKER" = "Tracker";
-"ADD NEW TRACK" = "Add new track";
+"START AT" = "Start at";
 
 "KM" = "km";
 "M" = "m";
@@ -40,71 +21,91 @@
 "2TRACKS" = "tracks";
 "5TRACKS" = "tracks";
 
-"NO ACTIVE SESSION" = "No active session";
-
-"NO CONNECTION" = "No connection";
-"NO TOKEN" = "No token";
-"SYNC FAIL" = "Sync fail";
-"RESPONSE ERROR" = "Response error";
-"SYNC ERROR" = "Sync error";
-
-"UNTITLED" = "untitled";
-"ADD NEW SPOT" = "Add new spot…";
-"MAP" = "Map";
-"SATELLITE" = "Satellite";
-"HYBRID" = "Hybrid";
-"HEADING" = "Heading";
-"TRACK NUMBER" = "Track number";
-
-"GENERAL" = "General settings";
-"SYNCER" = "Syncer";
-"AUTHSERVICE" = "AuthService";
-"BATTERY" = "Battery";
-
-"uid" = "User: ID";
-"localAccessToSettings" = "localAccessToSettings";
-"desiredAccuracy" = "desiredAccuracy, m";
-"requiredAccuracy" = "requiredAccuracy, m";
-"distanceFilter" = "distanceFilter, m";
-"timeFilter" = "timeFilter, s";
-"trackDetectionTime" = "trackDetectionTime, s";
-"trackerAutoStart" = "trackerAutoStart";
-"trackerStartTime" = "trackerStartTime";
-"trackerFinishTime" = "trackerFinishTime";
-"fetchLimit" = "fetchLimit";
-"syncInterval" = "syncInterval, s";
-"syncServerURI" = "syncServerURI";
-"xmlNamespace" = "xmlNamespace";
-"mapHeading" = "mapHeading";
-"mapType" = "mapType";
-"trackScale" = "trackScale";
-"checkingBattery" = "checkingBattery";
-
-"SPOT" = "Spot";
-"SPOT INFO" = "Spot info:";
-"SPOT LABEL" = "Spot label";
-"ADD PHOTO TO SPOT" = "Add photo to spot…";
-"INTERESTS" = "Interests:";
-"NETWORKS" = "Networks:";
-"DELETE SPOT" = "Delete spot";
-"SOURCE SELECT" = "Source select";
-"CHOOSE SOURCE" = "Choose source for photo";
-"CAMERA" = "Camera";
-"PHOTO LIBRARY" = "Photo library";
-
-"DELETE PHOTO" = "Delete photo";
-"R U SURE" = "Are you sure?";
-"MANAGE PHOTOS" = "Manage photos";
-"CHOOSE ACTION" = "Choose action";
-"ADD NEW PHOTO" = "Add new photo";
-"SET AS AVATAR" = "Set photo as avatar";
-"OF" = "of";
-
-"CHOOSE SOURCE 2" = "Choose source for picture";
-"INTEREST NAME" = "Name of interest";
-"NETWORK NAME" = "Name of network";
-
-"FILTER SPOT" = "Filter spot";
-"INTERESTS 2" = "Interests";
-"NETWORKS 2" = "Networks";
-"ADDRESS SEARCH" = "Address search";
+//"CLEAR DATABASE" = "Clear database";
+//"OBJECT TO DELETE" = "Choose objects to delete:";
+//"CANCEL" = "Cancel";
+//"ONLY TRACKS" = "Only tracks";
+//"ALL DATA" = "All data";
+//"STOP TRACKING" = "Stop tracking";
+//"NO" = "No";
+//"YES" = "Yes";
+//"STOP" = "Stop";
+//"WARNING" = "Warning";
+//"OK" = "Ok";
+//"STOP TRACKING FOR CLEAR" = "You should stop locations tracking for clear procedure";
+//"WAIT FOR SYNCING COMPLETE" = "Wait for syncing complete";
+//"CANT DELETE ALL DATA" = "You can not delete all data";
+//"START" = "Start";
+//"SETTINGS" = "Settings";
+//"SYNC" = "Sync";
+//"TRACKER" = "Tracker";
+//"ADD NEW TRACK" = "Add new track";
+//
+//"NO ACTIVE SESSION" = "No active session";
+//
+//"NO CONNECTION" = "No connection";
+//"NO TOKEN" = "No token";
+//"SYNC FAIL" = "Sync fail";
+//"RESPONSE ERROR" = "Response error";
+//"SYNC ERROR" = "Sync error";
+//
+//"UNTITLED" = "untitled";
+//"ADD NEW SPOT" = "Add new spot…";
+//"MAP" = "Map";
+//"SATELLITE" = "Satellite";
+//"HYBRID" = "Hybrid";
+//"HEADING" = "Heading";
+//"TRACK NUMBER" = "Track number";
+//
+//"GENERAL" = "General settings";
+//"SYNCER" = "Syncer";
+//"AUTHSERVICE" = "AuthService";
+//"BATTERY" = "Battery";
+//
+//"uid" = "User: ID";
+//"localAccessToSettings" = "localAccessToSettings";
+//"desiredAccuracy" = "desiredAccuracy, m";
+//"requiredAccuracy" = "requiredAccuracy, m";
+//"distanceFilter" = "distanceFilter, m";
+//"timeFilter" = "timeFilter, s";
+//"trackDetectionTime" = "trackDetectionTime, s";
+//"trackerAutoStart" = "trackerAutoStart";
+//"trackerStartTime" = "trackerStartTime";
+//"trackerFinishTime" = "trackerFinishTime";
+//"fetchLimit" = "fetchLimit";
+//"syncInterval" = "syncInterval, s";
+//"syncServerURI" = "syncServerURI";
+//"xmlNamespace" = "xmlNamespace";
+//"mapHeading" = "mapHeading";
+//"mapType" = "mapType";
+//"trackScale" = "trackScale";
+//"checkingBattery" = "checkingBattery";
+//
+//"SPOT" = "Spot";
+//"SPOT INFO" = "Spot info:";
+//"SPOT LABEL" = "Spot label";
+//"ADD PHOTO TO SPOT" = "Add photo to spot…";
+//"INTERESTS" = "Interests:";
+//"NETWORKS" = "Networks:";
+//"DELETE SPOT" = "Delete spot";
+//"SOURCE SELECT" = "Source select";
+//"CHOOSE SOURCE" = "Choose source for photo";
+//"CAMERA" = "Camera";
+//"PHOTO LIBRARY" = "Photo library";
+//
+//"DELETE PHOTO" = "Delete photo";
+//"R U SURE" = "Are you sure?";
+//"MANAGE PHOTOS" = "Manage photos";
+//"CHOOSE ACTION" = "Choose action";
+//"ADD NEW PHOTO" = "Add new photo";
+//"SET AS AVATAR" = "Set photo as avatar";
+//"OF" = "of";
+//
+//"CHOOSE SOURCE 2" = "Choose source for picture";
+//"INTEREST NAME" = "Name of interest";
+//"NETWORK NAME" = "Name of network";
+//
+//"FILTER SPOT" = "Filter spot";
+//"INTERESTS 2" = "Interests";
+//"NETWORKS 2" = "Networks";
+//"ADDRESS SEARCH" = "Address search";

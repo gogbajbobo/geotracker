@@ -26,6 +26,7 @@
                                      @"10", @"requiredAccuracy",
                                      @"-1", @"distanceFilter",
                                      @"2", @"timeFilter",
+                                     @"10", @"trackDetectionTime",
                                      @"1", @"localAccessToSettings",
                                      nil];
     

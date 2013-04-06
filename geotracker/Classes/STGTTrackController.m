@@ -50,9 +50,9 @@
     
     NSDictionary *currentTrackInfo;
     
-    CLLocationDistance overallDistance;
-    NSTimeInterval trackOverallTime;
-    CLLocationSpeed averageSpeed;
+    CLLocationDistance overallDistance = 0.0;
+    NSTimeInterval trackOverallTime = 0.0;
+    CLLocationSpeed averageSpeed = 0.0;
     
     STGTLocation *previousLocation;
     for (STGTLocation *location in [[self currentTrack] locations]) {
@@ -61,17 +61,14 @@
         } else {
             CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:[previousLocation.latitude doubleValue] longitude:[previousLocation.longitude doubleValue]];
             CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:[location.latitude doubleValue] longitude:[location.longitude doubleValue]];
-            overallDistance = overallDistance + [loc1 distanceFromLocation:loc2];
-            if (overallDistance < 0) {
-                overallDistance = 0;
-            }
+            overallDistance = overallDistance + fabs([loc1 distanceFromLocation:loc2]);
         }
     }
     
     trackOverallTime = [[self currentTrack].finishTime timeIntervalSinceDate:[self currentTrack].startTime];
     
     if (trackOverallTime != 0) {
-        averageSpeed = 3.6 * overallDistance / trackOverallTime;
+        averageSpeed = fabs(3.6 * overallDistance / trackOverallTime);
     }
     
     currentTrackInfo = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -88,9 +85,9 @@
 - (NSDictionary *)summaryInfo {
     
     NSDictionary *summaryInfo;
-    CLLocationDistance overallDistance;
-    NSTimeInterval trackOverallTime;
-    CLLocationSpeed averageSpeed;
+    CLLocationDistance overallDistance = 0.0;
+    NSTimeInterval trackOverallTime = 0.0;
+    CLLocationSpeed averageSpeed = 0.0;
 
     for (STGTTrack *track in self.resultsController.fetchedObjects) {
         
@@ -101,10 +98,7 @@
             } else {
                 CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:[previousLocation.latitude doubleValue] longitude:[previousLocation.longitude doubleValue]];
                 CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:[location.latitude doubleValue] longitude:[location.longitude doubleValue]];
-                overallDistance = overallDistance + [loc2 distanceFromLocation:loc1];
-                if (overallDistance < 0) {
-                    overallDistance = 0;
-                }
+                overallDistance = overallDistance + fabs([loc1 distanceFromLocation:loc2]);
             }
         }
         
@@ -112,7 +106,7 @@
     }
 
     if (trackOverallTime != 0) {
-        averageSpeed = 3.6 * overallDistance / trackOverallTime;
+        averageSpeed = fabs(3.6 * overallDistance / trackOverallTime);
     }
 
     summaryInfo = [NSDictionary dictionaryWithObjectsAndKeys:
