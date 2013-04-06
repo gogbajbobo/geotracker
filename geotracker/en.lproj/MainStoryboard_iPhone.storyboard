@@ -164,6 +164,9 @@
                                         <state key="highlighted">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="logButtonPressed:" destination="ybq-Oy-8hZ" eventType="touchUpInside" id="OgT-Vf-el0"/>
+                                        </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="ok.png" id="kBR-6j-qJd">
                                         <rect key="frame" x="79" y="34" width="24" height="24"/>

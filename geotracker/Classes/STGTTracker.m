@@ -7,6 +7,7 @@
 //
 
 #import "STGTTracker.h"
+#import "STSession.h"
 
 @interface STGTTracker()
 
@@ -223,17 +224,19 @@
 #pragma mark - tracking
 
 - (void)startTracking {
-    NSLog(@"%@ startTracking %@", self.group, [NSDate date]);
+//    NSLog(@"%@ startTracking %@", self.group, [NSDate date]);
     if ([[(id <STSession>)self.session status] isEqualToString:@"running"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"%@TrackingStart", self.group] object:self];
         self.tracking = YES;
+        [[(STSession *)self.session logger] saveLogMessageWithText:[NSString stringWithFormat:@"Start tracking %@", self.group] type:nil];
     }
 }
 
 - (void)stopTracking {
-    NSLog(@"%@ stopTracking %@", self.group, [NSDate date]);
+//    NSLog(@"%@ stopTracking %@", self.group, [NSDate date]);
     [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"%@TrackingStop", self.group] object:self];
     self.tracking = NO;
+    [[(STSession *)self.session logger] saveLogMessageWithText:[NSString stringWithFormat:@"Stop tracking %@", self.group] type:nil];
 }
 
 

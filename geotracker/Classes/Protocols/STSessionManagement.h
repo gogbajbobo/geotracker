@@ -23,7 +23,6 @@
 
 @end
 
-
 @protocol STSession <NSObject>
 
 + (id <STSession>)initWithUID:(NSString *)uid authDelegate:(id)authDelegate settings:(NSDictionary *)settings;

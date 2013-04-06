@@ -9,6 +9,7 @@
 #import "STSession.h"
 #import "STGTTracker.h"
 #import "STSyncer.h"
+#import "STLogger.h"
 
 @interface STSession()
 
@@ -73,6 +74,8 @@
 }
 
 - (void)settingsLoadComplete {
+    self.logger = [[STLogger alloc] init];
+    self.logger.session = self;
     self.locationTracker = [[STGTLocationTracker alloc] init];
     self.locationTracker.session = self;
     self.batteryTracker = [[STGTBatteryTracker alloc] init];
@@ -94,6 +97,7 @@
     if (_status != status) {
         _status = status;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"sessionStatusChanged" object:self];
+        [self.logger saveLogMessageWithText:[NSString stringWithFormat:@"Session status changed to %@", self.status] type:nil];
     }
 }
 

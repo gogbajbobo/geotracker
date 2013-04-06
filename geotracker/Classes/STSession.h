@@ -15,6 +15,7 @@
 #import "STGTBatteryTracker.h"
 #import "STGTSettings.h"
 #import "STGTSettingsController.h"
+#import "STLogger.h"
 
 @interface STSession : NSObject <STSession>
 
@@ -27,6 +28,7 @@
 @property (strong, nonatomic) NSString *status;
 @property (nonatomic, strong) id <STRequestAuthenticatable> authDelegate;
 @property (nonatomic, strong) STGTSettingsController *settingsController;
+@property (nonatomic, strong) STLogger *logger;
 
 + (STSession *)initWithUID:(NSString *)uid authDelegate:(id <STRequestAuthenticatable>)authDelegate;
 + (STSession *)initWithUID:(NSString *)uid authDelegate:(id <STRequestAuthenticatable>)authDelegate settings:(NSDictionary *)settings;

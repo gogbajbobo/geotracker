@@ -51,6 +51,12 @@
     }
 }
 
+- (IBAction)logButtonPressed:(id)sender {
+    UITableViewController *logTVC = [[UITableViewController alloc] init];
+    logTVC.tableView.delegate = self.currentSession.logger;
+    logTVC.tableView.dataSource = self.currentSession.logger;
+    [self.navigationController pushViewController:logTVC animated:YES];
+}
 
 
 #pragma mark - view behavior
