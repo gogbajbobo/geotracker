@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "STGTTrackController.h"
+#import "STSession.h"
 
 @interface STGTMainViewController : UIViewController
 
 @property (nonatomic, strong) STGTTrackController *trackController;
+@property (nonatomic, strong) STSession *currentSession;
 
 @end

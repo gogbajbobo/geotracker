@@ -21,14 +21,40 @@
 "2TRACKS" = "tracks";
 "5TRACKS" = "tracks";
 
+"TRACKER" = "Tracker";
+"CURRENT UID" = "Current session uid";
+"LOCATION TRACKER" = "Location tracker";
+"BATTERY TRACKER" = "Battery tracker";
+"ON" = "On";
+"OFF" = "Off";
+
+"localAccessToSettings" = "localAccessToSettings";
+"desiredAccuracy" = "desiredAccuracy, m";
+"requiredAccuracy" = "requiredAccuracy, m";
+"distanceFilter" = "distanceFilter, m";
+"timeFilter" = "timeFilter, s";
+"trackDetectionTime" = "trackDetectionTime, s";
+"locationTrackerAutoStart" = "locationTrackerAutoStart";
+"locationTrackerStartTime" = "locationTrackerStartTime";
+"locationTrackerFinishTime" = "locationTrackerFinishTime";
+"fetchLimit" = "fetchLimit";
+"syncInterval" = "syncInterval, s";
+"syncServerURI" = "syncServerURI";
+"xmlNamespace" = "xmlNamespace";
+"mapHeading" = "mapHeading";
+"mapType" = "mapType";
+"trackScale" = "trackScale";
+
+"NO" = "No";
+"YES" = "Yes";
+
+
 //"CLEAR DATABASE" = "Clear database";
 //"OBJECT TO DELETE" = "Choose objects to delete:";
 //"CANCEL" = "Cancel";
 //"ONLY TRACKS" = "Only tracks";
 //"ALL DATA" = "All data";
 //"STOP TRACKING" = "Stop tracking";
-//"NO" = "No";
-//"YES" = "Yes";
 //"STOP" = "Stop";
 //"WARNING" = "Warning";
 //"OK" = "Ok";
@@ -38,7 +64,6 @@
 //"START" = "Start";
 //"SETTINGS" = "Settings";
 //"SYNC" = "Sync";
-//"TRACKER" = "Tracker";
 //"ADD NEW TRACK" = "Add new track";
 //
 //"NO ACTIVE SESSION" = "No active session";
@@ -63,23 +88,6 @@
 //"BATTERY" = "Battery";
 //
 //"uid" = "User: ID";
-//"localAccessToSettings" = "localAccessToSettings";
-//"desiredAccuracy" = "desiredAccuracy, m";
-//"requiredAccuracy" = "requiredAccuracy, m";
-//"distanceFilter" = "distanceFilter, m";
-//"timeFilter" = "timeFilter, s";
-//"trackDetectionTime" = "trackDetectionTime, s";
-//"trackerAutoStart" = "trackerAutoStart";
-//"trackerStartTime" = "trackerStartTime";
-//"trackerFinishTime" = "trackerFinishTime";
-//"fetchLimit" = "fetchLimit";
-//"syncInterval" = "syncInterval, s";
-//"syncServerURI" = "syncServerURI";
-//"xmlNamespace" = "xmlNamespace";
-//"mapHeading" = "mapHeading";
-//"mapType" = "mapType";
-//"trackScale" = "trackScale";
-//"checkingBattery" = "checkingBattery";
 //
 //"SPOT" = "Spot";
 //"SPOT INFO" = "Spot info:";

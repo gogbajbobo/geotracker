@@ -19,6 +19,7 @@
 		2C181327170F054F00A36CBB /* STGTTrackController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C181326170F054F00A36CBB /* STGTTrackController.m */; };
 		2C18132A170F06F900A36CBB /* STGTTrack+dayAsString.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C181329170F06F900A36CBB /* STGTTrack+dayAsString.m */; };
 		2C18132F170F215D00A36CBB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C181331170F215D00A36CBB /* Localizable.strings */; };
+		2C1813351710116A00A36CBB /* STGTInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1813341710116A00A36CBB /* STGTInfoViewController.m */; };
 		2C2ACA6216EE2453001E333A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C2ACA6116EE2453001E333A /* UIKit.framework */; };
 		2C2ACA6416EE2453001E333A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C2ACA6316EE2453001E333A /* Foundation.framework */; };
 		2C2ACA6616EE2453001E333A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C2ACA6516EE2453001E333A /* CoreGraphics.framework */; };
@@ -94,6 +95,8 @@
 		2C181329170F06F900A36CBB /* STGTTrack+dayAsString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "STGTTrack+dayAsString.m"; sourceTree = "<group>"; };
 		2C181330170F215D00A36CBB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2C181332170F218900A36CBB /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2C1813331710116A00A36CBB /* STGTInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTInfoViewController.h; sourceTree = "<group>"; };
+		2C1813341710116A00A36CBB /* STGTInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTInfoViewController.m; sourceTree = "<group>"; };
 		2C2ACA5D16EE2453001E333A /* geotracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = geotracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C2ACA6116EE2453001E333A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2C2ACA6316EE2453001E333A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -305,6 +308,8 @@
 				2C181326170F054F00A36CBB /* STGTTrackController.m */,
 				2CE75FC8170DB98F00807B27 /* STGTMainViewController.h */,
 				2CE75FC9170DB98F00807B27 /* STGTMainViewController.m */,
+				2C1813331710116A00A36CBB /* STGTInfoViewController.h */,
+				2C1813341710116A00A36CBB /* STGTInfoViewController.m */,
 				2CE75FCB170DBBA400807B27 /* STGTRoundedCornerView.h */,
 				2CE75FCC170DBBA400807B27 /* STGTRoundedCornerView.m */,
 			);
@@ -529,6 +534,7 @@
 				2CE75FCD170DBBA400807B27 /* STGTRoundedCornerView.m in Sources */,
 				2C181327170F054F00A36CBB /* STGTTrackController.m in Sources */,
 				2C18132A170F06F900A36CBB /* STGTTrack+dayAsString.m in Sources */,
+				2C1813351710116A00A36CBB /* STGTInfoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

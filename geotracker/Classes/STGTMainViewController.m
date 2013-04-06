@@ -9,7 +9,7 @@
 #import "STGTMainViewController.h"
 #import "STGTRoundedCornerView.h"
 #import "STSessionManager.h"
-#import "STSession.h"
+#import "STGTInfoViewController.h"
 
 @interface STGTMainViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *startButton;
@@ -26,8 +26,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *todaySummary;
 @property (weak, nonatomic) IBOutlet UILabel *todaySummaryLabel;
 @property (weak, nonatomic) IBOutlet UILabel *syncLabel;
-
-@property (nonatomic, strong) STSession *currentSession;
 
 
 @end
@@ -141,6 +139,17 @@
     self.todaySummary.text = [NSString stringWithFormat:@"%.2f %@, %.1f %@, %d %@", overallDistance/1000, NSLocalizedString(@"KM", @""), averageSpeed, NSLocalizedString(@"KM/H", @""), numberOfTracks, NSLocalizedString(keyString, @"")];
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([segue.identifier isEqualToString:@"showInfoView"]) {
+        if ([segue.destinationViewController isKindOfClass:[STGTInfoViewController class]]) {
+            [(STGTInfoViewController *)segue.destinationViewController setCurrentSession:self.currentSession];
+        }
+    }
+
+}
+
+
 #pragma mark - init view
 
 - (void)initView {
@@ -153,6 +162,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(batteryTrackingStop) name:@"batteryTrackingStop" object:self.currentSession.locationTracker];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(trackControllerDidChangeContent) name:@"trackControllerDidChangeContent" object:self.trackController];
 
+    self.title = NSLocalizedString(@"TRACKER", @"");
+    
     [self initButtonsImage];
     [self initIndicators];
     [self checkSessionState];
