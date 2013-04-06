@@ -19,7 +19,7 @@
 
 - (void)initView {
     NSString *info;
-    NSLog(@"self.currentSession %@", self.currentSession);
+
     NSString *uid = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"CURRENT UID", @""), self.currentSession.uid];
     NSString *locationTracker = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"LOCATION TRACKER", @""), self.currentSession.locationTracker.tracking ? NSLocalizedString(@"ON", @"") : NSLocalizedString(@"OFF", @"")];
     NSString *batteryTracker = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"BATTERY TRACKER", @""), self.currentSession.batteryTracker.tracking ? NSLocalizedString(@"ON", @"") : NSLocalizedString(@"OFF", @"")];

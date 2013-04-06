@@ -43,7 +43,11 @@
 }
 
 - (STGTTrack *)currentTrack {
-    return (STGTTrack *)[self.resultsController.fetchedObjects objectAtIndex:0];
+    if (self.resultsController.fetchedObjects.count > 0) {
+        return (STGTTrack *)[self.resultsController.fetchedObjects objectAtIndex:0];
+    } else {
+        return nil;
+    }
 }
 
 - (NSDictionary *)currentTrackInfo {
