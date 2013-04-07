@@ -48,6 +48,7 @@
 "NO" = "No";
 "YES" = "Yes";
 
+"BUNDLE VERSION" = "bundle version";
 
 //"CLEAR DATABASE" = "Clear database";
 //"OBJECT TO DELETE" = "Choose objects to delete:";

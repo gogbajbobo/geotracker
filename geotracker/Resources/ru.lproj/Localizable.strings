@@ -48,6 +48,7 @@
 "YES" = "Да";
 "NO" = "Нет";
 
+"BUNDLE VERSION" = "версия сборки";
 
 //"CLEAR DATABASE" = "Очистка базы данных";
 //"OBJECT TO DELETE" = "Что вы хотите удалить?";

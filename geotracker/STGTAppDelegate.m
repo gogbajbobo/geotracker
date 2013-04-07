@@ -31,7 +31,7 @@
                                      nil];
     
     [[STSessionManager sharedManager] startSessionForUID:@"1" authDelegate:nil settings:sessionSettings];
-    
+
     return YES;
 }
 

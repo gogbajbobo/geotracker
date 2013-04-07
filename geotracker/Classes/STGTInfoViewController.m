@@ -19,6 +19,8 @@
 
 - (void)initView {
     NSString *info;
+    
+    NSString *bundleVersion = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"BUNDLE VERSION", @""), [[[NSBundle mainBundle] infoDictionary] valueForKey:@"CFBundleVersion"]];
 
     NSString *uid = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"CURRENT UID", @""), self.currentSession.uid];
     NSString *locationTracker = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"LOCATION TRACKER", @""), self.currentSession.locationTracker.tracking ? NSLocalizedString(@"ON", @"") : NSLocalizedString(@"OFF", @"")];
@@ -63,7 +65,7 @@
     
     NSString *settings = [NSString stringWithFormat:@"%@\r\n%@\r\n%@\r\n%@\r\n%@\r\n%@\r\n%@\r\n%@\r\n%@", desiredAccuracy, requiredAccuracy, distanceFilter, timeFilter, trackDetectionTime, locationTrackerAutoStart, fetchLimit, syncInterval, localAccessToSettings];
     
-    info = [NSString stringWithFormat:@"%@\r\n%@\r\n%@\r\n%@", uid, locationTracker, batteryTracker, settings];
+    info = [NSString stringWithFormat:@"%@\r\n%@\r\n%@\r\n%@\r\n%@", bundleVersion, uid, locationTracker, batteryTracker, settings];
     self.infoLabel.text = info;
 }
 
