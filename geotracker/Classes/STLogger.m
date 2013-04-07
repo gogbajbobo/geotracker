@@ -56,7 +56,7 @@
     NSLog(@"%@", text);
     [self.document saveDocument:^(BOOL success) {
         if (success) {
-            NSLog(@"save logMessage success");
+//            NSLog(@"save logMessage success");
         }
     }];
 
@@ -92,64 +92,41 @@
     [startDateFormatter setDateStyle:NSDateFormatterShortStyle];
     [startDateFormatter setTimeStyle:NSDateFormatterMediumStyle];
 
-    cell.textLabel.text = [[self.resultsController.fetchedObjects objectAtIndex:indexPath.row] text];
+    STGTLogMessage *logMessage = [self.resultsController.fetchedObjects objectAtIndex:indexPath.row];
     
-    cell.detailTextLabel.text = [startDateFormatter stringFromDate:[[self.resultsController.fetchedObjects objectAtIndex:indexPath.row] cts]];
+    cell.textLabel.text = logMessage.text;
+    if ([logMessage.type isEqualToString:@"error"]) {
+        cell.textLabel.textColor = [UIColor redColor];
+    } else {
+        cell.textLabel.textColor = [UIColor blackColor];
+    }
+    
+    cell.detailTextLabel.text = [startDateFormatter stringFromDate:logMessage.cts];
     
     return cell;
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if (indexPath.section == 0 && indexPath.row == 0) {
-//        if (self.currentTrack.locations.count != 0) {
-//            return UITableViewCellEditingStyleDelete;
-//        } else {
-            return UITableViewCellEditingStyleNone;
-//        }
-//    } else {
-//        if (![self.settings.localAccessToSettings boolValue] && [tableView cellForRowAtIndexPath:indexPath].tag == 0) {
-//            return UITableViewCellEditingStyleNone;
-//        } else {
-//            return UITableViewCellEditingStyleDelete;
-//        }
-//    }
+
+    return UITableViewCellEditingStyleNone;
+
 }
 
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     
-//    if (editingStyle == UITableViewCellEditingStyleDelete) {
-//        if (indexPath.section == 0 && indexPath.row == 0 && self.currentTrack.locations.count != 0) {
-//            [self startNewTrack];
-//        } else {
-//            id <NSFetchedResultsSectionInfo> sectionInfo = [[self.resultsController sections] objectAtIndex:indexPath.section];
-//            STGTTrack *track = (STGTTrack *)[[sectionInfo objects] objectAtIndex:indexPath.row];
-//            [self deleteTrack:track];
-//        }
-//    }
-    
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-//    NSInteger trackNumber = 0;
-//    for (int i = 0; i < indexPath.section; i++) {
-//        id <NSFetchedResultsSectionInfo> sectionInfo = [[self.resultsController sections] objectAtIndex:i];
-//        trackNumber = trackNumber + [sectionInfo numberOfObjects];
-//    }
-//    trackNumber = trackNumber + indexPath.row;
-//    self.selectedTrackNumber = trackNumber;
-//    self.locationsArray = [self locationsArrayForTrack:trackNumber];
     return indexPath;
     
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if (indexPath.section == 0 && indexPath.row == 0) {
-//        return NSLocalizedString(@"ADD NEW TRACK", @"");
-//    } else {
-        return nil;
-//    }
+
+    return nil;
+
 }
 
 
@@ -162,7 +139,6 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     //    NSLog(@"controllerDidChangeContent");
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"trackControllerDidChangeContent" object:self];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {

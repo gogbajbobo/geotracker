@@ -142,8 +142,8 @@
 
 - (CLLocation *)lastLocation {
     if (!_lastLocation) {
-        NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"cts" ascending:NO selector:@selector(compare:)]];
         if (self.currentTrack.locations.count > 0) {
+            NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"cts" ascending:NO selector:@selector(compare:)]];
             STGTLocation *lastLocation = [[self.currentTrack.locations sortedArrayUsingDescriptors:sortDescriptors] objectAtIndex:0];
             if (lastLocation) {
                 CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([lastLocation.latitude doubleValue], [lastLocation.longitude doubleValue]);

@@ -95,6 +95,10 @@
     }];
 }
 
+- (void)numberOfUnsyncedChanged {
+    self.syncLabel.text = [[self.currentSession.syncer numberOfUnsynced] stringValue];
+}
+
 - (void)trackControllerDidChangeContent {
 
     [self updateLabels];
@@ -167,7 +171,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(batteryTrackingStart) name:@"batteryTrackingStart" object:self.currentSession.locationTracker];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(batteryTrackingStop) name:@"batteryTrackingStop" object:self.currentSession.locationTracker];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(trackControllerDidChangeContent) name:@"trackControllerDidChangeContent" object:self.trackController];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(numberOfUnsyncedChanged) name:@"numberOfUnsyncedChanged" object:self.currentSession.syncer];
 
+    
+    
     self.title = NSLocalizedString(@"TRACKER", @"");
     
     [self initButtonsImage];
@@ -282,6 +289,7 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"batteryTrackingStart" object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"batteryTrackingStop" object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"trackControllerDidChangeContent" object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"numberOfUnsyncedChanged" object:nil];
 
         self.view = nil;
     }

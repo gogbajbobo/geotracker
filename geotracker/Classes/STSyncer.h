@@ -17,4 +17,6 @@
 @property (nonatomic, strong) id <STSession> session;
 @property (nonatomic) BOOL syncing;
 
+- (NSNumber *)numberOfUnsynced;
+
 @end
