@@ -59,14 +59,14 @@
     CLLocationSpeed averageSpeed = 0.0;
     
     STGTLocation *previousLocation;
-    for (STGTLocation *location in [[self currentTrack] locations]) {
-        if (!previousLocation) {
-            previousLocation = location;
-        } else {
+    NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"cts" ascending:NO selector:@selector(compare:)]];
+    for (STGTLocation *location in [[[self currentTrack] locations] sortedArrayUsingDescriptors:sortDescriptors]) {
+        if (previousLocation) {
             CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:[previousLocation.latitude doubleValue] longitude:[previousLocation.longitude doubleValue]];
             CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:[location.latitude doubleValue] longitude:[location.longitude doubleValue]];
             overallDistance = overallDistance + fabs([loc1 distanceFromLocation:loc2]);
         }
+        previousLocation = location;
     }
     
     trackOverallTime = [[self currentTrack].finishTime timeIntervalSinceDate:[self currentTrack].startTime];
@@ -96,14 +96,14 @@
     for (STGTTrack *track in self.resultsController.fetchedObjects) {
         
         STGTLocation *previousLocation;
-        for (STGTLocation *location in track.locations) {
-            if (!previousLocation) {
-                previousLocation = location;
-            } else {
+        NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"cts" ascending:NO selector:@selector(compare:)]];
+        for (STGTLocation *location in [track.locations sortedArrayUsingDescriptors:sortDescriptors]) {
+            if (previousLocation) {
                 CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:[previousLocation.latitude doubleValue] longitude:[previousLocation.longitude doubleValue]];
                 CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:[location.latitude doubleValue] longitude:[location.longitude doubleValue]];
                 overallDistance = overallDistance + fabs([loc1 distanceFromLocation:loc2]);
             }
+            previousLocation = location;
         }
         
         trackOverallTime = trackOverallTime + [track.finishTime timeIntervalSinceDate:track.startTime];

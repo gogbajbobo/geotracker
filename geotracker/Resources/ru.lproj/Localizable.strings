@@ -22,13 +22,13 @@
 "5TRACKS" = "треков";
 
 "TRACKER" = "Трекер";
-"CURRENT UID" = "Uid текущей сессии";
-"LOCATION TRACKER" = "Отслеживание геопозиции";
-"BATTERY TRACKER" = "Слежение за батарейкой";
+"CURRENT UID" = "uid текущей сессии";
+"LOCATION TRACKER" = "отслеживание геопозиции";
+"BATTERY TRACKER" = "слежение за батарейкой";
 "ON" = "Вкл.";
 "OFF" = "Выкл.";
 
-"localAccessToSettings" = "локальный доступ";
+"localAccessToSettings" = "доступ к настройкам";
 "desiredAccuracy" = "желаемая точность, м";
 "requiredAccuracy" = "требуемая точность, м";
 "distanceFilter" = "шаг слежения, м";
@@ -37,8 +37,8 @@
 "locationTrackerAutoStart" = "автостарт";
 "locationTrackerStartTime" = "время запуска";
 "locationTrackerFinishTime" = "время остановки";
-"fetchLimit" = "количество объектов";
-"syncInterval" = "интервал, с";
+"fetchLimit" = "количество объектов в пакете";
+"syncInterval" = "интервал синхронизации, с";
 "syncServerURI" = "syncServerURI";
 "xmlNamespace" = "xmlNamespace";
 "mapHeading" = "компас";

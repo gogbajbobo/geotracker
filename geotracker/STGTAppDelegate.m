@@ -16,7 +16,7 @@
     // Override point for customization after application launch.
 
     NSDictionary *sessionSettings = [NSDictionary dictionaryWithObjectsAndKeys:
-                                     @"0", @"batteryTrackerAutoStart",
+                                     @"1", @"batteryTrackerAutoStart",
                                      @"10.0", @"batteryTrackerStartTime",
                                      @"20.0", @"batteryTrackerFinishTime",
                                      @"0", @"locationTrackerAutoStart",
@@ -24,9 +24,9 @@
                                      @"20.0", @"locationTrackerFinishTime",
                                      @"10", @"desiredAccuracy",
                                      @"10", @"requiredAccuracy",
-                                     @"-1", @"distanceFilter",
-                                     @"2", @"timeFilter",
-                                     @"10", @"trackDetectionTime",
+                                     @"20", @"distanceFilter",
+                                     @"20", @"timeFilter",
+                                     @"180", @"trackDetectionTime",
                                      @"1", @"localAccessToSettings",
                                      nil];
     

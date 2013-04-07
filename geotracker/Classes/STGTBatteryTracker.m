@@ -62,7 +62,7 @@
             break;
     }
     batteryStatus.batteryState = batteryState;
-    NSLog(@"batteryStatus %@", batteryStatus);
+//    NSLog(@"batteryStatus %@", batteryStatus);
 }
 
 

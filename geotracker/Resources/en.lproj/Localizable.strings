@@ -22,9 +22,9 @@
 "5TRACKS" = "tracks";
 
 "TRACKER" = "Tracker";
-"CURRENT UID" = "Current session uid";
-"LOCATION TRACKER" = "Location tracker";
-"BATTERY TRACKER" = "Battery tracker";
+"CURRENT UID" = "current session uid";
+"LOCATION TRACKER" = "location tracker";
+"BATTERY TRACKER" = "battery tracker";
 "ON" = "On";
 "OFF" = "Off";
 

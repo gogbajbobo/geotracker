@@ -28,11 +28,11 @@
     NSDictionary *syncerSettings = [self.currentSession.settingsController currentSettingsForGroup:@"syncer"];
     NSDictionary *generalSettings = [self.currentSession.settingsController currentSettingsForGroup:@"general"];
     
-    NSString *desiredAccuracy = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"desiredAccuracy", @""), [locationTrackerSettings valueForKey:@"desiredAccuracy"]];
-    NSString *requiredAccuracy = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"requiredAccuracy", @""), [locationTrackerSettings valueForKey:@"requiredAccuracy"]];
-    NSString *distanceFilter = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"distanceFilter", @""), [locationTrackerSettings valueForKey:@"distanceFilter"]];
-    NSString *timeFilter = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"timeFilter", @""), [locationTrackerSettings valueForKey:@"timeFilter"]];
-    NSString *trackDetectionTime = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"trackDetectionTime", @""), [locationTrackerSettings valueForKey:@"trackDetectionTime"]];
+    NSString *desiredAccuracy = [NSString stringWithFormat:@"%@: %.f", NSLocalizedString(@"desiredAccuracy", @""), [[locationTrackerSettings valueForKey:@"desiredAccuracy"] doubleValue]];
+    NSString *requiredAccuracy = [NSString stringWithFormat:@"%@: %.f", NSLocalizedString(@"requiredAccuracy", @""), [[locationTrackerSettings valueForKey:@"requiredAccuracy"] doubleValue]];
+    NSString *distanceFilter = [NSString stringWithFormat:@"%@: %.f", NSLocalizedString(@"distanceFilter", @""), [[locationTrackerSettings valueForKey:@"distanceFilter"] doubleValue]];
+    NSString *timeFilter = [NSString stringWithFormat:@"%@: %.f", NSLocalizedString(@"timeFilter", @""), [[locationTrackerSettings valueForKey:@"timeFilter"] doubleValue]];
+    NSString *trackDetectionTime = [NSString stringWithFormat:@"%@: %.f", NSLocalizedString(@"trackDetectionTime", @""), [[locationTrackerSettings valueForKey:@"trackDetectionTime"] doubleValue]];
     
     NSString *autoStartValues;
     if ([[locationTrackerSettings valueForKey:@"locationTrackerAutoStart"] boolValue]) {
@@ -56,7 +56,7 @@
     NSString *locationTrackerAutoStart = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"locationTrackerAutoStart", @""), autoStartValues];
     
     NSString *fetchLimit = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"fetchLimit", @""), [syncerSettings valueForKey:@"fetchLimit"]];
-    NSString *syncInterval = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"syncInterval", @""), [syncerSettings valueForKey:@"syncInterval"]];
+    NSString *syncInterval = [NSString stringWithFormat:@"%@: %.f", NSLocalizedString(@"syncInterval", @""), [[syncerSettings valueForKey:@"syncInterval"] doubleValue]];
 
     NSString *localAccessToSettings = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"localAccessToSettings", @""), [[generalSettings valueForKey:@"localAccessToSettings"] boolValue] ? NSLocalizedString(@"YES", @"") : NSLocalizedString(@"NO", @"")];
 
