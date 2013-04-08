@@ -130,6 +130,8 @@
 - (void)releaseTimers {
     [self.startTimer invalidate];
     [self.finishTimer invalidate];
+    self.startTimer = nil;
+    self.finishTimer = nil;
 }
 
 - (NSTimer *)startTimer {
@@ -143,6 +145,7 @@
             _startTimer = [[NSTimer alloc] initWithFireDate:startTime interval:24*3600 target:self selector:@selector(startTracking) userInfo:nil repeats:YES];
         }
     }
+//    NSLog(@"_startTimer %@", _startTimer);
     return _startTimer;
 }
 
@@ -157,6 +160,7 @@
             _finishTimer = [[NSTimer alloc] initWithFireDate:finishTime interval:24*3600 target:self selector:@selector(stopTracking) userInfo:nil repeats:YES];
         }
     }
+//    NSLog(@"_finishTimer %@", _finishTimer);
     return _finishTimer;
 }
 
