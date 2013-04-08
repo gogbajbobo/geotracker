@@ -18,5 +18,6 @@
 @property (nonatomic) BOOL syncing;
 
 - (NSNumber *)numberOfUnsynced;
+- (void)syncData;
 
 @end

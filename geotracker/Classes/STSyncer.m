@@ -8,6 +8,7 @@
 
 #import "STSyncer.h"
 #import "STManagedDocument.h"
+#import "STSession.h"
 
 @interface STSyncer() <NSURLConnectionDelegate, NSURLConnectionDataDelegate, NSFetchedResultsControllerDelegate>
 
@@ -19,6 +20,7 @@
 @property (nonatomic, strong) NSString *xmlNamespace;
 @property (nonatomic, strong) NSTimer *syncTimer;
 @property (nonatomic, strong) NSFetchedResultsController *resultsController;
+@property (nonatomic) BOOL running;
 
 @end
 
@@ -29,19 +31,45 @@
 - (id)init {
     self = [super init];
     if (self) {
-        [self customInit];
+//        [self startSyncer];
     }
     return self;
 }
 
-- (void)customInit {
+- (void)startSyncer {
+    [[(STSession *)self.session logger] saveLogMessageWithText:@"Syncer start" type:@""];
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionStatusChanged:) name:@"sessionStatusChanged" object:self.session];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncerSettingsChange:) name:[NSString stringWithFormat:@"%@SettingsChange", @"syncer"] object:[(id <STSession>)self.session settingsController]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tokenReceived:) name:@"tokenReceived" object: self.authDelegate];
+    [self initTimer];
+    self.running = YES;
+}
+
+- (void)stopSyncer {
+    [[(STSession *)self.session logger] saveLogMessageWithText:@"Syncer stop" type:@""];
+    self.running = NO;
+    self.syncing = NO;
+    [self releaseTimer];
+    self.resultsController = nil;
+    self.settings = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"tokenReceived" object:self.authDelegate];
+}
+
+- (void)tokenReceived:(NSNotification *)notification {
+    [[(STSession *)self.session logger] saveLogMessageWithText:@"Token received" type:@""];
+    [self.syncTimer fire];
+}
+
+- (void) setAuthDelegate:(id <STRequestAuthenticatable>)newAuthDelegate {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"tokenReceived" object: _authDelegate];
+    _authDelegate = newAuthDelegate;
 }
 
 - (void)setSession:(id<STSession>)session {
+    if (self.running) {
+        [self stopSyncer];
+    }
     _session = session;
-    self.resultsController = nil;
     self.document = (STManagedDocument *)[(id <STSession>)session document];
     NSError *error;
     if (![self.resultsController performFetch:&error]) {
@@ -49,7 +77,7 @@
     } else {
         
     }
-
+    [self startSyncer];
 }
 
 - (NSMutableDictionary *)settings {
@@ -57,28 +85,6 @@
         _settings = [[(id <STSession>)self.session settingsController] currentSettingsForGroup:@"syncer"];
     }
     return _settings;
-}
-
-- (void)syncerSettingsChange:(NSNotification *)notification {
-    
-    [self.settings addEntriesFromDictionary:notification.userInfo];
-    NSString *key = [[notification.userInfo allKeys] lastObject];
-    
-    //    NSLog(@"%@ %@", [notification.userInfo valueForKey:key], key);
-    if ([key isEqualToString:@"fetchLimit"]) {
-        self.fetchLimit = [[notification.userInfo valueForKey:key] intValue];
-        
-    } else if ([key isEqualToString:@"syncInterval"]) {
-        self.syncInterval = [[notification.userInfo valueForKey:key] doubleValue];
-        
-    } else if ([key isEqualToString:@"syncServerURI"]) {
-        self.syncServerURI = [notification.userInfo valueForKey:key];
-        
-    } else if ([key isEqualToString:@"xmlNamespace"]) {
-        self.xmlNamespace = [notification.userInfo valueForKey:key];
-        
-    }
-    
 }
 
 - (int)fetchLimit {
@@ -117,6 +123,37 @@
     return _xmlNamespace;
 }
 
+- (void)setSyncing:(BOOL)syncing {
+    if (_syncing != syncing) {
+        _syncing = syncing;
+        NSString *status = _syncing ? @"start" : @"stop";
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"syncStatusChanged" object:self];
+        [[(STSession *)self.session logger] saveLogMessageWithText:[NSString stringWithFormat:@"Syncer %@ syncing", status] type:@""];
+    }
+}
+
+- (void)syncerSettingsChange:(NSNotification *)notification {
+    
+    [self.settings addEntriesFromDictionary:notification.userInfo];
+    NSString *key = [[notification.userInfo allKeys] lastObject];
+    
+    //    NSLog(@"%@ %@", [notification.userInfo valueForKey:key], key);
+    if ([key isEqualToString:@"fetchLimit"]) {
+        self.fetchLimit = [[notification.userInfo valueForKey:key] intValue];
+        
+    } else if ([key isEqualToString:@"syncInterval"]) {
+        self.syncInterval = [[notification.userInfo valueForKey:key] doubleValue];
+        
+    } else if ([key isEqualToString:@"syncServerURI"]) {
+        self.syncServerURI = [notification.userInfo valueForKey:key];
+        
+    } else if ([key isEqualToString:@"xmlNamespace"]) {
+        self.xmlNamespace = [notification.userInfo valueForKey:key];
+        
+    }
+    
+}
+
 #pragma mark - timer
 
 - (NSTimer *)syncTimer {
@@ -136,11 +173,12 @@
 
 - (void)releaseTimer {
     [self.syncTimer invalidate];
+    self.syncTimer = nil;
 }
 
 - (void)onTimerTick:(NSTimer *)timer {
-    //    NSLog(@"timer tick at %@", [NSDate date]);
-    [self dataSyncing];
+//    NSLog(@"timer tick at %@", [NSDate date]);
+    [self syncData];
 }
 
 #pragma mark - NSFetchedResultsController
@@ -171,8 +209,35 @@
 }
 
 
-- (void)dataSyncing {
-    
+#pragma mark - syncing
+
+- (void)syncData {
+
+    if (!self.syncing) {
+
+        self.syncing = YES;
+
+        NSUInteger count = self.resultsController.fetchedObjects.count;
+        
+        if (count == 0) {
+            [[(STSession *)self.session logger] saveLogMessageWithText:@"Syncer no data to sync" type:@""];
+            [self sendData:nil toServer:self.syncServerURI];
+        } else {
+            NSUInteger len = count < self.fetchLimit ? count : self.fetchLimit;
+            NSRange range = NSMakeRange(0, len);
+            NSArray *dataForSyncing = [self.resultsController.fetchedObjects subarrayWithRange:range];
+            [self sendData:[self xmlFrom:dataForSyncing] toServer:self.syncServerURI];
+        }
+    }
+
+}
+
+- (NSData *)xmlFrom:(NSArray *)dataForSyncing {
+    return nil;
+}
+
+- (void)sendData:(NSData *)requestData toServer:(NSString *)serverUrlString {
+    self.syncing = NO;
 }
 
 @end

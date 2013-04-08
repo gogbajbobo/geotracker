@@ -152,6 +152,9 @@
                                         <state key="highlighted">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="syncButtonPressed:" destination="ybq-Oy-8hZ" eventType="touchUpInside" id="UDe-Bd-F4I"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="itW-Q5-2Ei">
                                         <rect key="frame" x="114" y="10" width="52" height="48"/>

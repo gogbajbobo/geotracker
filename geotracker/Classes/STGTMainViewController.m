@@ -58,6 +58,9 @@
     [self.navigationController pushViewController:logTVC animated:YES];
 }
 
+- (IBAction)syncButtonPressed:(id)sender {
+    [self.currentSession.syncer syncData];
+}
 
 #pragma mark - view behavior
 
@@ -149,6 +152,10 @@
     self.todaySummary.text = [NSString stringWithFormat:@"%.2f %@, %.1f %@, %d %@", overallDistance/1000, NSLocalizedString(@"KM", @""), averageSpeed, NSLocalizedString(@"KM/H", @""), numberOfTracks, NSLocalizedString(keyString, @"")];
 }
 
+- (void)syncStatusChanged {
+    self.syncButton.enabled = !self.currentSession.syncer.syncing;
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     if ([segue.identifier isEqualToString:@"showInfoView"]) {
@@ -172,6 +179,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(batteryTrackingStop) name:@"batteryTrackingStop" object:self.currentSession.locationTracker];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(trackControllerDidChangeContent) name:@"trackControllerDidChangeContent" object:self.trackController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(numberOfUnsyncedChanged) name:@"numberOfUnsyncedChanged" object:self.currentSession.syncer];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncStatusChanged) name:@"syncStatusChanged" object:self.currentSession.syncer];
 
     
     
@@ -290,6 +298,7 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"batteryTrackingStop" object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"trackControllerDidChangeContent" object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"numberOfUnsyncedChanged" object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"syncStatusChanged" object:nil];
 
         self.view = nil;
     }
