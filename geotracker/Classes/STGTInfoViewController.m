@@ -27,6 +27,7 @@
     NSString *batteryTracker = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"BATTERY TRACKER", @""), self.currentSession.batteryTracker.tracking ? NSLocalizedString(@"ON", @"") : NSLocalizedString(@"OFF", @"")];
     
     NSDictionary *locationTrackerSettings = [self.currentSession.settingsController currentSettingsForGroup:@"location"];
+    NSDictionary *batteryTrackerSettings = [self.currentSession.settingsController currentSettingsForGroup:@"battery"];
     NSDictionary *syncerSettings = [self.currentSession.settingsController currentSettingsForGroup:@"syncer"];
     NSDictionary *generalSettings = [self.currentSession.settingsController currentSettingsForGroup:@"general"];
     
@@ -57,13 +58,33 @@
     
     NSString *locationTrackerAutoStart = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"locationTrackerAutoStart", @""), autoStartValues];
     
+    if ([[batteryTrackerSettings valueForKey:@"batteryTrackerAutoStart"] boolValue]) {
+        NSNumberFormatter *timeFormatter = [[NSNumberFormatter alloc] init];
+        timeFormatter.formatWidth = 2;
+        timeFormatter.paddingCharacter = @"0";
+        double time = [[batteryTrackerSettings valueForKey:@"batteryTrackerStartTime"] doubleValue];
+        double hours = floor(time);
+        double minutes = rint((time - floor(time)) * 60);
+        NSString *startTime = [NSString stringWithFormat:@"%@:%@", [timeFormatter stringFromNumber:[NSNumber numberWithDouble:hours]], [timeFormatter stringFromNumber:[NSNumber numberWithDouble:minutes]]];
+        time = [[batteryTrackerSettings valueForKey:@"batteryTrackerFinishTime"] doubleValue];
+        hours = floor(time);
+        minutes = rint((time - floor(time)) * 60);
+        NSString *finishTime = [NSString stringWithFormat:@"%@:%@", [timeFormatter stringFromNumber:[NSNumber numberWithDouble:hours]], [timeFormatter stringFromNumber:[NSNumber numberWithDouble:minutes]]];
+        autoStartValues = [NSString stringWithFormat:@"%@ - %@", startTime, finishTime];
+        
+    } else {
+        autoStartValues = NSLocalizedString(@"NO", @"");
+    }
+    
+    NSString *batteryTrackerAutoStart = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"batteryTrackerAutoStart", @""), autoStartValues];
+    
     NSString *fetchLimit = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"fetchLimit", @""), [syncerSettings valueForKey:@"fetchLimit"]];
     NSString *syncInterval = [NSString stringWithFormat:@"%@: %.f", NSLocalizedString(@"syncInterval", @""), [[syncerSettings valueForKey:@"syncInterval"] doubleValue]];
 
     NSString *localAccessToSettings = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"localAccessToSettings", @""), [[generalSettings valueForKey:@"localAccessToSettings"] boolValue] ? NSLocalizedString(@"YES", @"") : NSLocalizedString(@"NO", @"")];
 
     
-    NSString *settings = [NSString stringWithFormat:@"%@\r\n%@\r\n%@\r\n%@\r\n%@\r\n%@\r\n%@\r\n%@\r\n%@", desiredAccuracy, requiredAccuracy, distanceFilter, timeFilter, trackDetectionTime, locationTrackerAutoStart, fetchLimit, syncInterval, localAccessToSettings];
+    NSString *settings = [NSString stringWithFormat:@"%@\r\n%@\r\n%@\r\n%@\r\n%@\r\n%@\r\n%@\r\n%@\r\n%@\r\n%@", desiredAccuracy, requiredAccuracy, distanceFilter, timeFilter, trackDetectionTime, locationTrackerAutoStart, batteryTrackerAutoStart, fetchLimit, syncInterval, localAccessToSettings];
     
     info = [NSString stringWithFormat:@"%@\r\n%@\r\n%@\r\n%@\r\n%@", bundleVersion, uid, locationTracker, batteryTracker, settings];
     self.infoLabel.text = info;

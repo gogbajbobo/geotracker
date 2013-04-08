@@ -37,6 +37,9 @@
 "locationTrackerAutoStart" = "locationTrackerAutoStart";
 "locationTrackerStartTime" = "locationTrackerStartTime";
 "locationTrackerFinishTime" = "locationTrackerFinishTime";
+"batteryTrackerAutoStart" = "batteryTrackerAutoStart";
+"batteryTrackerStartTime" = "batteryTrackerStartTime";
+"batteryTrackerFinishTime" = "batteryTrackerFinishTime";
 "fetchLimit" = "fetchLimit";
 "syncInterval" = "syncInterval, s";
 "syncServerURI" = "syncServerURI";

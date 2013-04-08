@@ -34,9 +34,12 @@
 "distanceFilter" = "шаг слежения, м";
 "timeFilter" = "фильтр времени, с";
 "trackDetectionTime" = "время автоотсечки, с";
-"locationTrackerAutoStart" = "автостарт";
+"locationTrackerAutoStart" = "автостарт (геотрекер)";
 "locationTrackerStartTime" = "время запуска";
 "locationTrackerFinishTime" = "время остановки";
+"batteryTrackerAutoStart" = "автостарт (батарея)";
+"batteryTrackerStartTime" = "время запуска";
+"batteryTrackerFinishTime" = "время остановки";
 "fetchLimit" = "количество объектов в пакете";
 "syncInterval" = "интервал синхронизации, с";
 "syncServerURI" = "syncServerURI";

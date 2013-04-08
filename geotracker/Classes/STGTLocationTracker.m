@@ -251,7 +251,7 @@
     //    NSLog(@"location %@", location);
     [self.document saveDocument:^(BOOL success) {
         if (success) {
-            NSLog(@"save newLocation success");
+//            NSLog(@"save newLocation success");
         }
     }];
     
@@ -264,7 +264,7 @@
     //    NSLog(@"track %@", track);
     [self.document saveDocument:^(BOOL success) {
         if (success) {
-            NSLog(@"save newTrack success");
+//            NSLog(@"save newTrack success");
         }
     }];
 }
