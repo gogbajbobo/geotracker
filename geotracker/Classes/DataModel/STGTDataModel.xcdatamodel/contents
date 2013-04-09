@@ -77,12 +77,12 @@
         <element name="STGTInterest" positionX="-684" positionY="-108" width="128" height="88"/>
         <element name="STGTInterestImage" positionX="-486" positionY="-148" width="128" height="58"/>
         <element name="STGTLocation" positionX="-873" positionY="-126" width="128" height="163"/>
+        <element name="STGTLogMessage" positionX="-1044" positionY="-414" width="128" height="73"/>
         <element name="STGTNetwork" positionX="-441" positionY="-315" width="128" height="88"/>
         <element name="STGTNetworkImage" positionX="-648" positionY="-432" width="128" height="58"/>
         <element name="STGTSettings" positionX="-990" positionY="-567" width="128" height="103"/>
         <element name="STGTSpot" positionX="-452" positionY="-553" width="128" height="163"/>
         <element name="STGTSpotImage" positionX="-641" positionY="-522" width="128" height="58"/>
         <element name="STGTTrack" positionX="-1098" positionY="-153" width="128" height="88"/>
-        <element name="STGTLogMessage" positionX="-1044" positionY="-414" width="128" height="73"/>
     </elements>
 </model>

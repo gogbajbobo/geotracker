@@ -126,9 +126,9 @@
 - (void)setSyncing:(BOOL)syncing {
     if (_syncing != syncing) {
         _syncing = syncing;
-        NSString *status = _syncing ? @"start" : @"stop";
         [[NSNotificationCenter defaultCenter] postNotificationName:@"syncStatusChanged" object:self];
-        [[(STSession *)self.session logger] saveLogMessageWithText:[NSString stringWithFormat:@"Syncer %@ syncing", status] type:@""];
+//        NSString *status = _syncing ? @"start" : @"stop";
+//        [[(STSession *)self.session logger] saveLogMessageWithText:[NSString stringWithFormat:@"Syncer %@ syncing", status] type:@""];
     }
 }
 
@@ -223,6 +223,11 @@
             [[(STSession *)self.session logger] saveLogMessageWithText:@"Syncer no data to sync" type:@""];
             [self sendData:nil toServer:self.syncServerURI];
         } else {
+            
+//            for (NSManagedObject *object in self.resultsController.fetchedObjects) {
+//                NSLog(@"object.entity.name %@", object.entity.name);
+//            }
+            
             NSUInteger len = count < self.fetchLimit ? count : self.fetchLimit;
             NSRange range = NSMakeRange(0, len);
             NSArray *dataForSyncing = [self.resultsController.fetchedObjects subarrayWithRange:range];
@@ -237,7 +242,29 @@
 }
 
 - (void)sendData:(NSData *)requestData toServer:(NSString *)serverUrlString {
-    self.syncing = NO;
+    NSURL *requestURL = [NSURL URLWithString:serverUrlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
+    if (!requestData) {
+        [request setHTTPMethod:@"GET"];
+        //        NSLog(@"GET");
+    } else {
+        //        NSLog(@"POST");
+        [request setHTTPMethod:@"POST"];
+        [request setHTTPBody:requestData];
+        [request setValue:@"text/xml" forHTTPHeaderField:@"Content-type"];
+    }
+    
+    request = [[self.authDelegate authenticateRequest:(NSURLRequest *) request] mutableCopy];
+    if ([request valueForHTTPHeaderField:@"Authorization"]) {
+        NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+        if (!connection) {
+        [[(STSession *)self.session logger] saveLogMessageWithText:@"Syncer no connection" type:@"error"];
+            self.syncing = NO;
+        }
+    } else {
+        [[(STSession *)self.session logger] saveLogMessageWithText:@"Syncer no authorization header" type:@"error"];
+        self.syncing = NO;
+    }
 }
 
 @end
