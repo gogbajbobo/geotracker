@@ -1,4 +1,6 @@
 
+/Pods/*
+
 *.xcbkptlist
 
 *.xcuserstate
