@@ -38,6 +38,7 @@
                 completionHandler(YES);
             } else {
                 NSLog(@"UIDocumentSaveForOverwriting not success");
+                NSLog(@"self %@", self);
             }
         }];
     } else {

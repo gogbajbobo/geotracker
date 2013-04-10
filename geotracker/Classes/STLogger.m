@@ -55,8 +55,9 @@
     logMessage.type = type;
     NSLog(@"%@", text);
     [self.document saveDocument:^(BOOL success) {
+        NSLog(@"save logMessage %@", text);
         if (success) {
-//            NSLog(@"save logMessage success");
+            NSLog(@"save logMessage success");
         }
     }];
 

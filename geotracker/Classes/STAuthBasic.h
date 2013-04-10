@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Maxim Grigoriev. All rights reserved.
 //
 
-#import "UDOAuthBasicAbstract.h"
+#import <UDPushAuth/UDOAuthBasicAbstract.h>
 #import "STRequestAuthenticatable.h"
 
 @interface STAuthBasic : UDOAuthBasicAbstract <STRequestAuthenticatable>

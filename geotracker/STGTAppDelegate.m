@@ -44,6 +44,7 @@
                                      nil];
     
     [[STSessionManager sharedManager] startSessionForUID:@"1" authDelegate:[STAuthBasic sharedOAuth] settings:sessionSettings];
+//    [[STSessionManager sharedManager] startSessionForUID:@"1" authDelegate:nil settings:sessionSettings];
 
     return YES;
 }
