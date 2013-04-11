@@ -53,6 +53,9 @@
 
 "BUNDLE VERSION" = "версия сборки";
 
+"ADD NEW TRACK" = "Новый трек";
+
+
 //"CLEAR DATABASE" = "Очистка базы данных";
 //"OBJECT TO DELETE" = "Что вы хотите удалить?";
 //"ONLY TRACKS" = "Только треки";
@@ -68,7 +71,6 @@
 //"STOP" = "Стоп";
 //"SETTINGS" = "Настройки";
 //"SYNC" = "Синхр.";
-//"ADD NEW TRACK" = "Новый трек";
 //
 //"NO ACTIVE SESSION" = "Нет активной сессии";
 //

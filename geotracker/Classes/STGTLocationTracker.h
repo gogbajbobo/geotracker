@@ -7,7 +7,11 @@
 //
 
 #import "STGTTracker.h"
+#import "STGTTrack.h"
 
 @interface STGTLocationTracker : STGTTracker
+
+- (void)startNewTrack;
+- (void)deleteTrack:(STGTTrack *)track;
 
 @end

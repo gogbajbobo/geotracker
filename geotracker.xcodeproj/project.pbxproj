@@ -12,6 +12,7 @@
 		2C103A4F17004F6100BC46B4 /* STGTSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C103A4D17004F3A00BC46B4 /* STGTSettingsController.m */; };
 		2C103A511700512500BC46B4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C103A501700512500BC46B4 /* MapKit.framework */; };
 		2C103A531700512C00BC46B4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C103A521700512C00BC46B4 /* CoreLocation.framework */; };
+		2C171BCD1716EAF900426992 /* STGTMapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C171BCC1716EAF900426992 /* STGTMapController.m */; };
 		2C181320170DD67C00A36CBB /* battery.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C18131C170DD67C00A36CBB /* battery.png */; };
 		2C181321170DD67C00A36CBB /* geo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C18131D170DD67C00A36CBB /* geo.png */; };
 		2C181322170DD67C00A36CBB /* ok.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C18131E170DD67C00A36CBB /* ok.png */; };
@@ -89,6 +90,8 @@
 		2C103A4D17004F3A00BC46B4 /* STGTSettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTSettingsController.m; sourceTree = "<group>"; };
 		2C103A501700512500BC46B4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		2C103A521700512C00BC46B4 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		2C171BCB1716EAF900426992 /* STGTMapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTMapController.h; sourceTree = "<group>"; };
+		2C171BCC1716EAF900426992 /* STGTMapController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTMapController.m; sourceTree = "<group>"; };
 		2C18131C170DD67C00A36CBB /* battery.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = battery.png; sourceTree = "<group>"; };
 		2C18131D170DD67C00A36CBB /* geo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = geo.png; sourceTree = "<group>"; };
 		2C18131E170DD67C00A36CBB /* ok.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ok.png; sourceTree = "<group>"; };
@@ -325,6 +328,8 @@
 				2C181326170F054F00A36CBB /* STGTTrackController.m */,
 				2C1879EA17106D7100F6EFF9 /* STLogger.h */,
 				2C1879EB17106D7100F6EFF9 /* STLogger.m */,
+				2C171BCB1716EAF900426992 /* STGTMapController.h */,
+				2C171BCC1716EAF900426992 /* STGTMapController.m */,
 				2CE75FC8170DB98F00807B27 /* STGTMainViewController.h */,
 				2CE75FC9170DB98F00807B27 /* STGTMainViewController.m */,
 				2C1813331710116A00A36CBB /* STGTInfoViewController.h */,
@@ -589,6 +594,7 @@
 				2C1879E817106D3600F6EFF9 /* STGTLogMessage.m in Sources */,
 				2C1879EC17106D7100F6EFF9 /* STLogger.m in Sources */,
 				2C187A471715371600F6EFF9 /* STAuthBasic.m in Sources */,
+				2C171BCD1716EAF900426992 /* STGTMapController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,7 +7,6 @@
 //
 
 #import "STGTLocationTracker.h"
-#import "STGTTrack.h"
 #import "STGTLocation.h"
 
 @interface STGTLocationTracker() <CLLocationManagerDelegate>
@@ -267,6 +266,15 @@
         NSLog(@"save newTrack");
         if (success) {
             NSLog(@"save newTrack success");
+        }
+    }];
+}
+
+- (void)deleteTrack:(STGTTrack *)track {
+    [self.document.managedObjectContext deleteObject:track];
+    [self.document saveDocument:^(BOOL success) {
+        if (success) {
+            NSLog(@"deleteTrack success");
         }
     }];
 }

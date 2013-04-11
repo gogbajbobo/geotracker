@@ -53,6 +53,9 @@
 
 "BUNDLE VERSION" = "bundle version";
 
+"ADD NEW TRACK" = "Add new track";
+
+
 //"CLEAR DATABASE" = "Clear database";
 //"OBJECT TO DELETE" = "Choose objects to delete:";
 //"CANCEL" = "Cancel";
@@ -68,7 +71,6 @@
 //"START" = "Start";
 //"SETTINGS" = "Settings";
 //"SYNC" = "Sync";
-//"ADD NEW TRACK" = "Add new track";
 //
 //"NO ACTIVE SESSION" = "No active session";
 //

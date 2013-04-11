@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *todaySummary;
 @property (weak, nonatomic) IBOutlet UILabel *todaySummaryLabel;
 @property (weak, nonatomic) IBOutlet UILabel *syncLabel;
+@property (weak, nonatomic) IBOutlet STGTRoundedCornerView *todaySummaryView;
 
 
 @end
@@ -166,6 +167,13 @@
     self.syncIndicatorView.image = [UIImage imageNamed:@"ok.png"];    
 }
 
+- (void)todaySummaryTap {
+    UITableViewController *trackTVC = [[UITableViewController alloc] init];
+    self.trackController.tableView = trackTVC.tableView;
+    trackTVC.tableView.delegate = self.trackController;
+    trackTVC.tableView.dataSource = self.trackController;
+    [self.navigationController pushViewController:trackTVC animated:YES];
+}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
@@ -186,10 +194,16 @@
     
     self.title = NSLocalizedString(@"TRACKER", @"");
     
+    [self initViews];
     [self initButtonsImage];
     [self initIndicators];
     [self checkSessionState];
 
+}
+
+- (void)initViews {
+    UIGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(todaySummaryTap)];
+    [self.todaySummaryView addGestureRecognizer:tap];
 }
 
 - (void)initButtonsImage {
@@ -221,7 +235,7 @@
         if (!self.trackController) {
             self.trackController = [[STGTTrackController alloc] init];
         }
-        self.trackController.document = self.currentSession.document;
+        self.trackController.currentSession = self.currentSession;
 
         self.settingsButton.enabled = [[[self.currentSession.settingsController currentSettingsForGroup:@"general"] valueForKey:@"localAccessToSettings"] boolValue];
         self.spotsButton.enabled = YES;
@@ -292,6 +306,7 @@
     [super didReceiveMemoryWarning];
     if ([self isViewLoaded] && [self.view window] == nil) {
         [self removeNotificationsObservers];
+        [self releaseWeakProperties];
         self.view = nil;
     }
 }
@@ -322,6 +337,24 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"syncStatusChanged" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"syncerErrorLogMessageRecieved" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"syncerErrorLogMessageGone" object:nil];
+}
+
+- (void)releaseWeakProperties {
+    self.startButton = nil;
+    self.infoButton = nil;
+    self.spotsButton = nil;
+    self.syncButton = nil;
+    self.logButton = nil;
+    self.settingsButton = nil;
+    self.geoIndicatorView = nil;
+    self.batteryIndicatorView = nil;
+    self.syncIndicatorView = nil;
+    self.currentTrackInfo = nil;
+    self.currentTrackStartTime = nil;
+    self.todaySummary = nil;
+    self.todaySummaryLabel = nil;
+    self.syncLabel = nil;
+    self.todaySummaryView = nil;
 }
 
 @end

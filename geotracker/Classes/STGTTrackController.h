@@ -9,12 +9,17 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import <CoreLocation/CoreLocation.h>
-#import "STManagedDocument.h"
+#import "STGTTrack.h"
+#import "STSession.h"
 
-@interface STGTTrackController : NSObject
+@interface STGTTrackController : NSObject <UITableViewDataSource, UITableViewDelegate>
 
-@property (strong, nonatomic) STManagedDocument *document;
 @property (strong, nonatomic) NSDictionary *currentTrackInfo;
 @property (strong, nonatomic) NSDictionary *summaryInfo;
+@property (nonatomic, strong) STSession *currentSession;
+@property (nonatomic, strong) UITableView *tableView;
+
+- (NSDictionary *)infoForTrack:(STGTTrack *)track;
+- (STGTTrack *)currentTrack;
 
 @end
