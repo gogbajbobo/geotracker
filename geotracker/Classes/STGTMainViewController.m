@@ -156,6 +156,17 @@
     self.syncButton.enabled = !self.currentSession.syncer.syncing;
 }
 
+- (void)syncerErrorLogMessageRecieved {
+    self.syncIndicatorView.alpha = 1;
+    self.syncIndicatorView.image = [UIImage imageNamed:@"warning.png"];
+}
+
+- (void)syncerErrorLogMessageGone {
+    self.syncIndicatorView.alpha = 1;
+    self.syncIndicatorView.image = [UIImage imageNamed:@"ok.png"];    
+}
+
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     if ([segue.identifier isEqualToString:@"showInfoView"]) {
@@ -171,17 +182,7 @@
 
 - (void)initView {
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(currentSessionChanged:) name:@"currentSessionChanged" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkSessionState) name:@"sessionStatusChanged" object:self.currentSession];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationTrackingStart) name:@"locationTrackingStart" object:self.currentSession.locationTracker];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationTrackingStop) name:@"locationTrackingStop" object:self.currentSession.locationTracker];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(batteryTrackingStart) name:@"batteryTrackingStart" object:self.currentSession.locationTracker];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(batteryTrackingStop) name:@"batteryTrackingStop" object:self.currentSession.locationTracker];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(trackControllerDidChangeContent) name:@"trackControllerDidChangeContent" object:self.trackController];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(numberOfUnsyncedChanged) name:@"numberOfUnsyncedChanged" object:self.currentSession.syncer];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncStatusChanged) name:@"syncStatusChanged" object:self.currentSession.syncer];
-
-    
+    [self addNotificationsObservers];
     
     self.title = NSLocalizedString(@"TRACKER", @"");
     
@@ -290,18 +291,37 @@
 {
     [super didReceiveMemoryWarning];
     if ([self isViewLoaded] && [self.view window] == nil) {
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"currentSessionChanged" object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"sessionStatusChanged" object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"locationTrackingStart" object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"locationTrackingStop" object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"batteryTrackingStart" object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"batteryTrackingStop" object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"trackControllerDidChangeContent" object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"numberOfUnsyncedChanged" object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"syncStatusChanged" object:nil];
-
+        [self removeNotificationsObservers];
         self.view = nil;
     }
+}
+
+- (void)addNotificationsObservers {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(currentSessionChanged:) name:@"currentSessionChanged" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkSessionState) name:@"sessionStatusChanged" object:self.currentSession];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationTrackingStart) name:@"locationTrackingStart" object:self.currentSession.locationTracker];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationTrackingStop) name:@"locationTrackingStop" object:self.currentSession.locationTracker];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(batteryTrackingStart) name:@"batteryTrackingStart" object:self.currentSession.locationTracker];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(batteryTrackingStop) name:@"batteryTrackingStop" object:self.currentSession.locationTracker];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(trackControllerDidChangeContent) name:@"trackControllerDidChangeContent" object:self.trackController];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(numberOfUnsyncedChanged) name:@"numberOfUnsyncedChanged" object:self.currentSession.syncer];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncStatusChanged) name:@"syncStatusChanged" object:self.currentSession.syncer];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncerErrorLogMessageRecieved) name:@"syncerErrorLogMessageRecieved" object:self.currentSession.logger];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncerErrorLogMessageGone) name:@"syncerErrorLogMessageGone" object:self.currentSession.logger];
+}
+
+- (void)removeNotificationsObservers {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"currentSessionChanged" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"sessionStatusChanged" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"locationTrackingStart" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"locationTrackingStop" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"batteryTrackingStart" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"batteryTrackingStop" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"trackControllerDidChangeContent" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"numberOfUnsyncedChanged" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"syncStatusChanged" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"syncerErrorLogMessageRecieved" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"syncerErrorLogMessageGone" object:nil];
 }
 
 @end

@@ -14,6 +14,7 @@
 
 @property (strong, nonatomic) STManagedDocument *document;
 @property (strong, nonatomic) NSFetchedResultsController *resultsController;
+@property (nonatomic) BOOL lastMessageWasError;
 
 @end
 
@@ -53,6 +54,18 @@
     STGTLogMessage *logMessage = (STGTLogMessage *)[NSEntityDescription insertNewObjectForEntityForName:@"STGTLogMessage" inManagedObjectContext:self.document.managedObjectContext];
     logMessage.text = text;
     logMessage.type = type;
+
+    if ([type isEqualToString:@"error"]) {
+        if ([text rangeOfString:@"syncer" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"syncerErrorLogMessageRecieved" object:self];
+            self.lastMessageWasError = YES;
+        }
+    } else {
+        if (self.lastMessageWasError) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"syncerErrorLogMessageGone" object:self];
+        }
+    }
+
     NSLog(@"%@", text);
     [self.document saveDocument:^(BOOL success) {
 //        NSLog(@"save logMessage %@", text);
