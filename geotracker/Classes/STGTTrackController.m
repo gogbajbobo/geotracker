@@ -286,7 +286,12 @@
         cell.textLabel.text = [NSString stringWithFormat:@"%@%@ %@%@ %d %@", overallDistance, NSLocalizedString(@"M", @""), averageSpeed, NSLocalizedString(@"KM/H", @""), track.locations.count, NSLocalizedString(keyString, @"")];
     }
     
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ — %@", [startDateFormatter stringFromDate:track.startTime], [finishDateFormatter stringFromDate:track.finishTime]];
+    NSString *startTime = [startDateFormatter stringFromDate:track.startTime];
+    NSString *finishTime = [finishDateFormatter stringFromDate:track.finishTime];
+    startTime = startTime ? startTime : @"";
+    finishTime = finishTime ? finishTime : @"";
+    
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ — %@", startTime, finishTime];
     
     return cell;
 }
