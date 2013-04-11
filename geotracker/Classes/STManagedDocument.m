@@ -8,8 +8,23 @@
 
 #import "STManagedDocument.h"
 
+@interface STManagedDocument()
+
+@property (nonatomic) BOOL saving;
+
+@end
+
 @implementation STManagedDocument
 @synthesize myManagedObjectModel = _myManagedObjectModel;
+
+- (id)init {
+    self = [super init];
+    if (self) {
+
+    }
+    return self;
+}
+
 
 - (NSManagedObjectModel *)myManagedObjectModel {
     if (!_myManagedObjectModel) {
@@ -30,20 +45,24 @@
 }
 
 - (void)saveDocument:(void (^)(BOOL success))completionHandler {
-    if (self.documentState == UIDocumentStateNormal) {
-//        NSLog(@"fileURL %@", self.fileURL);
-        [self saveToURL:self.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success) {
-            if (success) {
-//                NSLog(@"UIDocumentSaveForOverwriting success");
-                completionHandler(YES);
-            } else {
-                NSLog(@"UIDocumentSaveForOverwriting not success");
-                NSLog(@"self %@", self);
-            }
-        }];
-    } else {
-        NSLog(@"fileURL %@", self.fileURL);
-        NSLog(@"cannot save document: documentState = %d", self.documentState);
+    
+    if (!self.saving) {
+        if (self.documentState == UIDocumentStateNormal) {
+            self.saving = YES;
+            //        NSLog(@"fileURL %@", self.fileURL);
+            [self saveToURL:self.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success) {
+                self.saving = NO;
+                if (success) {
+                    //                NSLog(@"UIDocumentSaveForOverwriting success");
+                    completionHandler(YES);
+                } else {
+                    NSLog(@"UIDocumentSaveForOverwriting not success");
+                    NSLog(@"self %@", self);
+                }
+            }];
+        } else {
+            NSLog(@"documentState != UIDocumentStateNormal for document: %@", self);
+        }
     }
 }
 
@@ -79,7 +98,5 @@
     return document;
     
 }
-
-
 
 @end
