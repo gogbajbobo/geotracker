@@ -97,7 +97,7 @@
     CLLocationDistance overallDistance = 0.0;
     NSTimeInterval overallTime = 0.0;
     CLLocationSpeed averageSpeed = 0.0;
-    STGTLocation *previousLocation;
+    STGTLocation *previousLocation = nil;
     NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"cts" ascending:NO selector:@selector(compare:)]];
     for (STGTLocation *location in [track.locations sortedArrayUsingDescriptors:sortDescriptors]) {
         if (previousLocation) {
@@ -108,7 +108,7 @@
         previousLocation = location;
     }
     
-    overallTime = [[self currentTrack].finishTime timeIntervalSinceDate:[self currentTrack].startTime];
+    overallTime = [track.finishTime timeIntervalSinceDate:track.startTime];
 
     if (overallTime != 0) {
         averageSpeed = fabs(3.6 * overallDistance / overallTime);
