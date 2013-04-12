@@ -100,7 +100,10 @@
     NSTimeInterval overallTime = 0.0;
     CLLocationSpeed averageSpeed = 0.0;
     
-    NSArray *todayTracks = [[[self.resultsController sections] objectAtIndex:0] objects];
+    NSArray *todayTracks;
+    if ([self.resultsController sections].count > 0) {
+        todayTracks = [[[self.resultsController sections] objectAtIndex:0] objects];
+    }
     
     for (STGTTrack *track in todayTracks) {
         

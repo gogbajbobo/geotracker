@@ -2,7 +2,7 @@
 //  STGTSettings.h
 //  geotracker
 //
-//  Created by Maxim Grigoriev on 4/2/13.
+//  Created by Maxim Grigoriev on 4/12/13.
 //  Copyright (c) 2013 Maxim Grigoriev. All rights reserved.
 //
 
@@ -17,5 +17,8 @@
 @property (nonatomic, retain) NSString * group;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * value;
+@property (nonatomic, retain) NSString * max;
+@property (nonatomic, retain) NSString * min;
+@property (nonatomic, retain) NSString * step;
 
 @end
