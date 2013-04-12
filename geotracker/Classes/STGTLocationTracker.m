@@ -20,6 +20,7 @@
 @property (nonatomic) CLLocationDistance distanceFilter;
 @property (nonatomic) NSTimeInterval timeFilter;
 @property (nonatomic) NSTimeInterval trackDetectionTime;
+@property (nonatomic) CLLocationDistance trackDetectionDistance;
 
 
 @end
@@ -27,10 +28,10 @@
 @implementation STGTLocationTracker
 
 @synthesize desiredAccuracy = _desiredAccuracy;
-@synthesize requiredAccuracy = _requiredAccuracy;
+//@synthesize requiredAccuracy = _requiredAccuracy;
 @synthesize distanceFilter = _distanceFilter;
-@synthesize timeFilter = _timeFilter;
-@synthesize trackDetectionTime = _trackDetectionTime;
+//@synthesize timeFilter = _timeFilter;
+//@synthesize trackDetectionTime = _trackDetectionTime;
 
 
 - (void)customInit {
@@ -57,6 +58,9 @@
         
     } else if ([key isEqualToString:@"trackDetectionTime"]) {
         self.trackDetectionTime = [[notification.userInfo valueForKey:key] doubleValue];
+        
+    } else if ([key isEqualToString:@"trackDetectionDistance"]) {
+        self.trackDetectionDistance = [[notification.userInfo valueForKey:key] doubleValue];
         
     } else if ([key isEqualToString:@"trackerAutoStart"]) {
         self.trackerAutoStart = [[notification.userInfo valueForKey:key] boolValue];
@@ -124,6 +128,13 @@
         _trackDetectionTime = [[self.settings valueForKey:@"trackDetectionTime"] doubleValue];
     }
     return _trackDetectionTime;
+}
+
+- (CLLocationDistance)trackDetectionDistance {
+    if (!_trackDetectionDistance) {
+        _trackDetectionDistance = [[self.settings valueForKey:@"trackDetectionDistance"] doubleValue];
+    }
+    return _trackDetectionDistance;
 }
 
 - (STGTTrack *)currentTrack {
@@ -207,7 +218,7 @@
     NSDate *timestamp = currentLocation.timestamp;
     if ([currentLocation.timestamp timeIntervalSinceDate:self.lastLocation.timestamp] > self.trackDetectionTime && self.currentTrack.locations.count != 0) {
         [self startNewTrack];
-        if ([currentLocation distanceFromLocation:self.lastLocation] < (2 * self.distanceFilter)) {
+        if ([currentLocation distanceFromLocation:self.lastLocation] < self.trackDetectionDistance) {
             NSDate *ts = [NSDate date];
             STGTLocation *location = (STGTLocation *)[NSEntityDescription insertNewObjectForEntityForName:@"STGTLocation" inManagedObjectContext:self.document.managedObjectContext];
             [location setLatitude:[NSNumber numberWithDouble:self.lastLocation.coordinate.latitude]];

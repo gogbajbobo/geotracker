@@ -31,6 +31,7 @@
     [trackerSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%f", 50.0], @"slider" , nil] forKey:@"distanceFilter"];
     [trackerSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%f", 20.0], @"slider" , nil] forKey:@"timeFilter"];
     [trackerSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%f", 300.0], @"slider" , nil] forKey:@"trackDetectionTime"];
+    [trackerSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%f", 100.0], @"slider" , nil] forKey:@"trackDetectionDistance"];
     [trackerSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d", NO], @"switch" , nil] forKey:@"locationTrackerAutoStart"];
     [trackerSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%f", 8.0], @"slider" , nil] forKey:@"locationTrackerStartTime"];
     [trackerSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%f", 20.0], @"slider" , nil] forKey:@"locationTrackerFinishTime"];

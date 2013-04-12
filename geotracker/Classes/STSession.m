@@ -70,6 +70,7 @@
     if ([[notification.userInfo valueForKey:@"uid"] isEqualToString:self.uid]) {
         self.settingsController = [STGTSettingsController initWithSettings:self.startSettings];
         self.settingsController.session = self;
+//        NSLog(@"currentSettings %@", [self.settingsController currentSettings]);
     }
 }
 
