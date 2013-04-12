@@ -13,5 +13,6 @@
 
 - (void)startNewTrack;
 - (void)deleteTrack:(STGTTrack *)track;
+- (void)splitTrack;
 
 @end

@@ -156,8 +156,7 @@
             NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"cts" ascending:NO selector:@selector(compare:)]];
             STGTLocation *lastLocation = [[self.currentTrack.locations sortedArrayUsingDescriptors:sortDescriptors] objectAtIndex:0];
             if (lastLocation) {
-                CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([lastLocation.latitude doubleValue], [lastLocation.longitude doubleValue]);
-                _lastLocation = [[CLLocation alloc] initWithCoordinate:coordinate altitude:[lastLocation.altitude doubleValue] horizontalAccuracy:[lastLocation.horizontalAccuracy doubleValue] verticalAccuracy:[lastLocation.verticalAccuracy doubleValue] course:[lastLocation.course doubleValue] speed:[lastLocation.speed doubleValue] timestamp:lastLocation.cts];
+                _lastLocation = [self locationFromLocationObject:lastLocation];
             }
         }
     }
@@ -220,16 +219,8 @@
         [self startNewTrack];
         if ([currentLocation distanceFromLocation:self.lastLocation] < self.trackDetectionDistance) {
             NSDate *ts = [NSDate date];
-            STGTLocation *location = (STGTLocation *)[NSEntityDescription insertNewObjectForEntityForName:@"STGTLocation" inManagedObjectContext:self.document.managedObjectContext];
-            [location setLatitude:[NSNumber numberWithDouble:self.lastLocation.coordinate.latitude]];
-            [location setLongitude:[NSNumber numberWithDouble:self.lastLocation.coordinate.longitude]];
-            [location setHorizontalAccuracy:[NSNumber numberWithDouble:self.lastLocation.horizontalAccuracy]];
-            [location setSpeed:[NSNumber numberWithDouble:-1]];
-            [location setCourse:[NSNumber numberWithDouble:-1]];
-            [location setAltitude:[NSNumber numberWithDouble:self.lastLocation.altitude]];
-            [location setVerticalAccuracy:[NSNumber numberWithDouble:self.lastLocation.verticalAccuracy]];
             [self.currentTrack setStartTime:ts];
-            [self.currentTrack addLocationsObject:location];
+            [self.currentTrack addLocationsObject:[self locationObjectFromCLLocation:self.lastLocation]];
             //            NSLog(@"copy lastLocation to new Track as first location");
         } else {
             //            NSLog(@"no");
@@ -237,28 +228,15 @@
         }
         timestamp = [NSDate date];
     }
-    
-    STGTLocation *location = (STGTLocation *)[NSEntityDescription insertNewObjectForEntityForName:@"STGTLocation" inManagedObjectContext:self.document.managedObjectContext];
-    CLLocationCoordinate2D coordinate = [currentLocation coordinate];
-    [location setLatitude:[NSNumber numberWithDouble:coordinate.latitude]];
-    [location setLongitude:[NSNumber numberWithDouble:coordinate.longitude]];
-    [location setHorizontalAccuracy:[NSNumber numberWithDouble:currentLocation.horizontalAccuracy]];
-    [location setSpeed:[NSNumber numberWithDouble:currentLocation.speed]];
-    [location setCourse:[NSNumber numberWithDouble:currentLocation.course]];
-    [location setAltitude:[NSNumber numberWithDouble:currentLocation.altitude]];
-    [location setVerticalAccuracy:[NSNumber numberWithDouble:currentLocation.verticalAccuracy]];
-    
+        
     if (self.currentTrack.locations.count == 0) {
         self.currentTrack.startTime = timestamp;
     }
+    [self.currentTrack addLocationsObject:[self locationObjectFromCLLocation:currentLocation]];
     self.currentTrack.finishTime = timestamp;
-    [self.currentTrack addLocationsObject:location];
-    
-    //    NSLog(@"currentLocation %@",currentLocation);
-    
+        
     self.lastLocation = currentLocation;
     
-    //    NSLog(@"location %@", location);
     [self.document saveDocument:^(BOOL success) {
         NSLog(@"save newLocation");
         if (success) {
@@ -290,5 +268,36 @@
     }];
 }
 
+- (void)splitTrack {
+    self.currentTrack.finishTime = self.lastLocation.timestamp;
+    [self startNewTrack];
+    STGTLocation *location = [self locationObjectFromCLLocation:self.lastLocation];
+    [self.currentTrack addLocationsObject:location];
+    self.lastLocation = [self locationFromLocationObject:location];
+}
+
+- (STGTLocation *)locationObjectFromCLLocation:(CLLocation *)location {
+    STGTLocation *locationObject = (STGTLocation *)[NSEntityDescription insertNewObjectForEntityForName:@"STGTLocation" inManagedObjectContext:self.document.managedObjectContext];
+    [locationObject setLatitude:[NSNumber numberWithDouble:location.coordinate.latitude]];
+    [locationObject setLongitude:[NSNumber numberWithDouble:location.coordinate.longitude]];
+    [locationObject setHorizontalAccuracy:[NSNumber numberWithDouble:location.horizontalAccuracy]];
+    [locationObject setSpeed:[NSNumber numberWithDouble:location.speed]];
+    [locationObject setCourse:[NSNumber numberWithDouble:location.course]];
+    [locationObject setAltitude:[NSNumber numberWithDouble:location.altitude]];
+    [locationObject setVerticalAccuracy:[NSNumber numberWithDouble:location.verticalAccuracy]];
+    return locationObject;
+}
+
+- (CLLocation *)locationFromLocationObject:(STGTLocation *)locationObject {
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([locationObject.latitude doubleValue], [locationObject.longitude doubleValue]);
+    CLLocation *location = [[CLLocation alloc] initWithCoordinate:coordinate
+                                                  altitude:[locationObject.altitude doubleValue]
+                                        horizontalAccuracy:[locationObject.horizontalAccuracy doubleValue]
+                                          verticalAccuracy:[locationObject.verticalAccuracy doubleValue]
+                                                    course:[locationObject.course doubleValue]
+                                                     speed:[locationObject.speed doubleValue]
+                                                 timestamp:locationObject.cts];
+    return location;
+}
 
 @end

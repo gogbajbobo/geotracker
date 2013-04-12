@@ -352,7 +352,7 @@
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         if (indexPath.section == 0 && indexPath.row == 0 && self.currentTrack.locations.count != 0) {
-            [self.currentSession.locationTracker startNewTrack];
+            [self.currentSession.locationTracker splitTrack];
         } else {
             id <NSFetchedResultsSectionInfo> sectionInfo = [[self.resultsController sections] objectAtIndex:indexPath.section];
             STGTTrack *track = (STGTTrack *)[[sectionInfo objects] objectAtIndex:indexPath.row];
