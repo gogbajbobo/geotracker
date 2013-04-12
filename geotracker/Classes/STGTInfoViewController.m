@@ -36,6 +36,7 @@
     NSString *distanceFilter = [NSString stringWithFormat:@"%@: %.f", NSLocalizedString(@"distanceFilter", @""), [[locationTrackerSettings valueForKey:@"distanceFilter"] doubleValue]];
     NSString *timeFilter = [NSString stringWithFormat:@"%@: %.f", NSLocalizedString(@"timeFilter", @""), [[locationTrackerSettings valueForKey:@"timeFilter"] doubleValue]];
     NSString *trackDetectionTime = [NSString stringWithFormat:@"%@: %.f", NSLocalizedString(@"trackDetectionTime", @""), [[locationTrackerSettings valueForKey:@"trackDetectionTime"] doubleValue]];
+    NSString *trackDetectionDistance = [NSString stringWithFormat:@"%@: %.f", NSLocalizedString(@"trackDetectionDistance", @""), [[locationTrackerSettings valueForKey:@"trackDetectionDistance"] doubleValue]];
     
     NSString *autoStartValues;
     if ([[locationTrackerSettings valueForKey:@"locationTrackerAutoStart"] boolValue]) {
@@ -84,7 +85,7 @@
     NSString *localAccessToSettings = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"localAccessToSettings", @""), [[generalSettings valueForKey:@"localAccessToSettings"] boolValue] ? NSLocalizedString(@"YES", @"") : NSLocalizedString(@"NO", @"")];
 
     
-    NSString *settings = [NSString stringWithFormat:@"%@\r\n%@\r\n%@\r\n%@\r\n%@\r\n%@\r\n%@\r\n%@\r\n%@\r\n%@", desiredAccuracy, requiredAccuracy, distanceFilter, timeFilter, trackDetectionTime, locationTrackerAutoStart, batteryTrackerAutoStart, fetchLimit, syncInterval, localAccessToSettings];
+    NSString *settings = [NSString stringWithFormat:@"%@\r\n%@\r\n%@\r\n%@\r\n%@\r\n%@\r\n%@\r\n%@\r\n%@\r\n%@\r\n%@", desiredAccuracy, requiredAccuracy, distanceFilter, timeFilter, trackDetectionTime, trackDetectionDistance, locationTrackerAutoStart, batteryTrackerAutoStart, fetchLimit, syncInterval, localAccessToSettings];
     
     info = [NSString stringWithFormat:@"%@\r\n%@\r\n%@\r\n%@\r\n%@", bundleVersion, uid, locationTracker, batteryTracker, settings];
     self.infoLabel.text = info;
