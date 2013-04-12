@@ -126,9 +126,9 @@
     }
     self.currentTrackInfo.text = [NSString stringWithFormat:@"%.2f %@, %.1f %@", overallDistance/1000, NSLocalizedString(@"KM", @""), averageSpeed, NSLocalizedString(@"KM/H", @"")];
 
-    overallDistance = [[self.trackController.summaryInfo valueForKey:@"overallDistance"] doubleValue];
-    averageSpeed = [[self.trackController.summaryInfo valueForKey:@"averageSpeed"] doubleValue];
-    int numberOfTracks = [[self.trackController.summaryInfo valueForKey:@"numberOfTracks"] intValue];
+    overallDistance = [[self.trackController.todaySummaryInfo valueForKey:@"overallDistance"] doubleValue];
+    averageSpeed = [[self.trackController.todaySummaryInfo valueForKey:@"averageSpeed"] doubleValue];
+    int numberOfTracks = [[self.trackController.todaySummaryInfo valueForKey:@"numberOfTracks"] intValue];
     
     NSString *keyString;
     if (numberOfTracks >= 11 && numberOfTracks <= 19) {

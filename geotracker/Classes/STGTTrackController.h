@@ -16,6 +16,7 @@
 
 @property (strong, nonatomic) NSDictionary *currentTrackInfo;
 @property (strong, nonatomic) NSDictionary *summaryInfo;
+@property (strong, nonatomic) NSDictionary *todaySummaryInfo;
 @property (nonatomic, strong) STSession *currentSession;
 @property (nonatomic, strong) UITableView *tableView;
 

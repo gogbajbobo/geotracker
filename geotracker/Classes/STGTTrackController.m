@@ -70,7 +70,7 @@
     CLLocationDistance overallDistance = 0.0;
     NSTimeInterval overallTime = 0.0;
     CLLocationSpeed averageSpeed = 0.0;
-
+    
     for (STGTTrack *track in self.resultsController.fetchedObjects) {
         
         NSDictionary *trackInfo = [self infoForTrack:track];
@@ -92,6 +92,37 @@
     return summaryInfo;
 
 }
+
+- (NSDictionary *)todaySummaryInfo {
+    
+    NSDictionary *todaySummaryInfo;
+    CLLocationDistance overallDistance = 0.0;
+    NSTimeInterval overallTime = 0.0;
+    CLLocationSpeed averageSpeed = 0.0;
+    
+    NSArray *todayTracks = [[[self.resultsController sections] objectAtIndex:0] objects];
+    
+    for (STGTTrack *track in todayTracks) {
+        
+        NSDictionary *trackInfo = [self infoForTrack:track];
+        overallDistance += [[trackInfo valueForKey:@"overallDistance"] doubleValue];
+        overallTime += [[trackInfo valueForKey:@"overallTime"] doubleValue];
+    }
+    
+    if (overallTime != 0) {
+        averageSpeed = fabs(3.6 * overallDistance / overallTime);
+    }
+    
+    todaySummaryInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                   [NSNumber numberWithDouble:overallDistance], @"overallDistance",
+                   [NSNumber numberWithDouble:averageSpeed], @"averageSpeed",
+                   [NSNumber numberWithInt:todayTracks.count], @"numberOfTracks",
+                   nil];
+    
+    
+    return todaySummaryInfo;
+}
+
 
 - (NSDictionary *)infoForTrack:(STGTTrack *)track {
     CLLocationDistance overallDistance = 0.0;
