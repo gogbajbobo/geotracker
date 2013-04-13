@@ -11,9 +11,34 @@
 
 @interface STGTSettingsTableViewController ()
 
+@property (nonatomic, strong) NSDictionary *controlsSettings;
+
 @end
 
 @implementation STGTSettingsTableViewController
+
+
+- (NSDictionary *)controlsSettings {
+    if (!_controlsSettings) {
+        _controlsSettings = [STGTSettingsController controlsSettings];
+    }
+    return _controlsSettings;
+}
+
+- (NSString *)controlTypeForIndexPath:(NSIndexPath *)indexPath {
+    NSArray *keys = [self.controlsSettings allKeys];
+    NSArray *controlGroup = [self.controlsSettings valueForKey:[keys objectAtIndex:indexPath.section]];
+    return [[controlGroup objectAtIndex:indexPath.row] objectAtIndex:0];
+}
+
+- (NSString *)controlNameForIndexPath:(NSIndexPath *)indexPath {
+    NSArray *keys = [self.controlsSettings allKeys];
+    NSArray *controlGroup = [self.controlsSettings valueForKey:[keys objectAtIndex:indexPath.section]];
+    return [[controlGroup objectAtIndex:indexPath.row] lastObject];
+}
+
+
+#pragma mark - view lifecycle
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -42,81 +67,47 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [[STGTSettingsController controlsSettings] count];
+    return [self.controlsSettings count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSArray *keys = [[STGTSettingsController controlsSettings] allKeys];
-    return [[[STGTSettingsController controlsSettings] valueForKey:[keys objectAtIndex:section]] count];
+    NSArray *keys = [self.controlsSettings allKeys];
+    return [[self.controlsSettings valueForKey:[keys objectAtIndex:section]] count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    NSString *title = [NSString stringWithFormat:@"SETTING%@",[[[STGTSettingsController controlsSettings] allKeys] objectAtIndex:section]];
+    NSString *title = [NSString stringWithFormat:@"SETTING%@",[[self.controlsSettings allKeys] objectAtIndex:section]];
     return NSLocalizedString(title, @"");
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSString *controlType = [self controlTypeForIndexPath:indexPath];
+    
+    if ([controlType isEqualToString:@"slider"] || [controlType isEqualToString:@"textField"]) {
+        return 70.0;
+    } else if ([controlType isEqualToString:@"switch"] || [controlType isEqualToString:@"segmentedControl"]) {
+        return 44.0;
+    } else {
+        return 0.0;
+    }
+    
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"settingCell";
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
     
-    // Configure the cell...
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    cell.textLabel.text = NSLocalizedString([self controlNameForIndexPath:indexPath], @"");
+    cell.detailTextLabel.text = @"123";
     
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
-}
 
 @end

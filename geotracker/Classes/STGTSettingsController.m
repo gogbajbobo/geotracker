@@ -77,52 +77,53 @@
     
     NSMutableDictionary *controlsSettings = [NSMutableDictionary dictionary];
 
-    NSMutableDictionary *locationTrackerSettings = [NSMutableDictionary dictionary];
+    NSMutableArray *locationTrackerSettings = [NSMutableArray array];
 //                                      control, min, max, step
-    [locationTrackerSettings setValue:@[@"slider", @"0", @"5", @"1"] forKey:@"desiredAccuracy"];
-    [locationTrackerSettings setValue:@[@"slider", @"5", @"100", @"10"] forKey:@"requiredAccuracy"];
-    [locationTrackerSettings setValue:@[@"slider", @"-1", @"200", @"10"] forKey:@"distanceFilter"];
-    [locationTrackerSettings setValue:@[@"slider", @"1", @"60", @"5"] forKey:@"timeFilter"];
-    [locationTrackerSettings setValue:@[@"slider", @"0", @"600", @"30"] forKey:@"trackDetectionTime"];
-    [locationTrackerSettings setValue:@[@"slider", @"1", @"1000", @"100"] forKey:@"trackSeparationDistance"];
-    [locationTrackerSettings setValue:@[@"switch", @"", @"", @""] forKey:@"locationTrackerAutoStart"];
-    [locationTrackerSettings setValue:@[@"slider", @"0", @"24", @"0.5"] forKey:@"locationTrackerStartTime"];
-    [locationTrackerSettings setValue:@[@"slider", @"0", @"24", @"0.5"] forKey:@"locationTrackerFinishTime"];
+    [locationTrackerSettings addObject:@[@"slider", @"0", @"5", @"1", @"desiredAccuracy"]];
+    [locationTrackerSettings addObject:@[@"slider", @"5", @"100", @"10", @"requiredAccuracy"]];
+    [locationTrackerSettings addObject:@[@"slider", @"-1", @"200", @"10", @"distanceFilter"]];
+    [locationTrackerSettings addObject:@[@"slider", @"1", @"60", @"5", @"timeFilter"]];
+    [locationTrackerSettings addObject:@[@"slider", @"0", @"600", @"30", @"trackDetectionTime"]];
+    [locationTrackerSettings addObject:@[@"slider", @"1", @"1000", @"100", @"trackSeparationDistance"]];
+    [locationTrackerSettings addObject:@[@"switch", @"", @"", @"", @"locationTrackerAutoStart"]];
+    [locationTrackerSettings addObject:@[@"slider", @"0", @"24", @"0.5", @"locationTrackerStartTime"]];
+    [locationTrackerSettings addObject:@[@"slider", @"0", @"24", @"0.5", @"locationTrackerFinishTime"]];
 
     [controlsSettings setValue:locationTrackerSettings forKey:@"location"];
 
     
-    NSMutableDictionary *mapSettings = [NSMutableDictionary dictionary];
-    [mapSettings setValue:@[@"segmentedControl", @"", @"", @""] forKey:@"mapHeading"];
-    [mapSettings setValue:@[@"segmentedControl", @"", @"", @""] forKey:@"mapType"];
-    [mapSettings setValue:@[@"slider", @"1", @"10", @"0.5"] forKey:@"trackScale"];
+    NSMutableArray *mapSettings = [NSMutableArray array];
+    [mapSettings addObject:@[@"segmentedControl", @"", @"", @"", @"mapHeading"]];
+    [mapSettings addObject:@[@"segmentedControl", @"", @"", @"", @"mapType"]];
+    [mapSettings addObject:@[@"slider", @"1", @"10", @"0.5", @"trackScale"]];
 
     [controlsSettings setValue:mapSettings forKey:@"map"];
     
     
-    NSMutableDictionary *syncerSettings = [NSMutableDictionary dictionary];
-    [syncerSettings setValue:@[@"slider", @"10", @"200", @"10"] forKey:@"fetchLimit"];
-    [syncerSettings setValue:@[@"slider", @"10", @"3600", @"60"] forKey:@"syncInterval"];
-    [syncerSettings setValue:@[@"textField", @"", @"", @""] forKey:@"syncServerURI"];
-    [syncerSettings setValue:@[@"textField", @"", @"", @""] forKey:@"xmlNamespace"];
+    NSMutableArray *syncerSettings = [NSMutableArray array];
+    [syncerSettings addObject:@[@"slider", @"10", @"200", @"10", @"fetchLimit"]];
+    [syncerSettings addObject:@[@"slider", @"10", @"3600", @"60", @"syncInterval"]];
+    [syncerSettings addObject:@[@"textField", @"", @"", @"", @"syncServerURI"]];
+    [syncerSettings addObject:@[@"textField", @"", @"", @"", @"xmlNamespace"]];
 
     [controlsSettings setValue:syncerSettings forKey:@"syncer"];
     
     
-    NSMutableDictionary *generalSettings = [NSMutableDictionary dictionary];
-    [generalSettings setValue:@[@"switch", @"", @"", @""] forKey:@"localAccessToSettings"];
+    NSMutableArray *generalSettings = [NSMutableArray array];
+    [generalSettings addObject:@[@"switch", @"", @"", @"", @"localAccessToSettings"]];
 
     [controlsSettings setValue:generalSettings forKey:@"general"];
     
     
-    NSMutableDictionary *batteryTrackerSettings = [NSMutableDictionary dictionary];
-    [batteryTrackerSettings setValue:@[@"switch", @"", @"", @""] forKey:@"batteryTrackerAutoStart"];
-    [batteryTrackerSettings setValue:@[@"8.0", @"slider", @"0", @"24", @"0.5"] forKey:@"batteryTrackerStartTime"];
-    [batteryTrackerSettings setValue:@[@"20.0", @"slider", @"0", @"24", @"0.5"] forKey:@"batteryTrackerFinishTime"];
+    NSMutableArray *batteryTrackerSettings = [NSMutableArray array];
+    [batteryTrackerSettings addObject:@[@"switch", @"", @"", @"", @"batteryTrackerAutoStart"]];
+    [batteryTrackerSettings addObject:@[@"slider", @"0", @"24", @"0.5", @"batteryTrackerStartTime"]];
+    [batteryTrackerSettings addObject:@[@"slider", @"0", @"24", @"0.5", @"batteryTrackerFinishTime"]];
 
     [controlsSettings setValue:batteryTrackerSettings forKey:@"battery"];
 
-    return [controlsSettings copy];
+//    NSLog(@"controlsSettings %@", controlsSettings);
+    return controlsSettings;
 }
 
 + (NSString *)normalizeValue:(NSString *)value forKey:(NSString *)key {
