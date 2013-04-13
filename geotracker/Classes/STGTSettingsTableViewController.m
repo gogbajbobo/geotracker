@@ -8,15 +8,43 @@
 
 #import "STGTSettingsTableViewController.h"
 #import "STGTSettingsController.h"
+#import "STSession.h"
 
 @interface STGTSettingsTableViewController ()
 
 @property (nonatomic, strong) NSDictionary *controlsSettings;
+@property (nonatomic, strong) NSArray *currentSettings;
 
 @end
 
+@interface STGTSettingsTableViewCell ()
+
+@end
+
+@implementation STGTSettingsTableViewCell
+
+- (void) layoutSubviews {
+
+    [super layoutSubviews];
+
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+
+    self.textLabel.frame = CGRectMake(10, 10, 240, 24);
+    self.textLabel.font = [UIFont boldSystemFontOfSize:18];
+    self.detailTextLabel.frame = CGRectMake(250, 10, 60, 24);
+    self.detailTextLabel.font = [UIFont boldSystemFontOfSize:18];
+    self.detailTextLabel.textAlignment = NSTextAlignmentRight;
+
+}
+
+
+@end
+
+
 @implementation STGTSettingsTableViewController
 
+
+#pragma mark - STGTSettingsTableViewController
 
 - (NSDictionary *)controlsSettings {
     if (!_controlsSettings) {
@@ -25,18 +53,57 @@
     return _controlsSettings;
 }
 
-- (NSString *)controlTypeForIndexPath:(NSIndexPath *)indexPath {
+- (NSArray *)currentSettings {
+    if (!_currentSettings) {
+        _currentSettings = [[(STSession *)self.session settingsController] currentSettings];
+    }
+    return _currentSettings;
+}
+
+- (NSArray *)settingsGroupForSection:(NSInteger)section {
     NSArray *keys = [self.controlsSettings allKeys];
-    NSArray *controlGroup = [self.controlsSettings valueForKey:[keys objectAtIndex:indexPath.section]];
+    return [self.controlsSettings valueForKey:[keys objectAtIndex:section]];
+}
+
+- (NSString *)controlTypeForIndexPath:(NSIndexPath *)indexPath {
+    NSArray *controlGroup = [self settingsGroupForSection:indexPath.section];
     return [[controlGroup objectAtIndex:indexPath.row] objectAtIndex:0];
 }
 
-- (NSString *)controlNameForIndexPath:(NSIndexPath *)indexPath {
-    NSArray *keys = [self.controlsSettings allKeys];
-    NSArray *controlGroup = [self.controlsSettings valueForKey:[keys objectAtIndex:indexPath.section]];
+- (NSString *)stepForIndexPath:(NSIndexPath *)indexPath {
+    NSArray *controlGroup = [self settingsGroupForSection:indexPath.section];
+    return [[controlGroup objectAtIndex:indexPath.row] objectAtIndex:3];
+}
+
+- (NSString *)settingNameForIndexPath:(NSIndexPath *)indexPath {
+    NSArray *controlGroup = [self settingsGroupForSection:indexPath.section];
     return [[controlGroup objectAtIndex:indexPath.row] lastObject];
 }
 
+- (NSString *)valueForIndexPath:(NSIndexPath *)indexPath {
+    
+    NSString *value = nil;
+    if ([[self controlTypeForIndexPath:indexPath] isEqualToString:@"slider"]) {
+        NSString *settingName = [self settingNameForIndexPath:indexPath];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.name == %@", settingName];
+        value = [[[self.currentSettings filteredArrayUsingPredicate:predicate] lastObject] valueForKey:@"value"];
+        
+        if ([settingName hasSuffix:@"StartTime"] || [settingName hasSuffix:@"FinishTime"]) {
+            double time = [value doubleValue];
+            double hours = floor(time);
+            double minutes = rint((time - floor(time)) * 60);
+            NSNumberFormatter *timeFormatter = [[NSNumberFormatter alloc] init];
+            timeFormatter.formatWidth = 2;
+            timeFormatter.paddingCharacter = @"0";
+            value = [NSString stringWithFormat:@"%@:%@", [timeFormatter stringFromNumber:[NSNumber numberWithDouble:hours]], [timeFormatter stringFromNumber:[NSNumber numberWithDouble:minutes]]];
+        } else if ([settingName isEqualToString:@"trackScale"]) {
+            value = [NSString stringWithFormat:@"%.1f", [value doubleValue]];
+        } else {
+            value = [NSString stringWithFormat:@"%.f", [value doubleValue]];
+        }
+    }
+    return value;
+}
 
 #pragma mark - view lifecycle
 
@@ -99,12 +166,17 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"settingCell";
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
+    STGTSettingsTableViewCell *cell = nil;
     
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    NSString *controlType = [self controlTypeForIndexPath:indexPath];
+    if ([controlType isEqualToString:@"slider"]) {
+        cell = [[STGTSettingsTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
+        cell.detailTextLabel.text = [self valueForIndexPath:indexPath];
+    } else {
+        cell = [[STGTSettingsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
     
-    cell.textLabel.text = NSLocalizedString([self controlNameForIndexPath:indexPath], @"");
-    cell.detailTextLabel.text = @"123";
+    cell.textLabel.text = NSLocalizedString([self settingNameForIndexPath:indexPath], @"");
     
     return cell;
 }

@@ -66,6 +66,7 @@
 
 - (IBAction)settingsButtonPressed:(id)sender {
     STGTSettingsTableViewController *settingsTVC = [[STGTSettingsTableViewController alloc] init];
+    settingsTVC.session = self.currentSession;
     [self.navigationController pushViewController:settingsTVC animated:YES];
 }
 

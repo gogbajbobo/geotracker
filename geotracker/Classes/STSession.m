@@ -74,6 +74,7 @@
 }
 
 - (void)settingsLoadComplete {
+//    NSLog(@"currentSettings %@", [self.settingsController currentSettings]);
     self.logger = [[STLogger alloc] init];
     self.logger.session = self;
     self.locationTracker = [[STGTLocationTracker alloc] init];

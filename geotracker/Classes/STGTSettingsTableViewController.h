@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "STSessionManagement.h"
 
 @interface STGTSettingsTableViewController : UITableViewController
+
+@property (nonatomic, strong) id <STSession> session;
+
+@end
+
+
+@interface STGTSettingsTableViewCell : UITableViewCell
 
 @end
