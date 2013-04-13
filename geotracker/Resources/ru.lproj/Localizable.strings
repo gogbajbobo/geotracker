@@ -56,6 +56,14 @@
 
 "ADD NEW TRACK" = "Новый трек";
 
+"SETTINGS" = "Настройки";
+
+"SETTINGgeneral" = "основные";
+"SETTINGbattery" = "батарея";
+"SETTINGmap" = "карта";
+"SETTINGlocation" = "геотрекинг";
+"SETTINGsyncer" = "синхронизация";
+
 
 //"CLEAR DATABASE" = "Очистка базы данных";
 //"OBJECT TO DELETE" = "Что вы хотите удалить?";

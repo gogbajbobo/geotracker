@@ -15,8 +15,10 @@
 @interface STGTSettingsController : NSObject <STGTSettingsController>
 
 + (NSDictionary *)defaultSettings;
++ (NSDictionary *)controlsSettings;
 
 + (STGTSettingsController *)initWithSettings:(NSDictionary *)startSettings;
+
 - (NSArray *)currentSettings;
 - (NSMutableDictionary *)currentSettingsForGroup:(NSString *)group;
 

@@ -56,6 +56,13 @@
 
 "ADD NEW TRACK" = "Add new track";
 
+"SETTINGS" = "Settings";
+
+"SETTINGgeneral" = "general";
+"SETTINGbattery" = "battery";
+"SETTINGmap" = "map";
+"SETTINGlocation" = "location";
+"SETTINGsyncer" = "syncer";
 
 //"CLEAR DATABASE" = "Clear database";
 //"OBJECT TO DELETE" = "Choose objects to delete:";

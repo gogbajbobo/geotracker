@@ -10,6 +10,7 @@
 #import "STGTRoundedCornerView.h"
 #import "STSessionManager.h"
 #import "STGTInfoViewController.h"
+#import "STGTSettingsTableViewController.h"
 
 @interface STGTMainViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *startButton;
@@ -62,6 +63,12 @@
 - (IBAction)syncButtonPressed:(id)sender {
     [self.currentSession.syncer syncData];
 }
+
+- (IBAction)settingsButtonPressed:(id)sender {
+    STGTSettingsTableViewController *settingsTVC = [[STGTSettingsTableViewController alloc] init];
+    [self.navigationController pushViewController:settingsTVC animated:YES];
+}
+
 
 #pragma mark - view behavior
 
