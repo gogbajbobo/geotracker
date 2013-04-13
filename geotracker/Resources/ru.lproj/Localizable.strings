@@ -34,7 +34,7 @@
 "distanceFilter" = "шаг слежения, м";
 "timeFilter" = "фильтр времени, с";
 "trackDetectionTime" = "время автоотсечки, с";
-"trackDetectionDistance" = "расстояние между треками, м";
+"trackSeparationDistance" = "разделение треков, м";
 "locationTrackerAutoStart" = "автостарт (геотрекер)";
 "locationTrackerStartTime" = "время запуска";
 "locationTrackerFinishTime" = "время остановки";

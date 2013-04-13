@@ -34,7 +34,7 @@
 "distanceFilter" = "distanceFilter, m";
 "timeFilter" = "timeFilter, s";
 "trackDetectionTime" = "trackDetectionTime, s";
-"trackDetectionDistance" = "trackDetectionDistance, m";
+"trackSeparationDistance" = "trackSeparationDistance, m";
 "locationTrackerAutoStart" = "locationTrackerAutoStart";
 "locationTrackerStartTime" = "locationTrackerStartTime";
 "locationTrackerFinishTime" = "locationTrackerFinishTime";

@@ -25,47 +25,104 @@
 + (NSDictionary *)defaultSettings {
     NSMutableDictionary *defaultSettings = [NSMutableDictionary dictionary];
     
-    NSMutableDictionary *trackerSettings = [NSMutableDictionary dictionary];
-    [trackerSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%f", kCLLocationAccuracyNearestTenMeters], @"slider", @"0", @"5", @"1", nil] forKey:@"desiredAccuracy"];
-    [trackerSettings setValue:[NSArray arrayWithObjects:@"10.0", @"slider", @"5", @"100", @"10", nil] forKey:@"requiredAccuracy"];
-    [trackerSettings setValue:[NSArray arrayWithObjects:@"50.0", @"slider", @"-1", @"200", @"10", nil] forKey:@"distanceFilter"];
-    [trackerSettings setValue:[NSArray arrayWithObjects:@"20.0", @"slider", @"1", @"60", @"5", nil] forKey:@"timeFilter"];
-    [trackerSettings setValue:[NSArray arrayWithObjects:@"300.0", @"slider", @"0", @"600", @"30", nil] forKey:@"trackDetectionTime"];
-    [trackerSettings setValue:[NSArray arrayWithObjects:@"100.0", @"slider", @"1", @"1000", @"100", nil] forKey:@"trackDetectionDistance"];
-    [trackerSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d", NO], @"switch", @"", @"", @"", nil] forKey:@"locationTrackerAutoStart"];
-    [trackerSettings setValue:[NSArray arrayWithObjects:@"8.0", @"slider", @"0", @"24", @"0.5", nil] forKey:@"locationTrackerStartTime"];
-    [trackerSettings setValue:[NSArray arrayWithObjects:@"20.0", @"slider", @"0", @"24", @"0.5", nil] forKey:@"locationTrackerFinishTime"];
+    NSMutableDictionary *locationTrackerSettings = [NSMutableDictionary dictionary];
+    [locationTrackerSettings setValue:[NSString stringWithFormat:@"%f", kCLLocationAccuracyNearestTenMeters] forKey:@"desiredAccuracy"];
+    [locationTrackerSettings setValue:@"10.0" forKey:@"requiredAccuracy"];
+    [locationTrackerSettings setValue:@"50.0" forKey:@"distanceFilter"];
+    [locationTrackerSettings setValue:@"20.0" forKey:@"timeFilter"];
+    [locationTrackerSettings setValue:@"300.0" forKey:@"trackDetectionTime"];
+    [locationTrackerSettings setValue:@"100.0" forKey:@"trackSeparationDistance"];
+    [locationTrackerSettings setValue:[NSString stringWithFormat:@"%d", NO] forKey:@"locationTrackerAutoStart"];
+    [locationTrackerSettings setValue:@"8.0" forKey:@"locationTrackerStartTime"];
+    [locationTrackerSettings setValue:@"20.0" forKey:@"locationTrackerFinishTime"];
     
-    [defaultSettings setValue:trackerSettings forKey:@"location"];
+    [defaultSettings setValue:locationTrackerSettings forKey:@"location"];
+    
     
     NSMutableDictionary *mapSettings = [NSMutableDictionary dictionary];
-    [mapSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d", MKUserTrackingModeNone], @"segmentedControl", @"", @"", @"", nil] forKey:@"mapHeading"];
-    [mapSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d", MKMapTypeStandard], @"segmentedControl", @"", @"", @"", nil] forKey:@"mapType"];
-    [mapSettings setValue:[NSArray arrayWithObjects:@"1.5", @"slider", @"1", @"10", @"0.5", nil] forKey:@"trackScale"];
+    [mapSettings setValue:[NSString stringWithFormat:@"%d", MKUserTrackingModeNone] forKey:@"mapHeading"];
+    [mapSettings setValue:[NSString stringWithFormat:@"%d", MKMapTypeStandard] forKey:@"mapType"];
+    [mapSettings setValue:@"1.5" forKey:@"trackScale"];
     
     [defaultSettings setValue:mapSettings forKey:@"map"];
     
+    
     NSMutableDictionary *syncerSettings = [NSMutableDictionary dictionary];
-    [syncerSettings setValue:[NSArray arrayWithObjects:@"20", @"slider", @"10", @"200", @"10", nil] forKey:@"fetchLimit"];
-    [syncerSettings setValue:[NSArray arrayWithObjects:@"240.0", @"slider", @"10", @"3600", @"60", nil] forKey:@"syncInterval"];
-    [syncerSettings setValue:[NSArray arrayWithObjects:@"https://system.unact.ru/asa/?_host=asa0&_svc=chest", @"textField", @"", @"", @"", nil] forKey:@"syncServerURI"];
-    [syncerSettings setValue:[NSArray arrayWithObjects:@"https://github.com/sys-team/ASA.chest", @"textField", @"", @"", @"", nil] forKey:@"xmlNamespace"];
+    [syncerSettings setValue:@"20" forKey:@"fetchLimit"];
+    [syncerSettings setValue:@"240.0" forKey:@"syncInterval"];
+    [syncerSettings setValue:@"https://system.unact.ru/asa/?_host=asa0&_svc=chest" forKey:@"syncServerURI"];
+    [syncerSettings setValue:@"https://github.com/sys-team/ASA.chest" forKey:@"xmlNamespace"];
     
     [defaultSettings setValue:syncerSettings forKey:@"syncer"];
     
+    
     NSMutableDictionary *generalSettings = [NSMutableDictionary dictionary];
-    [generalSettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d", YES], @"switch", @"", @"", @"", nil] forKey:@"localAccessToSettings"];
+    [generalSettings setValue:[NSString stringWithFormat:@"%d", YES] forKey:@"localAccessToSettings"];
     
     [defaultSettings setValue:generalSettings forKey:@"general"];
     
-    NSMutableDictionary *batterySettings = [NSMutableDictionary dictionary];
-    [batterySettings setValue:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d", YES], @"switch", @"", @"", @"", nil] forKey:@"batteryTrackerAutoStart"];
-    [batterySettings setValue:[NSArray arrayWithObjects:@"8.0", @"slider", @"0", @"24", @"0.5", nil] forKey:@"batteryTrackerStartTime"];
-    [batterySettings setValue:[NSArray arrayWithObjects:@"20.0", @"slider", @"0", @"24", @"0.5", nil] forKey:@"batteryTrackerFinishTime"];
     
-    [defaultSettings setValue:batterySettings forKey:@"battery"];
+    NSMutableDictionary *batteryTrackerSettings = [NSMutableDictionary dictionary];
+    [batteryTrackerSettings setValue:[NSString stringWithFormat:@"%d", NO] forKey:@"batteryTrackerAutoStart"];
+    [batteryTrackerSettings setValue:@"8.0" forKey:@"batteryTrackerStartTime"];
+    [batteryTrackerSettings setValue:@"20.0" forKey:@"batteryTrackerFinishTime"];
+    
+    [defaultSettings setValue:batteryTrackerSettings forKey:@"battery"];
+    
     
     return [defaultSettings copy];
+}
+
++ (NSDictionary *)controlsSettings {
+    
+    NSMutableDictionary *controlsSettings = [NSMutableDictionary dictionary];
+
+    NSMutableDictionary *locationTrackerSettings = [NSMutableDictionary dictionary];
+//                                      control, min, max, step
+    [locationTrackerSettings setValue:@[@"slider", @"0", @"5", @"1"] forKey:@"desiredAccuracy"];
+    [locationTrackerSettings setValue:@[@"slider", @"5", @"100", @"10"] forKey:@"requiredAccuracy"];
+    [locationTrackerSettings setValue:@[@"slider", @"-1", @"200", @"10"] forKey:@"distanceFilter"];
+    [locationTrackerSettings setValue:@[@"slider", @"1", @"60", @"5"] forKey:@"timeFilter"];
+    [locationTrackerSettings setValue:@[@"slider", @"0", @"600", @"30"] forKey:@"trackDetectionTime"];
+    [locationTrackerSettings setValue:@[@"slider", @"1", @"1000", @"100"] forKey:@"trackSeparationDistance"];
+    [locationTrackerSettings setValue:@[@"switch", @"", @"", @""] forKey:@"locationTrackerAutoStart"];
+    [locationTrackerSettings setValue:@[@"slider", @"0", @"24", @"0.5"] forKey:@"locationTrackerStartTime"];
+    [locationTrackerSettings setValue:@[@"slider", @"0", @"24", @"0.5"] forKey:@"locationTrackerFinishTime"];
+
+    [controlsSettings setValue:locationTrackerSettings forKey:@"location"];
+
+    
+    NSMutableDictionary *mapSettings = [NSMutableDictionary dictionary];
+    [mapSettings setValue:@[@"segmentedControl", @"", @"", @""] forKey:@"mapHeading"];
+    [mapSettings setValue:@[@"segmentedControl", @"", @"", @""] forKey:@"mapType"];
+    [mapSettings setValue:@[@"slider", @"1", @"10", @"0.5"] forKey:@"trackScale"];
+
+    [controlsSettings setValue:mapSettings forKey:@"map"];
+    
+    
+    NSMutableDictionary *syncerSettings = [NSMutableDictionary dictionary];
+    [syncerSettings setValue:@[@"slider", @"10", @"200", @"10"] forKey:@"fetchLimit"];
+    [syncerSettings setValue:@[@"slider", @"10", @"3600", @"60"] forKey:@"syncInterval"];
+    [syncerSettings setValue:@[@"textField", @"", @"", @""] forKey:@"syncServerURI"];
+    [syncerSettings setValue:@[@"textField", @"", @"", @""] forKey:@"xmlNamespace"];
+
+    [controlsSettings setValue:syncerSettings forKey:@"syncer"];
+    
+    
+    NSMutableDictionary *generalSettings = [NSMutableDictionary dictionary];
+    [generalSettings setValue:@[@"switch", @"", @"", @""] forKey:@"localAccessToSettings"];
+
+    [controlsSettings setValue:generalSettings forKey:@"general"];
+    
+    
+    NSMutableDictionary *batteryTrackerSettings = [NSMutableDictionary dictionary];
+    [batteryTrackerSettings setValue:@[@"switch", @"", @"", @""] forKey:@"batteryTrackerAutoStart"];
+    [batteryTrackerSettings setValue:@[@"8.0", @"slider", @"0", @"24", @"0.5"] forKey:@"batteryTrackerStartTime"];
+    [batteryTrackerSettings setValue:@[@"20.0", @"slider", @"0", @"24", @"0.5"] forKey:@"batteryTrackerFinishTime"];
+
+    [controlsSettings setValue:batteryTrackerSettings forKey:@"battery"];
+
+    return [controlsSettings copy];
 }
 
 + (NSString *)normalizeValue:(NSString *)value forKey:(NSString *)key {
@@ -244,12 +301,12 @@
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.name == %@", settingName];
             STGTSettings *settingToCheck = [[[self currentSettings] filteredArrayUsingPredicate:predicate] lastObject];
 
-            NSMutableArray *setting = [[settingsGroup valueForKey:settingName] mutableCopy];
+            NSString *settingValue = [settingsGroup valueForKey:settingName];
             
             if ([[self.startSettings allKeys] containsObject:settingName]) {
                 NSString *nValue = [STGTSettingsController normalizeValue:[self.startSettings valueForKey:settingName] forKey:settingName];
                 if (nValue) {
-                    [setting replaceObjectAtIndex:0 withObject:nValue];
+                    settingValue = nValue;
                 } else {
                     NSLog(@"value is not correct %@", [self.startSettings valueForKey:settingName]);
                     [self.startSettings removeObjectForKey:settingName];
@@ -261,18 +318,14 @@
                 STGTSettings *newSetting = (STGTSettings *)[NSEntityDescription insertNewObjectForEntityForName:@"STGTSettings" inManagedObjectContext:self.session.document.managedObjectContext];
                 newSetting.group = settingsGroupName;
                 newSetting.name = settingName;
-                newSetting.value = [setting objectAtIndex:0];
-                newSetting.control = [setting objectAtIndex:1];
-                newSetting.min = [setting objectAtIndex:2];
-                newSetting.max = [setting objectAtIndex:3];
-                newSetting.step = [setting objectAtIndex:4];
+                newSetting.value = settingValue;
                 [newSetting addObserver:self forKeyPath:@"value" options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld) context:nil];
 
             } else {
                 [settingToCheck addObserver:self forKeyPath:@"value" options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld) context:nil];
                 if ([[self.startSettings allKeys] containsObject:settingName]) {
-                    if (![settingToCheck.value isEqualToString:[setting objectAtIndex:0]]) {
-                        settingToCheck.value = [setting objectAtIndex:0];
+                    if (![settingToCheck.value isEqualToString:settingValue]) {
+                        settingToCheck.value = settingValue;
 //                        NSLog(@"new value");
                     }
                 }

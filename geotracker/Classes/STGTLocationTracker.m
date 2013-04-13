@@ -20,7 +20,7 @@
 @property (nonatomic) CLLocationDistance distanceFilter;
 @property (nonatomic) NSTimeInterval timeFilter;
 @property (nonatomic) NSTimeInterval trackDetectionTime;
-@property (nonatomic) CLLocationDistance trackDetectionDistance;
+@property (nonatomic) CLLocationDistance trackSeparationDistance;
 
 
 @end
@@ -28,10 +28,7 @@
 @implementation STGTLocationTracker
 
 @synthesize desiredAccuracy = _desiredAccuracy;
-//@synthesize requiredAccuracy = _requiredAccuracy;
 @synthesize distanceFilter = _distanceFilter;
-//@synthesize timeFilter = _timeFilter;
-//@synthesize trackDetectionTime = _trackDetectionTime;
 
 
 - (void)customInit {
@@ -59,8 +56,8 @@
     } else if ([key isEqualToString:@"trackDetectionTime"]) {
         self.trackDetectionTime = [[notification.userInfo valueForKey:key] doubleValue];
         
-    } else if ([key isEqualToString:@"trackDetectionDistance"]) {
-        self.trackDetectionDistance = [[notification.userInfo valueForKey:key] doubleValue];
+    } else if ([key isEqualToString:@"trackSeparationDistance"]) {
+        self.trackSeparationDistance = [[notification.userInfo valueForKey:key] doubleValue];
         
     } else if ([key isEqualToString:@"trackerAutoStart"]) {
         self.trackerAutoStart = [[notification.userInfo valueForKey:key] boolValue];
@@ -130,11 +127,11 @@
     return _trackDetectionTime;
 }
 
-- (CLLocationDistance)trackDetectionDistance {
-    if (!_trackDetectionDistance) {
-        _trackDetectionDistance = [[self.settings valueForKey:@"trackDetectionDistance"] doubleValue];
+- (CLLocationDistance)trackSeparationDistance {
+    if (!_trackSeparationDistance) {
+        _trackSeparationDistance = [[self.settings valueForKey:@"trackSeparationDistance"] doubleValue];
     }
-    return _trackDetectionDistance;
+    return _trackSeparationDistance;
 }
 
 - (STGTTrack *)currentTrack {
@@ -217,7 +214,7 @@
     NSDate *timestamp = currentLocation.timestamp;
     if ([currentLocation.timestamp timeIntervalSinceDate:self.lastLocation.timestamp] > self.trackDetectionTime && self.currentTrack.locations.count != 0) {
         [self startNewTrack];
-        if ([currentLocation distanceFromLocation:self.lastLocation] < self.trackDetectionDistance) {
+        if ([currentLocation distanceFromLocation:self.lastLocation] < self.trackSeparationDistance) {
             NSDate *ts = [NSDate date];
             [self.currentTrack setStartTime:ts];
             [self.currentTrack addLocationsObject:[self locationObjectFromCLLocation:self.lastLocation]];

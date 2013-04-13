@@ -47,12 +47,8 @@
         <relationship name="network" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="STGTNetwork" inverseName="image" inverseEntity="STGTNetwork" syncable="YES"/>
     </entity>
     <entity name="STGTSettings" representedClassName="STGTSettings" parentEntity="STGTDatum" syncable="YES">
-        <attribute name="control" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="group" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="max" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="min" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="step" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="STGTSpot" representedClassName="STGTSpot" parentEntity="STGTDatum" syncable="YES">
@@ -83,7 +79,7 @@
         <element name="STGTLogMessage" positionX="-1044" positionY="-414" width="128" height="73"/>
         <element name="STGTNetwork" positionX="-441" positionY="-315" width="128" height="88"/>
         <element name="STGTNetworkImage" positionX="-648" positionY="-432" width="128" height="58"/>
-        <element name="STGTSettings" positionX="-990" positionY="-567" width="128" height="148"/>
+        <element name="STGTSettings" positionX="-990" positionY="-558" width="128" height="88"/>
         <element name="STGTSpot" positionX="-452" positionY="-553" width="128" height="163"/>
         <element name="STGTSpotImage" positionX="-641" positionY="-522" width="128" height="58"/>
         <element name="STGTTrack" positionX="-1098" positionY="-153" width="128" height="88"/>
