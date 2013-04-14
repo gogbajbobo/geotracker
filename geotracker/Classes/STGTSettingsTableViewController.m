@@ -71,6 +71,16 @@
     return [[controlGroup objectAtIndex:indexPath.row] objectAtIndex:0];
 }
 
+- (NSString *)minForIndexPath:(NSIndexPath *)indexPath {
+    NSArray *controlGroup = [self settingsGroupForSection:indexPath.section];
+    return [[controlGroup objectAtIndex:indexPath.row] objectAtIndex:1];
+}
+
+- (NSString *)maxForIndexPath:(NSIndexPath *)indexPath {
+    NSArray *controlGroup = [self settingsGroupForSection:indexPath.section];
+    return [[controlGroup objectAtIndex:indexPath.row] objectAtIndex:2];
+}
+
 - (NSString *)stepForIndexPath:(NSIndexPath *)indexPath {
     NSArray *controlGroup = [self settingsGroupForSection:indexPath.section];
     return [[controlGroup objectAtIndex:indexPath.row] objectAtIndex:3];
@@ -191,13 +201,22 @@
             
         } else if ([controlType isEqualToString:@"segmentedControl"]) {
             
+            int i = [[self minForIndexPath:indexPath] intValue];
+            int ii = [[self maxForIndexPath:indexPath] intValue];
+            int step = [[self stepForIndexPath:indexPath] intValue];
             
-            NSArray *segments = [NSArray arrayWithObjects: @"Map", @"Satellite", @"Hybrid", nil];
+            NSMutableArray *segments = [NSMutableArray array];
+            
+            while (i <= ii) {
+                NSString *segmentTitle = [NSString stringWithFormat:@"%@_%d", [self settingNameForIndexPath:indexPath], i];
+                [segments addObject:NSLocalizedString(segmentTitle, @"")];
+                i += step;
+            }
+            
             UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:segments];
             segmentedControl.frame = CGRectMake(110, 7, 200, 30);
             segmentedControl.segmentedControlStyle = UISegmentedControlStylePlain;
-            NSDictionary *textAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:14], UITextAttributeFont,
-                                            nil];
+            NSDictionary *textAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:12], UITextAttributeFont, nil];
             [segmentedControl setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
 //            [segmentedControl addTarget:self action:@selector(segmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
             segmentedControl.selectedSegmentIndex = [[self valueForIndexPath:indexPath] integerValue];

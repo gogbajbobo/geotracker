@@ -64,6 +64,13 @@
 "SETTINGlocation" = "location";
 "SETTINGsyncer" = "syncer";
 
+"mapHeading_1" = "None";
+"mapHeading_2" = "Follow";
+"mapHeading_3" = "Heading";
+"mapType_1" = "Standard";
+"mapType_2" = "Satellite";
+"mapType_3" = "Hybrid";
+
 //"CLEAR DATABASE" = "Clear database";
 //"OBJECT TO DELETE" = "Choose objects to delete:";
 //"CANCEL" = "Cancel";

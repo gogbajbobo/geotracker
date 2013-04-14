@@ -64,6 +64,13 @@
 "SETTINGlocation" = "геотрекинг";
 "SETTINGsyncer" = "синхронизация";
 
+"mapHeading_1" = "Выкл.";
+"mapHeading_2" = "Следить";
+"mapHeading_3" = "Компас";
+"mapType_1" = "Обычная";
+"mapType_2" = "Спутник";
+"mapType_3" = "Гибрид";
+
 
 //"CLEAR DATABASE" = "Очистка базы данных";
 //"OBJECT TO DELETE" = "Что вы хотите удалить?";
