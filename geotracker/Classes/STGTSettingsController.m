@@ -93,8 +93,8 @@
 
     
     NSMutableArray *mapSettings = [NSMutableArray array];
-    [mapSettings addObject:@[@"segmentedControl", @"", @"", @"", @"mapHeading"]];
-    [mapSettings addObject:@[@"segmentedControl", @"", @"", @"", @"mapType"]];
+    [mapSettings addObject:@[@"segmentedControl", @"1", @"3", @"1", @"mapHeading"]];
+    [mapSettings addObject:@[@"segmentedControl", @"1", @"3", @"1", @"mapType"]];
     [mapSettings addObject:@[@"slider", @"1", @"10", @"0.5", @"trackScale"]];
 
     [controlsSettings setValue:mapSettings forKey:@"map"];

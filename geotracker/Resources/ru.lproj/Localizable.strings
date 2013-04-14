@@ -41,7 +41,7 @@
 "batteryTrackerAutoStart" = "автостарт (батарея)";
 "batteryTrackerStartTime" = "время запуска";
 "batteryTrackerFinishTime" = "время остановки";
-"fetchLimit" = "количество объектов в пакете";
+"fetchLimit" = "объектов в пакете";
 "syncInterval" = "интервал синхронизации, с";
 "syncServerURI" = "syncServerURI";
 "xmlNamespace" = "xmlNamespace";

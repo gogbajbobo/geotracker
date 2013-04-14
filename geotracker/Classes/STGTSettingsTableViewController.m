@@ -29,9 +29,10 @@
 
     self.selectionStyle = UITableViewCellSelectionStyleNone;
 
-    self.textLabel.frame = CGRectMake(10, 10, 240, 24);
-    self.textLabel.font = [UIFont boldSystemFontOfSize:18];
-    self.detailTextLabel.frame = CGRectMake(250, 10, 60, 24);
+    self.textLabel.frame = CGRectMake(10, 10, 220, 24);
+    self.textLabel.font = [UIFont systemFontOfSize:16];
+    self.textLabel.backgroundColor = [UIColor clearColor];
+    self.detailTextLabel.frame = CGRectMake(230, 10, 60, 24);
     self.detailTextLabel.font = [UIFont boldSystemFontOfSize:18];
     self.detailTextLabel.textAlignment = NSTextAlignmentRight;
 
@@ -82,12 +83,11 @@
 
 - (NSString *)valueForIndexPath:(NSIndexPath *)indexPath {
     
-    NSString *value = nil;
+    NSString *settingName = [self settingNameForIndexPath:indexPath];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.name == %@", settingName];
+    NSString *value = [[[self.currentSettings filteredArrayUsingPredicate:predicate] lastObject] valueForKey:@"value"];
+    
     if ([[self controlTypeForIndexPath:indexPath] isEqualToString:@"slider"]) {
-        NSString *settingName = [self settingNameForIndexPath:indexPath];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.name == %@", settingName];
-        value = [[[self.currentSettings filteredArrayUsingPredicate:predicate] lastObject] valueForKey:@"value"];
-        
         if ([settingName hasSuffix:@"StartTime"] || [settingName hasSuffix:@"FinishTime"]) {
             double time = [value doubleValue];
             double hours = floor(time);
@@ -102,6 +102,7 @@
             value = [NSString stringWithFormat:@"%.f", [value doubleValue]];
         }
     }
+    
     return value;
 }
 
@@ -169,11 +170,41 @@
     STGTSettingsTableViewCell *cell = nil;
     
     NSString *controlType = [self controlTypeForIndexPath:indexPath];
+    
     if ([controlType isEqualToString:@"slider"]) {
         cell = [[STGTSettingsTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
         cell.detailTextLabel.text = [self valueForIndexPath:indexPath];
+        UISlider *slider = [[UISlider alloc] initWithFrame:CGRectMake(25, 38, 270, 24)];
+//        [slider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+        [cell.contentView addSubview:slider];
+        
     } else {
         cell = [[STGTSettingsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        
+        if ([controlType isEqualToString:@"switch"]) {
+            UISwitch *headingSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(230, 9, 80, 27)];
+            [headingSwitch setOn:[[self valueForIndexPath:indexPath] boolValue] animated:NO];
+//            [headingSwitch addTarget:self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
+            [cell.contentView addSubview:headingSwitch];
+
+        } else if ([controlType isEqualToString:@"textField"]) {
+            
+        } else if ([controlType isEqualToString:@"segmentedControl"]) {
+            
+            
+            NSArray *segments = [NSArray arrayWithObjects: @"Map", @"Satellite", @"Hybrid", nil];
+            UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:segments];
+            segmentedControl.frame = CGRectMake(110, 7, 200, 30);
+            segmentedControl.segmentedControlStyle = UISegmentedControlStylePlain;
+            NSDictionary *textAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:14], UITextAttributeFont,
+                                            nil];
+            [segmentedControl setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
+//            [segmentedControl addTarget:self action:@selector(segmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
+            segmentedControl.selectedSegmentIndex = [[self valueForIndexPath:indexPath] integerValue];
+            [cell.contentView addSubview:segmentedControl];
+
+        }
+
     }
     
     cell.textLabel.text = NSLocalizedString([self settingNameForIndexPath:indexPath], @"");
