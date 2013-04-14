@@ -336,6 +336,19 @@
     [self.session settingsLoadComplete];
 }
 
+- (void)applyNewSettings:(NSDictionary *)newSettings {
+    
+    for (NSString *settingName in [newSettings allKeys]) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.name == %@", settingName];
+        STGTSettings *setting = [[[self currentSettings] filteredArrayUsingPredicate:predicate] lastObject];
+        NSString *value = [STGTSettingsController normalizeValue:[newSettings valueForKey:settingName] forKey:settingName];
+        if (value) {
+            setting.value = value;
+        }
+    }
+    
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 //    NSLog(@"observeChangeValueForObject %@", object);
 //    NSLog(@"old value %@", [change valueForKey:NSKeyValueChangeOldKey]);
@@ -364,6 +377,8 @@
     if ([anObject isKindOfClass:[STGTSettings class]]) {
 //        NSLog(@"anObject %@", anObject);
         [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"%@SettingsChange", [anObject valueForKey:@"group"]] object:anObject userInfo:[NSDictionary dictionaryWithObject:[anObject valueForKey:@"value"] forKey:[anObject valueForKey:@"name"]]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"settingsChange" object:anObject userInfo:[NSDictionary dictionaryWithObject:[anObject valueForKey:@"value"] forKey:[anObject valueForKey:@"name"]]];
+        
     }
         
     if (type == NSFetchedResultsChangeDelete) {

@@ -185,7 +185,29 @@
         cell = [[STGTSettingsTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
         cell.detailTextLabel.text = [self valueForIndexPath:indexPath];
         UISlider *slider = [[UISlider alloc] initWithFrame:CGRectMake(25, 38, 270, 24)];
-//        [slider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+        slider.maximumValue = [[self maxForIndexPath:indexPath] doubleValue];
+        slider.minimumValue = [[self minForIndexPath:indexPath] doubleValue];
+        if ([[self settingNameForIndexPath:indexPath] isEqualToString:@"desiredAccuracy"]) {
+            double value = [[self valueForIndexPath:indexPath] doubleValue];
+            NSArray *accuracyArray = [NSArray arrayWithObjects: [NSNumber numberWithDouble:kCLLocationAccuracyBestForNavigation],
+                                      [NSNumber numberWithDouble:kCLLocationAccuracyBest],
+                                      [NSNumber numberWithDouble:kCLLocationAccuracyNearestTenMeters],
+                                      [NSNumber numberWithDouble:kCLLocationAccuracyHundredMeters],
+                                      [NSNumber numberWithDouble:kCLLocationAccuracyKilometer],
+                                      [NSNumber numberWithDouble:kCLLocationAccuracyThreeKilometers],nil];
+            value = [accuracyArray indexOfObject:[NSNumber numberWithDouble:value]];
+            if (value == NSNotFound) {
+                NSLog(@"NSNotFoundS");
+                value = [accuracyArray indexOfObject:[NSNumber numberWithDouble:kCLLocationAccuracyNearestTenMeters]];
+            }
+            slider.value = value;
+        } else {
+            slider.value = [[self valueForIndexPath:indexPath] doubleValue];            
+        }
+
+        [slider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+        [slider addTarget:self action:@selector(sliderValueChangeFinished:) forControlEvents:UIControlEventTouchUpInside];
+
         [cell.contentView addSubview:slider];
         
     } else {
@@ -236,5 +258,53 @@
     return cell;
 }
 
+
+#pragma mark - controls
+
+- (void)sliderValueChanged:(UISlider *)slider {
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:(UITableViewCell *)slider.superview.superview];
+    NSString *settingName = [self settingNameForIndexPath:indexPath];
+    double step = [[self stepForIndexPath:indexPath] doubleValue];
+
+//    NSDictionary *stepValue = [NSDictionary dictionaryWithObjectsAndKeys:
+//                               [NSNumber numberWithDouble:10], @"requiredAccuracy",
+//                               [NSNumber numberWithDouble:5], @"timeFilter",
+//                               [NSNumber numberWithDouble:30], @"trackDetectionTime",
+//                               [NSNumber numberWithDouble:60], @"syncInterval",
+//                               [NSNumber numberWithDouble:10], @"fetchLimit",
+//                               [NSNumber numberWithDouble:0.5], @"trackerStartTime",
+//                               [NSNumber numberWithDouble:0.5], @"trackerFinishTime",
+//                               [NSNumber numberWithDouble:0.5], @"trackScale", nil];
+    
+    if ([settingName isEqualToString:@"desiredAccuracy"]) {
+//        NSArray *accuracyArray = [NSArray arrayWithObjects: [NSNumber numberWithDouble:kCLLocationAccuracyBestForNavigation],
+//                                  [NSNumber numberWithDouble:kCLLocationAccuracyBest],
+//                                  [NSNumber numberWithDouble:kCLLocationAccuracyNearestTenMeters],
+//                                  [NSNumber numberWithDouble:kCLLocationAccuracyHundredMeters],
+//                                  [NSNumber numberWithDouble:kCLLocationAccuracyKilometer],
+//                                  [NSNumber numberWithDouble:kCLLocationAccuracyThreeKilometers],nil];
+        [slider setValue:rint(slider.value)];
+//        self.settings.desiredAccuracy = [accuracyArray objectAtIndex:(NSUInteger)sender.value];
+    } else if ([settingName isEqualToString:@"distanceFilter"]) {
+        [slider setValue:floor(slider.value/10)*10];
+//        self.settings.distanceFilter = [NSNumber numberWithDouble:sender.value];
+        //    } else if ([settingName isEqualToString:@"batteryCheckingInterval"]) {
+        //        [sender setValue:rint(sender.value/60)*60];
+        //        UILabel *valueLabel = (UILabel *)[[(UITableViewCell *)sender.superview.superview contentView] viewWithTag:2];
+        //        valueLabel.text = [NSString stringWithFormat:@"%@", [NSNumber numberWithDouble:sender.value]];
+    } else {
+        [slider setValue:rint(slider.value/step)*step];
+//        [self.settings setValue:[NSNumber numberWithDouble:sender.value] forKey:settingName];
+    }
+    
+}
+
+- (void)sliderValueChangeFinished:(UISlider *)slider {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:(UITableViewCell *)slider.superview.superview];
+    NSString *settingName = [self settingNameForIndexPath:indexPath];
+    NSString *value = [NSString stringWithFormat:@"%f", slider.value];
+    [[(STSession *)self.session settingsController] applyNewSettings:[NSDictionary dictionaryWithObjectsAndKeys:value, settingName, nil]];
+}
 
 @end
