@@ -10,7 +10,7 @@
 #import "STGTSettingsController.h"
 #import "STSession.h"
 
-@interface STGTSettingsTableViewController ()
+@interface STGTSettingsTableViewController () <UITextFieldDelegate>
 
 @property (nonatomic, strong) NSDictionary *controlsSettings;
 @property (nonatomic, strong) NSArray *currentSettings;
@@ -30,7 +30,7 @@
     self.selectionStyle = UITableViewCellSelectionStyleNone;
 
     self.textLabel.frame = CGRectMake(10, 10, 220, 24);
-    self.textLabel.font = [UIFont systemFontOfSize:16];
+    self.textLabel.font = [UIFont boldSystemFontOfSize:16];
     self.textLabel.backgroundColor = [UIColor clearColor];
     self.detailTextLabel.frame = CGRectMake(230, 10, 60, 24);
     self.detailTextLabel.font = [UIFont boldSystemFontOfSize:18];
@@ -198,15 +198,20 @@
             [cell.contentView addSubview:headingSwitch];
 
         } else if ([controlType isEqualToString:@"textField"]) {
+            UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(25, 38, 270, 24)];
+            textField.text = [self valueForIndexPath:indexPath];
+            textField.font = [UIFont systemFontOfSize:14];
+            textField.keyboardType = UIKeyboardTypeURL;
+            textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+            textField.delegate = self;
+            [cell.contentView addSubview:textField];
             
         } else if ([controlType isEqualToString:@"segmentedControl"]) {
-            
             int i = [[self minForIndexPath:indexPath] intValue];
             int ii = [[self maxForIndexPath:indexPath] intValue];
             int step = [[self stepForIndexPath:indexPath] intValue];
             
             NSMutableArray *segments = [NSMutableArray array];
-            
             while (i <= ii) {
                 NSString *segmentTitle = [NSString stringWithFormat:@"%@_%d", [self settingNameForIndexPath:indexPath], i];
                 [segments addObject:NSLocalizedString(segmentTitle, @"")];
