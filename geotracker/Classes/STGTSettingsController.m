@@ -243,11 +243,10 @@
 - (void)applyNewSettings:(NSDictionary *)newSettings {
     
     for (NSString *settingName in [newSettings allKeys]) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.name == %@", settingName];
-        STGTSettings *setting = [[[self currentSettings] filteredArrayUsingPredicate:predicate] lastObject];
         NSString *value = [STGTSettingsController normalizeValue:[newSettings valueForKey:settingName] forKey:settingName];
-        NSLog(@"value %@", value);
         if (value) {
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.name == %@", settingName];
+            STGTSettings *setting = [[[self currentSettings] filteredArrayUsingPredicate:predicate] lastObject];
             setting.value = value;
         }
     }
