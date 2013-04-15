@@ -74,14 +74,13 @@
 }
 
 + (NSString *)normalizeValue:(NSString *)value forKey:(NSString *)key {
+    
+    NSArray *positiveDouble = [NSArray arrayWithObjects:@"requiredAccuracy", @"timeFilter", @"trackDetectionTime", @"trackSeparationDistance", @"trackScale", @"fetchLimit", @"syncInterval", nil];
+    
     if ([key isEqualToString:@"desiredAccuracy"]) {
         double dValue = [value doubleValue];
         if (dValue == -2 || dValue == -1 || dValue == 10 || dValue == 100 || dValue == 1000 || dValue == 3000) {
             return [NSString stringWithFormat:@"%f", dValue];
-        }
-    } else if ([key isEqualToString:@"requiredAccuracy"]) {
-        if ([self isPositiveDouble:value]) {
-            return [NSString stringWithFormat:@"%f", [value doubleValue]];
         }
     } else if ([key isEqualToString:@"distanceFilter"]) {
         double dValue = [value doubleValue];
@@ -89,71 +88,29 @@
             return [NSString stringWithFormat:@"%f", dValue];
         }
         
-    } else if ([key isEqualToString:@"timeFilter"]) {
+    } else if ([positiveDouble containsObject:key]) {
         if ([self isPositiveDouble:value]) {
             return [NSString stringWithFormat:@"%f", [value doubleValue]];
         }
-        
-    } else if ([key isEqualToString:@"trackDetectionTime"]) {
-        if ([self isPositiveDouble:value]) {
-            return [NSString stringWithFormat:@"%f", [value doubleValue]];
-        }
-        
-    } else if ([key isEqualToString:@"trackDetectionDistance"]) {
-        if ([self isPositiveDouble:value]) {
-            return [NSString stringWithFormat:@"%f", [value doubleValue]];
-        }
-        
-    } else if ([key hasSuffix:@"TrackerAutoStart"]) {
+    } else if ([key hasSuffix:@"TrackerAutoStart"] || [key isEqualToString:@"localAccessToSettings"]) {
         if ([self isBool:value]) {
             return [NSString stringWithFormat:@"%d", [value boolValue]];
         }
         
-    } else if ([key hasSuffix:@"TrackerStartTime"]) {
+    } else if ([key hasSuffix:@"TrackerStartTime"] || [key hasSuffix:@"TrackerFinishTime"]) {
         if ([self isValidTime:value]) {
             return [NSString stringWithFormat:@"%f", [value doubleValue]];
         }
         
-    } else if ([key hasSuffix:@"TrackerFinishTime"]) {
-        if ([self isValidTime:value]) {
-            return [NSString stringWithFormat:@"%f", [value doubleValue]];
-        }
-        
-    } else if ([key isEqualToString:@"mapHeading"]) {
+    } else if ([key isEqualToString:@"mapHeading"] || [key isEqualToString:@"mapType"]) {
         double iValue = [value doubleValue];
         if (iValue == 0 || iValue == 1 || iValue == 2) {
             return [NSString stringWithFormat:@"%.f", iValue];
         }
         
-    } else if ([key isEqualToString:@"mapType"]) {
-        double iValue = [value doubleValue];
-        if (iValue == 0 || iValue == 1 || iValue == 2) {
-            return [NSString stringWithFormat:@"%.f", iValue];
-        }
-        
-    } else if ([key isEqualToString:@"fetchLimit"]) {
-        if ([self isPositiveDouble:value]) {
-            return [NSString stringWithFormat:@"%f", [value doubleValue]];
-        }
-        
-    } else if ([key isEqualToString:@"syncInterval"]) {
-        if ([self isPositiveDouble:value]) {
-            return [NSString stringWithFormat:@"%f", [value doubleValue]];
-        }
-        
-    } else if ([key isEqualToString:@"syncServerURI"]) {
+    } else if ([key isEqualToString:@"syncServerURI"] || [key isEqualToString:@"xmlNamespace"]) {
         if ([self isValidURI:value]) {
             return value;
-        }
-        
-    } else if ([key isEqualToString:@"xmlNamespace"]) {
-        if ([self isValidURI:value]) {
-            return value;
-        }
-        
-    } else if ([key isEqualToString:@"localAccessToSettings"]) {
-        if ([self isBool:value]) {
-            return [NSString stringWithFormat:@"%d", [value boolValue]];
         }
         
     }
@@ -289,6 +246,7 @@
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.name == %@", settingName];
         STGTSettings *setting = [[[self currentSettings] filteredArrayUsingPredicate:predicate] lastObject];
         NSString *value = [STGTSettingsController normalizeValue:[newSettings valueForKey:settingName] forKey:settingName];
+        NSLog(@"value %@", value);
         if (value) {
             setting.value = value;
         }

@@ -52,7 +52,7 @@
     NSMutableDictionary *controlsSettings = [NSMutableDictionary dictionary];
     
     NSMutableArray *locationTrackerSettings = [NSMutableArray array];
-    //                                      control, min, max, step
+    //                                      control, min, max, step, name
     [locationTrackerSettings addObject:@[@"slider", @"0", @"5", @"1", @"desiredAccuracy"]];
     [locationTrackerSettings addObject:@[@"slider", @"5", @"100", @"10", @"requiredAccuracy"]];
     [locationTrackerSettings addObject:@[@"slider", @"-1", @"200", @"10", @"distanceFilter"]];
@@ -358,6 +358,16 @@
     NSIndexPath *indexPath = [self.tableView indexPathForCell:(UITableViewCell *)slider.superview.superview];
     NSString *settingName = [self settingNameForIndexPath:indexPath];
     NSString *value = [NSString stringWithFormat:@"%f", slider.value];
+    if ([settingName isEqualToString:@"desiredAccuracy"]) {
+        NSArray *accuracyArray = [NSArray arrayWithObjects: [NSNumber numberWithDouble:kCLLocationAccuracyBestForNavigation],
+                                  [NSNumber numberWithDouble:kCLLocationAccuracyBest],
+                                  [NSNumber numberWithDouble:kCLLocationAccuracyNearestTenMeters],
+                                  [NSNumber numberWithDouble:kCLLocationAccuracyHundredMeters],
+                                  [NSNumber numberWithDouble:kCLLocationAccuracyKilometer],
+                                  [NSNumber numberWithDouble:kCLLocationAccuracyThreeKilometers],nil];
+        value = [NSString stringWithFormat:@"%@", [accuracyArray objectAtIndex:rint(slider.value)]];
+    }
+//    NSLog(@"value %@", value);
     [[(STSession *)self.session settingsController] applyNewSettings:[NSDictionary dictionaryWithObjectsAndKeys:value, settingName, nil]];
 }
 
