@@ -47,9 +47,63 @@
 
 #pragma mark - STGTSettingsTableViewController
 
++ (NSDictionary *)controlsSettings {
+    
+    NSMutableDictionary *controlsSettings = [NSMutableDictionary dictionary];
+    
+    NSMutableArray *locationTrackerSettings = [NSMutableArray array];
+    //                                      control, min, max, step
+    [locationTrackerSettings addObject:@[@"slider", @"0", @"5", @"1", @"desiredAccuracy"]];
+    [locationTrackerSettings addObject:@[@"slider", @"5", @"100", @"10", @"requiredAccuracy"]];
+    [locationTrackerSettings addObject:@[@"slider", @"-1", @"200", @"10", @"distanceFilter"]];
+    [locationTrackerSettings addObject:@[@"slider", @"1", @"60", @"5", @"timeFilter"]];
+    [locationTrackerSettings addObject:@[@"slider", @"0", @"600", @"30", @"trackDetectionTime"]];
+    [locationTrackerSettings addObject:@[@"slider", @"1", @"1000", @"100", @"trackSeparationDistance"]];
+    [locationTrackerSettings addObject:@[@"switch", @"", @"", @"", @"locationTrackerAutoStart"]];
+    [locationTrackerSettings addObject:@[@"slider", @"0", @"24", @"0.5", @"locationTrackerStartTime"]];
+    [locationTrackerSettings addObject:@[@"slider", @"0", @"24", @"0.5", @"locationTrackerFinishTime"]];
+    
+    [controlsSettings setValue:locationTrackerSettings forKey:@"location"];
+    
+    
+    NSMutableArray *mapSettings = [NSMutableArray array];
+    [mapSettings addObject:@[@"segmentedControl", @"1", @"3", @"1", @"mapHeading"]];
+    [mapSettings addObject:@[@"segmentedControl", @"1", @"3", @"1", @"mapType"]];
+    [mapSettings addObject:@[@"slider", @"1", @"10", @"0.5", @"trackScale"]];
+    
+    [controlsSettings setValue:mapSettings forKey:@"map"];
+    
+    
+    NSMutableArray *syncerSettings = [NSMutableArray array];
+    [syncerSettings addObject:@[@"slider", @"10", @"200", @"10", @"fetchLimit"]];
+    [syncerSettings addObject:@[@"slider", @"10", @"3600", @"60", @"syncInterval"]];
+    [syncerSettings addObject:@[@"textField", @"", @"", @"", @"syncServerURI"]];
+    [syncerSettings addObject:@[@"textField", @"", @"", @"", @"xmlNamespace"]];
+    
+    [controlsSettings setValue:syncerSettings forKey:@"syncer"];
+    
+    
+    NSMutableArray *generalSettings = [NSMutableArray array];
+    [generalSettings addObject:@[@"switch", @"", @"", @"", @"localAccessToSettings"]];
+    
+    [controlsSettings setValue:generalSettings forKey:@"general"];
+    
+    
+    NSMutableArray *batteryTrackerSettings = [NSMutableArray array];
+    [batteryTrackerSettings addObject:@[@"switch", @"", @"", @"", @"batteryTrackerAutoStart"]];
+    [batteryTrackerSettings addObject:@[@"slider", @"0", @"24", @"0.5", @"batteryTrackerStartTime"]];
+    [batteryTrackerSettings addObject:@[@"slider", @"0", @"24", @"0.5", @"batteryTrackerFinishTime"]];
+    
+    [controlsSettings setValue:batteryTrackerSettings forKey:@"battery"];
+    
+    //    NSLog(@"controlsSettings %@", controlsSettings);
+    return controlsSettings;
+}
+
+
 - (NSDictionary *)controlsSettings {
     if (!_controlsSettings) {
-        _controlsSettings = [STGTSettingsController controlsSettings];
+        _controlsSettings = [STGTSettingsTableViewController controlsSettings];
     }
     return _controlsSettings;
 }

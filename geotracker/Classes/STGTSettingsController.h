@@ -15,7 +15,6 @@
 @interface STGTSettingsController : NSObject <STGTSettingsController>
 
 + (NSDictionary *)defaultSettings;
-+ (NSDictionary *)controlsSettings;
 
 + (STGTSettingsController *)initWithSettings:(NSDictionary *)startSettings;
 
