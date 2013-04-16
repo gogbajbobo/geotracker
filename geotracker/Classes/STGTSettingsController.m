@@ -240,17 +240,20 @@
     [self.session settingsLoadComplete];
 }
 
-- (void)applyNewSettings:(NSDictionary *)newSettings {
-    
+- (NSString *)applyNewSettings:(NSDictionary *)newSettings {
+
+    NSString *value;
     for (NSString *settingName in [newSettings allKeys]) {
-        NSString *value = [STGTSettingsController normalizeValue:[newSettings valueForKey:settingName] forKey:settingName];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.name == %@", settingName];
+        STGTSettings *setting = [[[self currentSettings] filteredArrayUsingPredicate:predicate] lastObject];
+        value = [STGTSettingsController normalizeValue:[newSettings valueForKey:settingName] forKey:settingName];
         if (value) {
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.name == %@", settingName];
-            STGTSettings *setting = [[[self currentSettings] filteredArrayUsingPredicate:predicate] lastObject];
             setting.value = value;
+        } else {
+            value = setting.value;
         }
     }
-    
+    return value;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {

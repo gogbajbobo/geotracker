@@ -295,6 +295,7 @@
             textField.clearButtonMode = UITextFieldViewModeWhileEditing;
             textField.delegate = self;
             [cell.contentView addSubview:textField];
+            cell.textField = textField;
             
         } else if ([controlType isEqualToString:@"segmentedControl"]) {
             int i = [[self minForIndexPath:indexPath] intValue];
@@ -340,6 +341,7 @@
     [self setSlider:cell.slider value:[value doubleValue] forSettingName:settingName];
     [cell.senderSwitch setOn:[value boolValue]];
     [cell.segmentedControl setSelectedSegmentIndex:[value integerValue]];
+    cell.textField.text = value;
 }
 
 
@@ -419,5 +421,21 @@
     NSString *value = [NSString stringWithFormat:@"%d", segmentedControl.selectedSegmentIndex];
     [[(STSession *)self.session settingsController] applyNewSettings:[NSDictionary dictionaryWithObjectsAndKeys:value, settingName, nil]];
 }
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+    STGTSettingsTableViewCell *cell = (STGTSettingsTableViewCell *)textField.superview.superview;
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    NSString *settingName = [self settingNameForIndexPath:indexPath];
+    textField.text = [[(STSession *)self.session settingsController] applyNewSettings:[NSDictionary dictionaryWithObjectsAndKeys:textField.text, settingName, nil]];
+    return YES;
+}
+
 
 @end

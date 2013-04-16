@@ -18,7 +18,7 @@
 
 + (STGTSettingsController *)initWithSettings:(NSDictionary *)startSettings;
 
-- (void)applyNewSettings:(NSDictionary *)newSettings;
+- (NSString *)applyNewSettings:(NSDictionary *)newSettings;
 
 - (NSArray *)currentSettings;
 - (NSMutableDictionary *)currentSettingsForGroup:(NSString *)group;
