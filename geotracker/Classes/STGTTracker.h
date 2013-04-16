@@ -23,6 +23,5 @@
 - (void)customInit;
 - (void)startTracking;
 - (void)stopTracking;
-- (void)trackerSettingsChange:(NSNotification *)notification;
 
 @end

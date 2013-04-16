@@ -322,6 +322,7 @@
 - (void)addNotificationsObservers {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(currentSessionChanged:) name:@"currentSessionChanged" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkSessionState) name:@"sessionStatusChanged" object:self.currentSession];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkSessionState) name:@"settingsChanged" object:self.currentSession];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationTrackingStart) name:@"locationTrackingStart" object:self.currentSession.locationTracker];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationTrackingStop) name:@"locationTrackingStop" object:self.currentSession.locationTracker];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(batteryTrackingStart) name:@"batteryTrackingStart" object:self.currentSession.locationTracker];
@@ -336,6 +337,7 @@
 - (void)removeNotificationsObservers {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"currentSessionChanged" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"sessionStatusChanged" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"settingsChanged" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"locationTrackingStart" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"locationTrackingStop" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"batteryTrackingStart" object:nil];

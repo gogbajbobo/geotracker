@@ -204,7 +204,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChange:) name:@"settingsChange" object:self.session];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged:) name:@"settingsChanged" object:self.session];
     [super viewWillAppear:animated];
 }
 
@@ -218,7 +218,7 @@
 {
     [super didReceiveMemoryWarning];
     if ([self isViewLoaded] && [self.view window] == nil) {
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"settingsChange" object:self.session];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"settingsChanged" object:self.session];
         self.view = nil;
     }
 }
@@ -330,7 +330,7 @@
 
 #pragma mark - show changes in situ
 
-- (void)settingsChange:(NSNotification *)notification {
+- (void)settingsChanged:(NSNotification *)notification {
 //    NSLog(@"notification.userInfo %@", notification.userInfo);
     NSString *groupName = [[notification.userInfo valueForKey:@"changedObject"] valueForKey:@"group"];
     NSString *settingName = [[notification.userInfo valueForKey:@"changedObject"] valueForKey:@"name"];
