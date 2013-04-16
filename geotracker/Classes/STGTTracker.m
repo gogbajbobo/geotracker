@@ -11,6 +11,14 @@
 
 @interface STGTTracker()
 
+
+@property (nonatomic, strong) NSTimer *startTimer;
+@property (nonatomic, strong) NSTimer *finishTimer;
+
+@property (nonatomic) double trackerStartTime;
+@property (nonatomic) double trackerFinishTime;
+
+
 @end
 
 @implementation STGTTracker
@@ -41,7 +49,9 @@
 - (NSMutableDictionary *)settings {
     if (!_settings) {
         _settings = [[(id <STSession>)self.session settingsController] currentSettingsForGroup:self.group];
-//        NSLog(@"settings for %@: %@", self.group, _settings);
+        for (NSString *settingName in [_settings allKeys]) {
+            [_settings addObserver:self forKeyPath:settingName options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld) context:nil];
+        }
     }
     return _settings;
 }
@@ -49,21 +59,19 @@
 - (void)trackerSettingsChange:(NSNotification *)notification {
     
     [self.settings addEntriesFromDictionary:notification.userInfo];
-    NSString *key = [[notification.userInfo allKeys] lastObject];
-
-//    NSLog(@"%@ %@", [notification.userInfo valueForKey:key], key);
-    if ([key hasSuffix:@"TrackerAutoStart"]) {
-        self.trackerAutoStart = [[notification.userInfo valueForKey:key] boolValue];
-        
-    } else if ([key hasSuffix:@"TrackerStartTime"]) {
-        self.trackerStartTime = [[notification.userInfo valueForKey:key] doubleValue];
-        
-    } else if ([key hasSuffix:@"TrackerFinishTime"]) {
-        self.trackerFinishTime = [[notification.userInfo valueForKey:key] doubleValue];
-        
-    }
 
 }
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    
+    if ([change valueForKey:NSKeyValueChangeNewKey] != [change valueForKey:NSKeyValueChangeOldKey]) {
+        if ([keyPath hasSuffix:@"TrackerAutoStart"] || [keyPath hasSuffix:@"TrackerStartTime"] || [keyPath hasSuffix:@"TrackerFinishTime"]) {
+            [self checkTrackerAutoStart];
+        }
+    }
+    
+}
+
 
 - (void)sessionStatusChanged:(NSNotification *)notification {
     if ([[(id <STSession>)notification.object status] isEqualToString:@"finishing"]) {
@@ -77,47 +85,15 @@
 #pragma mark - tracker settings
 
 - (BOOL)trackerAutoStart {
-    if (!_trackerAutoStart) {
-        _trackerAutoStart = [[self.settings valueForKey:[NSString stringWithFormat:@"%@TrackerAutoStart", self.group]] boolValue];
-    }
-    return _trackerAutoStart;
+    return [[self.settings valueForKey:[NSString stringWithFormat:@"%@TrackerAutoStart", self.group]] boolValue];
 }
-
-- (void)setTrackerAutoStart:(BOOL)trackerAutoStart {
-    if (_trackerAutoStart != trackerAutoStart) {
-        _trackerAutoStart = trackerAutoStart;
-        [self checkTrackerAutoStart];
-    }
-}
-
 
 - (double)trackerStartTime {
-    if (!_trackerStartTime) {
-        _trackerStartTime = [[self.settings valueForKey:[NSString stringWithFormat:@"%@TrackerStartTime", self.group]] doubleValue];
-    }
-    return _trackerStartTime;
+    return [[self.settings valueForKey:[NSString stringWithFormat:@"%@TrackerStartTime", self.group]] doubleValue];
 }
-
-- (void)setTrackerStartTime:(double)trackerStartTime {
-    if (_trackerStartTime != trackerStartTime) {
-        _trackerStartTime = trackerStartTime;
-        [self checkTrackerAutoStart];
-    }
-}
-
 
 - (double)trackerFinishTime {
-    if (!_trackerFinishTime) {
-        _trackerFinishTime = [[self.settings valueForKey:[NSString stringWithFormat:@"%@TrackerFinishTime", self.group]] doubleValue];
-    }
-    return _trackerFinishTime;
-}
-
-- (void)setTrackerFinishTime:(double)trackerFinishTime {
-    if (_trackerFinishTime != trackerFinishTime) {
-        _trackerFinishTime = trackerFinishTime;
-        [self checkTrackerAutoStart];
-    }
+    return [[self.settings valueForKey:[NSString stringWithFormat:@"%@TrackerFinishTime", self.group]] doubleValue];
 }
 
 #pragma mark - timers

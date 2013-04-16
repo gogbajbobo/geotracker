@@ -15,14 +15,10 @@
 
 @property (strong, nonatomic) STManagedDocument *document;
 @property (nonatomic, strong) id <STSession> session;
-@property (nonatomic, strong) NSMutableDictionary *settings;
-@property (nonatomic, strong) NSTimer *startTimer;
-@property (nonatomic, strong) NSTimer *finishTimer;
 @property (nonatomic) BOOL tracking;
-@property (nonatomic) BOOL trackerAutoStart;
-@property (nonatomic) double trackerStartTime;
-@property (nonatomic) double trackerFinishTime;
+@property (nonatomic, strong) NSMutableDictionary *settings;
 @property (nonatomic, strong) NSString *group;
+@property (nonatomic) BOOL trackerAutoStart;
 
 - (void)customInit;
 - (void)startTracking;

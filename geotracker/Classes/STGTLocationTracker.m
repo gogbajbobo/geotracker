@@ -36,102 +36,45 @@
     [super customInit];
 }
 
-- (void)trackerSettingsChange:(NSNotification *)notification {
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     
-    [super trackerSettingsChange:notification];
+    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     
-    NSString *key = [[notification.userInfo allKeys] lastObject];
-    if ([key isEqualToString:@"distanceFilter"]) {
-        self.distanceFilter = [[notification.userInfo valueForKey:key] doubleValue];
-        
-    } else if ([key isEqualToString:@"desiredAccuracy"]) {
-        self.desiredAccuracy = [[notification.userInfo valueForKey:key] doubleValue];
-        
-    } else if ([key isEqualToString:@"requiredAccuracy"]) {
-        self.requiredAccuracy = [[notification.userInfo valueForKey:key] doubleValue];
-        
-    } else if ([key isEqualToString:@"timeFilter"]) {
-        self.timeFilter = [[notification.userInfo valueForKey:key] doubleValue];
-        
-    } else if ([key isEqualToString:@"trackDetectionTime"]) {
-        self.trackDetectionTime = [[notification.userInfo valueForKey:key] doubleValue];
-        
-    } else if ([key isEqualToString:@"trackSeparationDistance"]) {
-        self.trackSeparationDistance = [[notification.userInfo valueForKey:key] doubleValue];
-        
-    } else if ([key isEqualToString:@"trackerAutoStart"]) {
-        self.trackerAutoStart = [[notification.userInfo valueForKey:key] boolValue];
-        
-    } else if ([key isEqualToString:@"trackerStartTime"]) {
-        self.trackerStartTime = [[notification.userInfo valueForKey:key] doubleValue];
-        
-    } else if ([key isEqualToString:@"trackerFinishTime"]) {
-        self.trackerFinishTime = [[notification.userInfo valueForKey:key] doubleValue];
-        
+    if ([change valueForKey:NSKeyValueChangeNewKey] != [change valueForKey:NSKeyValueChangeOldKey]) {
+        if ([keyPath isEqualToString:@"distanceFilter"] || [keyPath isEqualToString:@"desiredAccuracy"]) {
+            self.locationManager.desiredAccuracy = [[self.settings valueForKey:@"desiredAccuracy"] doubleValue];
+            self.locationManager.distanceFilter = [[self.settings valueForKey:@"distanceFilter"] doubleValue];
+        }
     }
-    //    NSLog(@"self.settings %@", self.settings);
+    
 }
+
 
 #pragma mark - locationTracker settings
 
 - (CLLocationAccuracy) desiredAccuracy {
-    if (!_desiredAccuracy) {
-        _desiredAccuracy = [[self.settings valueForKey:@"desiredAccuracy"] doubleValue];
-    }
-    return _desiredAccuracy;
+    return [[self.settings valueForKey:@"desiredAccuracy"] doubleValue];
 }
-
-- (void)setDesiredAccuracy:(CLLocationAccuracy)desiredAccuracy {
-    if (_desiredAccuracy != desiredAccuracy) {
-        _desiredAccuracy = desiredAccuracy;
-        self.locationManager.desiredAccuracy = _desiredAccuracy;
-    }
-}
-
 
 - (double)requiredAccuracy {
-    if (!_requiredAccuracy) {
-        _requiredAccuracy = [[self.settings valueForKey:@"requiredAccuracy"] doubleValue];
-    }
-    return _requiredAccuracy;
+    return [[self.settings valueForKey:@"requiredAccuracy"] doubleValue];
 }
 
 
 - (CLLocationDistance)distanceFilter {
-    if (!_distanceFilter) {
-        _distanceFilter = [[self.settings valueForKey:@"distanceFilter"] doubleValue];
-    }
-    return _distanceFilter;
+    return [[self.settings valueForKey:@"distanceFilter"] doubleValue];
 }
-
-- (void)setDistanceFilter:(CLLocationDistance)distanceFilter {
-    if (_distanceFilter != distanceFilter) {
-        _distanceFilter = distanceFilter;
-        self.locationManager.distanceFilter = _distanceFilter;
-    }
-}
-
 
 - (NSTimeInterval)timeFilter {
-    if (!_timeFilter) {
-        _timeFilter = [[self.settings valueForKey:@"timeFilter"] doubleValue];
-    }
-    return _timeFilter;
+    return [[self.settings valueForKey:@"timeFilter"] doubleValue];
 }
 
-
 - (NSTimeInterval)trackDetectionTime {
-    if (!_trackDetectionTime) {
-        _trackDetectionTime = [[self.settings valueForKey:@"trackDetectionTime"] doubleValue];
-    }
-    return _trackDetectionTime;
+    return [[self.settings valueForKey:@"trackDetectionTime"] doubleValue];
 }
 
 - (CLLocationDistance)trackSeparationDistance {
-    if (!_trackSeparationDistance) {
-        _trackSeparationDistance = [[self.settings valueForKey:@"trackSeparationDistance"] doubleValue];
-    }
-    return _trackSeparationDistance;
+    return [[self.settings valueForKey:@"trackSeparationDistance"] doubleValue];
 }
 
 - (STGTTrack *)currentTrack {
