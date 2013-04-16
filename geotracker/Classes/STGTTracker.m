@@ -30,7 +30,7 @@
 
 - (void)customInit {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionStatusChanged:) name:@"sessionStatusChanged" object:self.session];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(trackerSettingsChange:) name:[NSString stringWithFormat:@"%@SettingsChange", self.group] object:[(id <STSession>)self.session settingsController]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(trackerSettingsChange:) name:[NSString stringWithFormat:@"%@SettingsChange", self.group] object:(id <STSession>)self.session];
 }
 
 - (void)setSession:(id<STSession>)session {
