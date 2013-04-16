@@ -13,7 +13,7 @@
 @interface STGTSettingsTableViewController () <UITextFieldDelegate, NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong) NSDictionary *controlsSettings;
-@property (nonatomic, strong) NSFetchedResultsController *settingsResultController;
+//@property (nonatomic, strong) NSFetchedResultsController *settingsResultController;
 
 @end
 
@@ -51,73 +51,56 @@
     
     NSMutableDictionary *controlsSettings = [NSMutableDictionary dictionary];
     
-    NSMutableDictionary *locationTrackerSettings = [NSMutableDictionary dictionary];
-    //                                      control, min, max, step
-    [locationTrackerSettings setValue:@[@"slider", @"0", @"5", @"1"] forKey:@"desiredAccuracy"];
-    [locationTrackerSettings setValue:@[@"slider", @"5", @"100", @"10"] forKey:@"requiredAccuracy"];
-    [locationTrackerSettings setValue:@[@"slider", @"-1", @"200", @"10"] forKey:@"distanceFilter"];
-    [locationTrackerSettings setValue:@[@"slider", @"1", @"60", @"5"] forKey:@"timeFilter"];
-    [locationTrackerSettings setValue:@[@"slider", @"0", @"600", @"30"] forKey:@"trackDetectionTime"];
-    [locationTrackerSettings setValue:@[@"slider", @"1", @"1000", @"100"] forKey:@"trackSeparationDistance"];
-    [locationTrackerSettings setValue:@[@"switch", @"", @"", @""] forKey:@"locationTrackerAutoStart"];
-    [locationTrackerSettings setValue:@[@"slider", @"0", @"24", @"0.5"] forKey:@"locationTrackerStartTime"];
-    [locationTrackerSettings setValue:@[@"slider", @"0", @"24", @"0.5"] forKey:@"locationTrackerFinishTime"];
+    NSMutableArray *locationTrackerSettings = [NSMutableArray array];
+    //                                      control, min, max, step, name
+    [locationTrackerSettings addObject:@[@"slider", @"0", @"5", @"1", @"desiredAccuracy"]];
+    [locationTrackerSettings addObject:@[@"slider", @"5", @"100", @"10", @"requiredAccuracy"]];
+    [locationTrackerSettings addObject:@[@"slider", @"-1", @"200", @"10", @"distanceFilter"]];
+    [locationTrackerSettings addObject:@[@"slider", @"1", @"60", @"5", @"timeFilter"]];
+    [locationTrackerSettings addObject:@[@"slider", @"0", @"600", @"30", @"trackDetectionTime"]];
+    [locationTrackerSettings addObject:@[@"slider", @"1", @"1000", @"100", @"trackSeparationDistance"]];
+    [locationTrackerSettings addObject:@[@"switch", @"", @"", @"", @"locationTrackerAutoStart"]];
+    [locationTrackerSettings addObject:@[@"slider", @"0", @"24", @"0.5", @"locationTrackerStartTime"]];
+    [locationTrackerSettings addObject:@[@"slider", @"0", @"24", @"0.5", @"locationTrackerFinishTime"]];
     
     [controlsSettings setValue:locationTrackerSettings forKey:@"location"];
     
     
-    NSMutableDictionary *mapSettings = [NSMutableDictionary dictionary];
-    [mapSettings setValue:@[@"segmentedControl", @"1", @"3", @"1"] forKey:@"mapHeading"];
-    [mapSettings setValue:@[@"segmentedControl", @"1", @"3", @"1"] forKey:@"mapType"];
-    [mapSettings setValue:@[@"slider", @"1", @"10", @"0.5"] forKey:@"trackScale"];
+    NSMutableArray *mapSettings = [NSMutableArray array];
+    [mapSettings addObject:@[@"segmentedControl", @"1", @"3", @"1", @"mapHeading"]];
+    [mapSettings addObject:@[@"segmentedControl", @"1", @"3", @"1", @"mapType"]];
+    [mapSettings addObject:@[@"slider", @"1", @"10", @"0.5", @"trackScale"]];
     
     [controlsSettings setValue:mapSettings forKey:@"map"];
     
     
-    NSMutableDictionary *syncerSettings = [NSMutableDictionary dictionary];
-    [syncerSettings setValue:@[@"slider", @"10", @"200", @"10"] forKey:@"fetchLimit"];
-    [syncerSettings setValue:@[@"slider", @"10", @"3600", @"60"] forKey:@"syncInterval"];
-    [syncerSettings setValue:@[@"textField", @"", @"", @""] forKey:@"syncServerURI"];
-    [syncerSettings setValue:@[@"textField", @"", @"", @""] forKey:@"xmlNamespace"];
+    NSMutableArray *syncerSettings = [NSMutableArray array];
+    [syncerSettings addObject:@[@"slider", @"10", @"200", @"10", @"fetchLimit"]];
+    [syncerSettings addObject:@[@"slider", @"10", @"3600", @"60", @"syncInterval"]];
+    [syncerSettings addObject:@[@"textField", @"", @"", @"", @"syncServerURI"]];
+    [syncerSettings addObject:@[@"textField", @"", @"", @"", @"xmlNamespace"]];
     
     [controlsSettings setValue:syncerSettings forKey:@"syncer"];
     
     
-    NSMutableDictionary *generalSettings = [NSMutableDictionary dictionary];
-    [generalSettings setValue:@[@"switch", @"", @"", @""] forKey:@"localAccessToSettings"];
+    NSMutableArray *generalSettings = [NSMutableArray array];
+    [generalSettings addObject:@[@"switch", @"", @"", @"", @"localAccessToSettings"]];
     
     [controlsSettings setValue:generalSettings forKey:@"general"];
     
     
-    NSMutableDictionary *batteryTrackerSettings = [NSMutableDictionary dictionary];
-    [batteryTrackerSettings setValue:@[@"switch", @"", @"", @""] forKey:@"batteryTrackerAutoStart"];
-    [batteryTrackerSettings setValue:@[@"slider", @"0", @"24", @"0.5"] forKey:@"batteryTrackerStartTime"];
-    [batteryTrackerSettings setValue:@[@"slider", @"0", @"24", @"0.5"] forKey:@"batteryTrackerFinishTime"];
+    NSMutableArray *batteryTrackerSettings = [NSMutableArray array];
+    [batteryTrackerSettings addObject:@[@"switch", @"", @"", @"", @"batteryTrackerAutoStart"]];
+    [batteryTrackerSettings addObject:@[@"slider", @"0", @"24", @"0.5", @"batteryTrackerStartTime"]];
+    [batteryTrackerSettings addObject:@[@"slider", @"0", @"24", @"0.5", @"batteryTrackerFinishTime"]];
     
     [controlsSettings setValue:batteryTrackerSettings forKey:@"battery"];
     
+    NSArray *groupNames = [NSArray arrayWithObjects:@"general", @"location", @"battery", @"map", @"syncer", nil];
+    [controlsSettings setValue:groupNames forKey:@"groupNames"];
+    
     //    NSLog(@"controlsSettings %@", controlsSettings);
     return controlsSettings;
-}
-
-- (void)setSession:(id<STSession>)session {
-    _session = session;
-    NSError *error;
-    if (![self.settingsResultController performFetch:&error]) {
-        NSLog(@"performFetch error %@", error);
-    } else {
-
-    }
-}
-
-- (NSFetchedResultsController *)settingsResultController {
-    if (!_settingsResultController) {
-        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"STGTSettings"];
-        request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"id" ascending:YES selector:@selector(compare:)]];
-        _settingsResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.session.document.managedObjectContext sectionNameKeyPath:@"group" cacheName:nil];
-        _settingsResultController.delegate = self;
-    }
-    return _settingsResultController;
 }
 
 
@@ -129,43 +112,47 @@
 }
 
 - (STGTSettings *)settingObjectForIndexPath:(NSIndexPath *)indexPath {
-    return [[[[self.settingsResultController sections] objectAtIndex:indexPath.section] objects] objectAtIndex:indexPath.row];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.group == %@ && SELF.name == %@", [[self groupNames] objectAtIndex:indexPath.section], [self settingNameForIndexPath:indexPath]];
+    return [[[[(STSession *)self.session settingsController] currentSettings] filteredArrayUsingPredicate:predicate] lastObject];
 }
 
-- (NSDictionary *)settingsGroupForSection:(NSInteger)section {
-    NSString *groupName = [[[self.settingsResultController sections] objectAtIndex:section] name];
+- (NSArray *)groupNames {
+    return [[self controlsSettings] valueForKey:@"groupNames"];
+}
+
+- (NSArray *)settingsGroupForSection:(NSInteger)section {
+    NSString *groupName = [[self groupNames] objectAtIndex:section];
     return [self.controlsSettings valueForKey:groupName];
 }
 
 - (NSString *)controlTypeForIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *controlGroup = [self settingsGroupForSection:indexPath.section];
-    return [[controlGroup valueForKey:[self settingNameForIndexPath:indexPath]] objectAtIndex:0];
+    NSArray *controlGroup = [self settingsGroupForSection:indexPath.section];
+    return [[controlGroup objectAtIndex:indexPath.row] objectAtIndex:0];
 }
 
 - (NSString *)minForIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *controlGroup = [self settingsGroupForSection:indexPath.section];
-    return [[controlGroup valueForKey:[self settingNameForIndexPath:indexPath]] objectAtIndex:1];
+    NSArray *controlGroup = [self settingsGroupForSection:indexPath.section];
+    return [[controlGroup objectAtIndex:indexPath.row] objectAtIndex:1];
 }
 
 - (NSString *)maxForIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *controlGroup = [self settingsGroupForSection:indexPath.section];
-    return [[controlGroup valueForKey:[self settingNameForIndexPath:indexPath]] objectAtIndex:2];
+    NSArray *controlGroup = [self settingsGroupForSection:indexPath.section];
+    return [[controlGroup objectAtIndex:indexPath.row] objectAtIndex:2];
 }
 
 - (NSString *)stepForIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *controlGroup = [self settingsGroupForSection:indexPath.section];
-    return [[controlGroup valueForKey:[self settingNameForIndexPath:indexPath]] objectAtIndex:3];
+    NSArray *controlGroup = [self settingsGroupForSection:indexPath.section];
+    return [[controlGroup objectAtIndex:indexPath.row] objectAtIndex:3];
 }
 
 - (NSString *)settingNameForIndexPath:(NSIndexPath *)indexPath {
-    return [[self settingObjectForIndexPath:indexPath] valueForKey:@"name"];
+    
+    return [[[self settingsGroupForSection:indexPath.section] objectAtIndex:indexPath.row] lastObject];
 }
 
 - (NSString *)valueForIndexPath:(NSIndexPath *)indexPath {
     
     NSString *settingName = [self settingNameForIndexPath:indexPath];
-//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.name == %@", settingName];
-//    NSString *value = [[[self.settingsResultController.fetchedObjects filteredArrayUsingPredicate:predicate] lastObject] valueForKey:@"value"];
     
     NSString *value = [[self settingObjectForIndexPath:indexPath] valueForKey:@"value"];
     
@@ -217,19 +204,17 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [[self.settingsResultController sections] count];
-//    return [self.controlsSettings count];
+    return [[self groupNames] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    NSArray *keys = [self.controlsSettings allKeys];
-//    return [[self.controlsSettings valueForKey:[keys objectAtIndex:section]] count];
-    return [[[self.settingsResultController sections] objectAtIndex:section] numberOfObjects];
+    NSArray *keys = [self groupNames];
+    return [[self.controlsSettings valueForKey:[keys objectAtIndex:section]] count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    NSString *title = [NSString stringWithFormat:@"SETTING%@",[[[self.settingsResultController sections] objectAtIndex:section] name]];
+    NSString *title = [NSString stringWithFormat:@"SETTING%@",[[self groupNames] objectAtIndex:section]];
     return NSLocalizedString(title, @"");
 }
 
@@ -332,6 +317,10 @@
     return cell;
 }
 
+#pragma mark - access to cells
+
+
+
 
 #pragma mark - controls
 
@@ -363,38 +352,6 @@
         value = [NSString stringWithFormat:@"%@", [accuracyArray objectAtIndex:rint(slider.value)]];
     }
     [[(STSession *)self.session settingsController] applyNewSettings:[NSDictionary dictionaryWithObjectsAndKeys:value, settingName, nil]];
-}
-
-
-#pragma mark - NSFetchedResultsController delegate
-
-- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
-    //    NSLog(@"controllerWillChangeContent");
-}
-
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-    //    NSLog(@"controllerDidChangeContent");
-}
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
-    
-    //    NSLog(@"controller didChangeObject");
-        
-    if (type == NSFetchedResultsChangeDelete) {
-        
-        //        NSLog(@"NSFetchedResultsChangeDelete");
-        
-    } else if (type == NSFetchedResultsChangeInsert) {
-        
-        //        NSLog(@"NSFetchedResultsChangeInsert");
-        
-    } else if (type == NSFetchedResultsChangeUpdate) {
-        
-        //        NSLog(@"NSFetchedResultsChangeUpdate");
-        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-
-    }
-    
 }
 
 @end
