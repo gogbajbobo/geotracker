@@ -281,10 +281,11 @@
         cell = [[STGTSettingsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         
         if ([controlType isEqualToString:@"switch"]) {
-            UISwitch *headingSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(230, 9, 80, 27)];
-            [headingSwitch setOn:[[self valueForIndexPath:indexPath] boolValue] animated:NO];
-//            [headingSwitch addTarget:self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
-            [cell.contentView addSubview:headingSwitch];
+            UISwitch *senderSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(230, 9, 80, 27)];
+            [senderSwitch setOn:[[self valueForIndexPath:indexPath] boolValue] animated:NO];
+            [senderSwitch addTarget:self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
+            [cell.contentView addSubview:senderSwitch];
+            cell.senderSwitch = senderSwitch;
 
         } else if ([controlType isEqualToString:@"textField"]) {
             UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(25, 38, 270, 24)];
@@ -328,7 +329,7 @@
 #pragma mark - show changes in situ
 
 - (void)settingsChange:(NSNotification *)notification {
-    NSLog(@"notification.userInfo %@", notification.userInfo);
+//    NSLog(@"notification.userInfo %@", notification.userInfo);
     NSString *groupName = [[notification.userInfo valueForKey:@"changedObject"] valueForKey:@"group"];
     NSString *settingName = [[notification.userInfo valueForKey:@"changedObject"] valueForKey:@"name"];
     NSIndexPath *indexPath = [self indexPathForGroup:groupName setting:settingName];
@@ -336,6 +337,7 @@
     NSString *value = [self valueForIndexPath:indexPath];
     cell.detailTextLabel.text = value;
     [self setSlider:cell.slider value:[value doubleValue] forSettingName:settingName];
+    [cell.senderSwitch setOn:[value boolValue]];
 }
 
 
@@ -398,6 +400,14 @@
                               [NSNumber numberWithDouble:kCLLocationAccuracyKilometer],
                               [NSNumber numberWithDouble:kCLLocationAccuracyThreeKilometers],nil];
     return [NSString stringWithFormat:@"%@", [accuracyArray objectAtIndex:index]];
+}
+
+- (void)switchValueChanged:(UISwitch *)senderSwitch {
+    STGTSettingsTableViewCell *cell = (STGTSettingsTableViewCell *)senderSwitch.superview.superview;
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    NSString *settingName = [self settingNameForIndexPath:indexPath];
+    NSString *value = [NSString stringWithFormat:@"%d", senderSwitch.on];
+    [[(STSession *)self.session settingsController] applyNewSettings:[NSDictionary dictionaryWithObjectsAndKeys:value, settingName, nil]];
 }
 
 @end

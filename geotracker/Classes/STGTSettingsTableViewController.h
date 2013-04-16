@@ -19,5 +19,5 @@
 @interface STGTSettingsTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) UISlider *slider;
-
+@property (nonatomic, strong) UISwitch *senderSwitch;
 @end
