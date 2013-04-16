@@ -281,7 +281,7 @@
     if ([anObject isKindOfClass:[STGTSettings class]]) {
 //        NSLog(@"anObject %@", anObject);
         [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"%@SettingsChange", [anObject valueForKey:@"group"]] object:anObject userInfo:[NSDictionary dictionaryWithObject:[anObject valueForKey:@"value"] forKey:[anObject valueForKey:@"name"]]];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"settingsChange" object:anObject userInfo:[NSDictionary dictionaryWithObject:[anObject valueForKey:@"value"] forKey:[anObject valueForKey:@"name"]]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"settingsChange" object:self.session userInfo:[NSDictionary dictionaryWithObject:anObject forKey:@"changedObject"]];
         
     }
         

@@ -18,4 +18,6 @@
 
 @interface STGTSettingsTableViewCell : UITableViewCell
 
+@property (nonatomic, strong) UISlider *slider;
+
 @end

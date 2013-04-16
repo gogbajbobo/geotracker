@@ -150,29 +150,46 @@
     return [[[self settingsGroupForSection:indexPath.section] objectAtIndex:indexPath.row] lastObject];
 }
 
+
+- (NSIndexPath *)indexPathForGroup:(NSString *)groupName setting:(NSString *)settingName {
+    NSInteger *section = [[self groupNames] indexOfObject:groupName];
+    NSInteger *row;
+    for (NSArray *controlSetting in [self settingsGroupForSection:section]) {
+        if ([[controlSetting lastObject] isEqualToString:settingName]) {
+            row = [[self settingsGroupForSection:section] indexOfObject:controlSetting];
+        }
+    }
+    return [NSIndexPath indexPathForRow:row inSection:section];
+}
+
 - (NSString *)valueForIndexPath:(NSIndexPath *)indexPath {
     
     NSString *settingName = [self settingNameForIndexPath:indexPath];
-    
     NSString *value = [[self settingObjectForIndexPath:indexPath] valueForKey:@"value"];
-    
     if ([[self controlTypeForIndexPath:indexPath] isEqualToString:@"slider"]) {
-        if ([settingName hasSuffix:@"StartTime"] || [settingName hasSuffix:@"FinishTime"]) {
-            double time = [value doubleValue];
-            double hours = floor(time);
-            double minutes = rint((time - floor(time)) * 60);
-            NSNumberFormatter *timeFormatter = [[NSNumberFormatter alloc] init];
-            timeFormatter.formatWidth = 2;
-            timeFormatter.paddingCharacter = @"0";
-            value = [NSString stringWithFormat:@"%@:%@", [timeFormatter stringFromNumber:[NSNumber numberWithDouble:hours]], [timeFormatter stringFromNumber:[NSNumber numberWithDouble:minutes]]];
-        } else if ([settingName isEqualToString:@"trackScale"]) {
-            value = [NSString stringWithFormat:@"%.1f", [value doubleValue]];
-        } else {
-            value = [NSString stringWithFormat:@"%.f", [value doubleValue]];
-        }
+        value = [self formatValue:value forSettingName:settingName];
     }
-//    NSLog(@"section %d, row %d id %@", indexPath.section, indexPath.row, [[self settingObjectForIndexPath:indexPath] valueForKey:@"id"]);
     return value;
+
+}
+
+- (NSString *)formatValue:(NSString *)valueString forSettingName:(NSString *)settingName{
+    
+    if ([settingName hasSuffix:@"StartTime"] || [settingName hasSuffix:@"FinishTime"]) {
+        double time = [valueString doubleValue];
+        double hours = floor(time);
+        double minutes = rint((time - floor(time)) * 60);
+        NSNumberFormatter *timeFormatter = [[NSNumberFormatter alloc] init];
+        timeFormatter.formatWidth = 2;
+        timeFormatter.paddingCharacter = @"0";
+        valueString = [NSString stringWithFormat:@"%@:%@", [timeFormatter stringFromNumber:[NSNumber numberWithDouble:hours]], [timeFormatter stringFromNumber:[NSNumber numberWithDouble:minutes]]];
+    } else if ([settingName isEqualToString:@"trackScale"]) {
+        valueString = [NSString stringWithFormat:@"%.1f", [valueString doubleValue]];
+    } else {
+        valueString = [NSString stringWithFormat:@"%.f", [valueString doubleValue]];
+    }
+    return valueString;
+
 }
 
 #pragma mark - view lifecycle
@@ -186,6 +203,11 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChange:) name:@"settingsChange" object:self.session];
+    [super viewWillAppear:animated];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -196,6 +218,7 @@
 {
     [super didReceiveMemoryWarning];
     if ([self isViewLoaded] && [self.view window] == nil) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"settingsChange" object:self.session];
         self.view = nil;
     }
 }
@@ -246,28 +269,13 @@
         UISlider *slider = [[UISlider alloc] initWithFrame:CGRectMake(25, 38, 270, 24)];
         slider.maximumValue = [[self maxForIndexPath:indexPath] doubleValue];
         slider.minimumValue = [[self minForIndexPath:indexPath] doubleValue];
-        if ([[self settingNameForIndexPath:indexPath] isEqualToString:@"desiredAccuracy"]) {
-            double value = [[self valueForIndexPath:indexPath] doubleValue];
-            NSArray *accuracyArray = [NSArray arrayWithObjects: [NSNumber numberWithDouble:kCLLocationAccuracyBestForNavigation],
-                                      [NSNumber numberWithDouble:kCLLocationAccuracyBest],
-                                      [NSNumber numberWithDouble:kCLLocationAccuracyNearestTenMeters],
-                                      [NSNumber numberWithDouble:kCLLocationAccuracyHundredMeters],
-                                      [NSNumber numberWithDouble:kCLLocationAccuracyKilometer],
-                                      [NSNumber numberWithDouble:kCLLocationAccuracyThreeKilometers],nil];
-            value = [accuracyArray indexOfObject:[NSNumber numberWithDouble:value]];
-            if (value == NSNotFound) {
-                NSLog(@"NSNotFoundS");
-                value = [accuracyArray indexOfObject:[NSNumber numberWithDouble:kCLLocationAccuracyNearestTenMeters]];
-            }
-            slider.value = value;
-        } else {
-            slider.value = [[self valueForIndexPath:indexPath] doubleValue];            
-        }
-
+        [self setSlider:slider value:[[self valueForIndexPath:indexPath] doubleValue] forSettingName:[self settingNameForIndexPath:indexPath]];
+        
         [slider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
         [slider addTarget:self action:@selector(sliderValueChangeFinished:) forControlEvents:UIControlEventTouchUpInside];
 
         [cell.contentView addSubview:slider];
+        cell.slider = slider;
         
     } else {
         cell = [[STGTSettingsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
@@ -317,16 +325,45 @@
     return cell;
 }
 
-#pragma mark - access to cells
+#pragma mark - show changes in situ
 
-
+- (void)settingsChange:(NSNotification *)notification {
+    NSLog(@"notification.userInfo %@", notification.userInfo);
+    NSString *groupName = [[notification.userInfo valueForKey:@"changedObject"] valueForKey:@"group"];
+    NSString *settingName = [[notification.userInfo valueForKey:@"changedObject"] valueForKey:@"name"];
+    NSIndexPath *indexPath = [self indexPathForGroup:groupName setting:settingName];
+    STGTSettingsTableViewCell *cell = (STGTSettingsTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    NSString *value = [self valueForIndexPath:indexPath];
+    cell.detailTextLabel.text = value;
+    [self setSlider:cell.slider value:[value doubleValue] forSettingName:settingName];
+}
 
 
 #pragma mark - controls
 
+- (void)setSlider:(UISlider *)slider value:(double)value forSettingName:(NSString *)settingName {
+    
+    if ([settingName isEqualToString:@"desiredAccuracy"]) {
+        NSArray *accuracyArray = [NSArray arrayWithObjects: [NSNumber numberWithDouble:kCLLocationAccuracyBestForNavigation],
+                                  [NSNumber numberWithDouble:kCLLocationAccuracyBest],
+                                  [NSNumber numberWithDouble:kCLLocationAccuracyNearestTenMeters],
+                                  [NSNumber numberWithDouble:kCLLocationAccuracyHundredMeters],
+                                  [NSNumber numberWithDouble:kCLLocationAccuracyKilometer],
+                                  [NSNumber numberWithDouble:kCLLocationAccuracyThreeKilometers],nil];
+        value = [accuracyArray indexOfObject:[NSNumber numberWithDouble:value]];
+        if (value == NSNotFound) {
+            NSLog(@"NSNotFoundS");
+            value = [accuracyArray indexOfObject:[NSNumber numberWithDouble:kCLLocationAccuracyNearestTenMeters]];
+        }
+    }
+    slider.value = value;
+
+}
+
 - (void)sliderValueChanged:(UISlider *)slider {
     
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:(UITableViewCell *)slider.superview.superview];
+    STGTSettingsTableViewCell *cell = (STGTSettingsTableViewCell *)slider.superview.superview;
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     NSString *settingName = [self settingNameForIndexPath:indexPath];
     double step = [[self stepForIndexPath:indexPath] doubleValue];
     
@@ -336,22 +373,31 @@
         [slider setValue:rint(slider.value/step)*step];
     }
     
+    NSString *value = [NSString stringWithFormat:@"%f", slider.value];
+    if ([settingName isEqualToString:@"desiredAccuracy"]) {
+        value = [self desiredAccuracyValueFrom:rint(slider.value)];
+    }
+    cell.detailTextLabel.text = [self formatValue:value forSettingName:settingName];
 }
 
 - (void)sliderValueChangeFinished:(UISlider *)slider {
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:(UITableViewCell *)slider.superview.superview];
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:(STGTSettingsTableViewCell *)slider.superview.superview];
     NSString *settingName = [self settingNameForIndexPath:indexPath];
     NSString *value = [NSString stringWithFormat:@"%f", slider.value];
     if ([settingName isEqualToString:@"desiredAccuracy"]) {
-        NSArray *accuracyArray = [NSArray arrayWithObjects: [NSNumber numberWithDouble:kCLLocationAccuracyBestForNavigation],
-                                  [NSNumber numberWithDouble:kCLLocationAccuracyBest],
-                                  [NSNumber numberWithDouble:kCLLocationAccuracyNearestTenMeters],
-                                  [NSNumber numberWithDouble:kCLLocationAccuracyHundredMeters],
-                                  [NSNumber numberWithDouble:kCLLocationAccuracyKilometer],
-                                  [NSNumber numberWithDouble:kCLLocationAccuracyThreeKilometers],nil];
-        value = [NSString stringWithFormat:@"%@", [accuracyArray objectAtIndex:rint(slider.value)]];
+        value = [self desiredAccuracyValueFrom:rint(slider.value)];
     }
     [[(STSession *)self.session settingsController] applyNewSettings:[NSDictionary dictionaryWithObjectsAndKeys:value, settingName, nil]];
+}
+
+- (NSString *)desiredAccuracyValueFrom:(int)index {
+    NSArray *accuracyArray = [NSArray arrayWithObjects: [NSNumber numberWithDouble:kCLLocationAccuracyBestForNavigation],
+                              [NSNumber numberWithDouble:kCLLocationAccuracyBest],
+                              [NSNumber numberWithDouble:kCLLocationAccuracyNearestTenMeters],
+                              [NSNumber numberWithDouble:kCLLocationAccuracyHundredMeters],
+                              [NSNumber numberWithDouble:kCLLocationAccuracyKilometer],
+                              [NSNumber numberWithDouble:kCLLocationAccuracyThreeKilometers],nil];
+    return [NSString stringWithFormat:@"%@", [accuracyArray objectAtIndex:index]];
 }
 
 @end
