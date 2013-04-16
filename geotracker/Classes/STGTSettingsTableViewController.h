@@ -20,4 +20,7 @@
 
 @property (nonatomic, strong) UISlider *slider;
 @property (nonatomic, strong) UISwitch *senderSwitch;
+@property (nonatomic, strong) UISegmentedControl *segmentedControl;
+
+
 @end

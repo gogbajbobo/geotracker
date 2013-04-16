@@ -313,9 +313,10 @@
             segmentedControl.segmentedControlStyle = UISegmentedControlStylePlain;
             NSDictionary *textAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:12], UITextAttributeFont, nil];
             [segmentedControl setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
-//            [segmentedControl addTarget:self action:@selector(segmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
+            [segmentedControl addTarget:self action:@selector(segmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
             segmentedControl.selectedSegmentIndex = [[self valueForIndexPath:indexPath] integerValue];
             [cell.contentView addSubview:segmentedControl];
+            cell.segmentedControl = segmentedControl;
 
         }
 
@@ -338,6 +339,7 @@
     cell.detailTextLabel.text = value;
     [self setSlider:cell.slider value:[value doubleValue] forSettingName:settingName];
     [cell.senderSwitch setOn:[value boolValue]];
+    [cell.segmentedControl setSelectedSegmentIndex:[value integerValue]];
 }
 
 
@@ -407,6 +409,14 @@
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     NSString *settingName = [self settingNameForIndexPath:indexPath];
     NSString *value = [NSString stringWithFormat:@"%d", senderSwitch.on];
+    [[(STSession *)self.session settingsController] applyNewSettings:[NSDictionary dictionaryWithObjectsAndKeys:value, settingName, nil]];
+}
+
+- (void)segmentedControlValueChanged:(UISegmentedControl *)segmentedControl {
+    STGTSettingsTableViewCell *cell = (STGTSettingsTableViewCell *)segmentedControl.superview.superview;
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    NSString *settingName = [self settingNameForIndexPath:indexPath];
+    NSString *value = [NSString stringWithFormat:@"%d", segmentedControl.selectedSegmentIndex];
     [[(STSession *)self.session settingsController] applyNewSettings:[NSDictionary dictionaryWithObjectsAndKeys:value, settingName, nil]];
 }
 
