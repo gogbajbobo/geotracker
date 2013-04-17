@@ -108,7 +108,7 @@
 }
 
 - (void)startAnimationOfSyncer:(UIView *)view {
-    [UIView animateWithDuration:2.0 delay:0.0 options:UIViewAnimationOptionRepeat | UIViewAnimationOptionCurveLinear animations:^{
+    [UIView animateWithDuration:2.0 delay:0.0 options:(UIViewAnimationOptionRepeat | UIViewAnimationOptionCurveLinear) animations:^{
         CGAffineTransform transform = CGAffineTransformMakeRotation(M_PI);
         view.transform = transform;
     } completion:^(BOOL finished) {
@@ -117,7 +117,7 @@
 }
 
 - (void)stopAnimationOfSyncer:(UIView *)view {
-    [UIView animateWithDuration:2.0 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveLinear animations:^{
+    [UIView animateWithDuration:2.0 delay:0.0 options:(UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveLinear) animations:^{
         CGAffineTransform transform = CGAffineTransformMakeRotation(M_PI);
         view.transform = transform;
     } completion:^(BOOL finished) {
@@ -180,6 +180,7 @@
 }
 
 - (void)syncStatusChanged {
+    NSLog(@"syncer.syncing %d", self.currentSession.syncer.syncing);
     self.syncButton.enabled = !self.currentSession.syncer.syncing;
     if (self.syncButton.enabled) {
         [self stopAnimationOfSyncer:self.syncButton.imageView];
