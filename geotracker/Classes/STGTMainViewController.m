@@ -107,6 +107,24 @@
     }];
 }
 
+- (void)startAnimationOfSyncer:(UIView *)view {
+    [UIView animateWithDuration:2.0 delay:0.0 options:UIViewAnimationOptionRepeat | UIViewAnimationOptionCurveLinear animations:^{
+        CGAffineTransform transform = CGAffineTransformMakeRotation(M_PI);
+        view.transform = transform;
+    } completion:^(BOOL finished) {
+        [self stopAnimationOfSyncer:view];
+    }];
+}
+
+- (void)stopAnimationOfSyncer:(UIView *)view {
+    [UIView animateWithDuration:2.0 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveLinear animations:^{
+        CGAffineTransform transform = CGAffineTransformMakeRotation(M_PI);
+        view.transform = transform;
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
 - (void)numberOfUnsyncedChanged {
     self.syncLabel.text = [[self.currentSession.syncer numberOfUnsynced] stringValue];
 }
@@ -163,6 +181,11 @@
 
 - (void)syncStatusChanged {
     self.syncButton.enabled = !self.currentSession.syncer.syncing;
+    if (self.syncButton.enabled) {
+        [self stopAnimationOfSyncer:self.syncButton.imageView];
+    } else {
+        [self startAnimationOfSyncer:self.syncButton.imageView];
+    }
 }
 
 - (void)syncerErrorLogMessageRecieved {
