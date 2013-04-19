@@ -96,32 +96,39 @@
 - (NSDictionary *)todaySummaryInfo {
     
     NSDictionary *todaySummaryInfo;
-    CLLocationDistance overallDistance = 0.0;
-    NSTimeInterval overallTime = 0.0;
-    CLLocationSpeed averageSpeed = 0.0;
     
-    NSArray *todayTracks;
-    if ([self.resultsController sections].count > 0) {
-        todayTracks = [[[self.resultsController sections] objectAtIndex:0] objects];
-    }
-    
-    for (STGTTrack *track in todayTracks) {
+    NSDate *currentDate = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterShortStyle];
+    currentDate = [dateFormatter dateFromString:[dateFormatter stringFromDate:currentDate]];
+
+    if ([self.currentTrack.finishTime compare:currentDate] == NSOrderedDescending) {
+        CLLocationDistance overallDistance = 0.0;
+        NSTimeInterval overallTime = 0.0;
+        CLLocationSpeed averageSpeed = 0.0;
         
-        NSDictionary *trackInfo = [self infoForTrack:track];
-        overallDistance += [[trackInfo valueForKey:@"overallDistance"] doubleValue];
-        overallTime += [[trackInfo valueForKey:@"overallTime"] doubleValue];
+        NSArray *todayTracks;
+        if ([self.resultsController sections].count > 0) {
+            todayTracks = [[[self.resultsController sections] objectAtIndex:0] objects];
+        }
+        
+        for (STGTTrack *track in todayTracks) {
+            
+            NSDictionary *trackInfo = [self infoForTrack:track];
+            overallDistance += [[trackInfo valueForKey:@"overallDistance"] doubleValue];
+            overallTime += [[trackInfo valueForKey:@"overallTime"] doubleValue];
+        }
+        
+        if (overallTime != 0) {
+            averageSpeed = fabs(3.6 * overallDistance / overallTime);
+        }
+        
+        todaySummaryInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [NSNumber numberWithDouble:overallDistance], @"overallDistance",
+                            [NSNumber numberWithDouble:averageSpeed], @"averageSpeed",
+                            [NSNumber numberWithInt:todayTracks.count], @"numberOfTracks",
+                            nil];
     }
-    
-    if (overallTime != 0) {
-        averageSpeed = fabs(3.6 * overallDistance / overallTime);
-    }
-    
-    todaySummaryInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                   [NSNumber numberWithDouble:overallDistance], @"overallDistance",
-                   [NSNumber numberWithDouble:averageSpeed], @"averageSpeed",
-                   [NSNumber numberWithInt:todayTracks.count], @"numberOfTracks",
-                   nil];
-    
     
     return todaySummaryInfo;
 }
