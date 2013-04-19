@@ -57,6 +57,7 @@
     UITableViewController *logTVC = [[UITableViewController alloc] init];
     logTVC.tableView.delegate = self.currentSession.logger;
     logTVC.tableView.dataSource = self.currentSession.logger;
+    self.currentSession.logger.tableView = logTVC.tableView;
     [self.navigationController pushViewController:logTVC animated:YES];
 }
 

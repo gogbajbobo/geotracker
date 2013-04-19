@@ -168,6 +168,9 @@
     } else if (type == NSFetchedResultsChangeInsert) {
         
         //        NSLog(@"NSFetchedResultsChangeInsert");
+        [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+//        [self.tableView scrollToRowAtIndexPath:newIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+
         
     } else if (type == NSFetchedResultsChangeUpdate) {
         
