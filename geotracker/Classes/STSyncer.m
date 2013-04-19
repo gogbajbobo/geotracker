@@ -174,7 +174,7 @@
         [app endBackgroundTask:bgTask];
     }];
     
-    [[NSRunLoop currentRunLoop] addTimer:self.syncTimer forMode:NSDefaultRunLoopMode];
+    [[NSRunLoop currentRunLoop] addTimer:self.syncTimer forMode:NSRunLoopCommonModes];
 }
 
 - (void)releaseTimer {
@@ -183,7 +183,7 @@
 }
 
 - (void)onTimerTick:(NSTimer *)timer {
-//    NSLog(@"syncTimer tick at %@", [NSDate date]);
+    NSLog(@"syncTimer tick at %@", [NSDate date]);
     [self syncData];
 }
 
