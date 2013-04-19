@@ -99,6 +99,12 @@
 #pragma mark - timers
 
 - (void)initTimers {
+    UIBackgroundTaskIdentifier bgTask = 0;
+    UIApplication  *app = [UIApplication sharedApplication];
+    bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
+        [app endBackgroundTask:bgTask];
+    }];
+    
     [[NSRunLoop currentRunLoop] addTimer:self.startTimer forMode:NSDefaultRunLoopMode];
     [[NSRunLoop currentRunLoop] addTimer:self.finishTimer forMode:NSDefaultRunLoopMode];
 }

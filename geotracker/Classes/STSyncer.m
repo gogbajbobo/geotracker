@@ -168,6 +168,12 @@
 }
 
 - (void)initTimer {
+    UIBackgroundTaskIdentifier bgTask = 0;
+    UIApplication  *app = [UIApplication sharedApplication];
+    bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
+        [app endBackgroundTask:bgTask];
+    }];
+    
     [[NSRunLoop currentRunLoop] addTimer:self.syncTimer forMode:NSDefaultRunLoopMode];
 }
 
@@ -177,7 +183,7 @@
 }
 
 - (void)onTimerTick:(NSTimer *)timer {
-//    NSLog(@"timer tick at %@", [NSDate date]);
+//    NSLog(@"syncTimer tick at %@", [NSDate date]);
     [self syncData];
 }
 
