@@ -181,7 +181,7 @@
 }
 
 - (void)syncStatusChanged {
-    NSLog(@"syncer.syncing %d", self.currentSession.syncer.syncing);
+//    NSLog(@"syncer.syncing %d", self.currentSession.syncer.syncing);
     self.syncButton.enabled = !self.currentSession.syncer.syncing;
     if (self.syncButton.enabled) {
         [self stopAnimationOfSyncer:self.syncButton.imageView];

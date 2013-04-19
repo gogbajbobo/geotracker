@@ -183,7 +183,7 @@
 }
 
 - (void)onTimerTick:(NSTimer *)timer {
-    NSLog(@"syncTimer tick at %@", [NSDate date]);
+//    NSLog(@"syncTimer tick at %@", [NSDate date]);
     [self syncData];
 }
 
