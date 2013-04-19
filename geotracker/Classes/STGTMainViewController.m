@@ -109,7 +109,7 @@
 }
 
 - (void)startAnimationOfSyncer:(UIView *)view {
-    [UIView animateWithDuration:2.0 delay:0.0 options:(UIViewAnimationOptionRepeat | UIViewAnimationOptionCurveLinear) animations:^{
+    [UIView animateWithDuration:1.0 delay:0.0 options:(UIViewAnimationOptionRepeat | UIViewAnimationOptionCurveLinear) animations:^{
         CGAffineTransform transform = CGAffineTransformMakeRotation(M_PI);
         view.transform = transform;
     } completion:^(BOOL finished) {
@@ -118,8 +118,8 @@
 }
 
 - (void)stopAnimationOfSyncer:(UIView *)view {
-    [UIView animateWithDuration:2.0 delay:0.0 options:(UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveLinear) animations:^{
-        CGAffineTransform transform = CGAffineTransformMakeRotation(M_PI);
+    [UIView animateWithDuration:1.0 delay:0.0 options:(UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveLinear) animations:^{
+        CGAffineTransform transform = CGAffineTransformMakeRotation(0);
         view.transform = transform;
     } completion:^(BOOL finished) {
         
