@@ -200,6 +200,20 @@
     self.syncIndicatorView.image = [UIImage imageNamed:@"ok.png"];    
 }
 
+- (void)appWillEnterForeground {
+    [self restartAnimation];
+}
+
+- (void)restartAnimation {
+    if (self.currentSession.syncer.syncing) {
+        [self startAnimationOfSyncer:self.syncButton.imageView];
+    } else if (self.currentSession.locationTracker.tracking) {
+        [self startAnimationOfView:self.geoIndicatorView];
+    } else if (self.currentSession.batteryTracker.tracking) {
+        [self startAnimationOfView:self.batteryIndicatorView];
+    }
+}
+
 - (void)todaySummaryTap {
     UITableViewController *trackTVC = [[UITableViewController alloc] init];
     self.trackController.tableView = trackTVC.tableView;
@@ -357,6 +371,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncStatusChanged) name:@"syncStatusChanged" object:self.currentSession.syncer];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncerErrorLogMessageRecieved) name:@"syncerErrorLogMessageRecieved" object:self.currentSession.logger];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncerErrorLogMessageGone) name:@"syncerErrorLogMessageGone" object:self.currentSession.logger];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 - (void)removeNotificationsObservers {
@@ -372,6 +387,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"syncStatusChanged" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"syncerErrorLogMessageRecieved" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"syncerErrorLogMessageGone" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 - (void)releaseWeakProperties {
