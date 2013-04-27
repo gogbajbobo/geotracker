@@ -265,59 +265,19 @@
     
     if ([controlType isEqualToString:@"slider"]) {
         cell = [[STGTSettingsTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
-        cell.detailTextLabel.text = [self valueForIndexPath:indexPath];
-        UISlider *slider = [[UISlider alloc] initWithFrame:CGRectMake(25, 38, 270, 24)];
-        slider.maximumValue = [[self maxForIndexPath:indexPath] doubleValue];
-        slider.minimumValue = [[self minForIndexPath:indexPath] doubleValue];
-        [self setSlider:slider value:[[self valueForIndexPath:indexPath] doubleValue] forSettingName:[self settingNameForIndexPath:indexPath]];
-        
-        [slider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
-        [slider addTarget:self action:@selector(sliderValueChangeFinished:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSliderToCell:cell atIndexPath:indexPath];
 
-        [cell.contentView addSubview:slider];
-        cell.slider = slider;
-        
     } else {
         cell = [[STGTSettingsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         
         if ([controlType isEqualToString:@"switch"]) {
-            UISwitch *senderSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(230, 9, 80, 27)];
-            [senderSwitch setOn:[[self valueForIndexPath:indexPath] boolValue] animated:NO];
-            [senderSwitch addTarget:self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
-            [cell.contentView addSubview:senderSwitch];
-            cell.senderSwitch = senderSwitch;
+            [self addSwitchToCell:cell atIndexPath:indexPath];
 
         } else if ([controlType isEqualToString:@"textField"]) {
-            UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(25, 38, 270, 24)];
-            textField.text = [self valueForIndexPath:indexPath];
-            textField.font = [UIFont systemFontOfSize:14];
-            textField.keyboardType = UIKeyboardTypeURL;
-            textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-            textField.delegate = self;
-            [cell.contentView addSubview:textField];
-            cell.textField = textField;
+            [self addTextFieldToCell:cell atIndexPath:indexPath];
             
         } else if ([controlType isEqualToString:@"segmentedControl"]) {
-            int i = [[self minForIndexPath:indexPath] intValue];
-            int ii = [[self maxForIndexPath:indexPath] intValue];
-            int step = [[self stepForIndexPath:indexPath] intValue];
-            
-            NSMutableArray *segments = [NSMutableArray array];
-            while (i <= ii) {
-                NSString *segmentTitle = [NSString stringWithFormat:@"%@_%d", [self settingNameForIndexPath:indexPath], i];
-                [segments addObject:NSLocalizedString(segmentTitle, @"")];
-                i += step;
-            }
-            
-            UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:segments];
-            segmentedControl.frame = CGRectMake(110, 7, 200, 30);
-            segmentedControl.segmentedControlStyle = UISegmentedControlStylePlain;
-            NSDictionary *textAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:12], UITextAttributeFont, nil];
-            [segmentedControl setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
-            [segmentedControl addTarget:self action:@selector(segmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
-            segmentedControl.selectedSegmentIndex = [[self valueForIndexPath:indexPath] integerValue];
-            [cell.contentView addSubview:segmentedControl];
-            cell.segmentedControl = segmentedControl;
+            [self addSegmentedControlToCell:cell atIndexPath:indexPath];
 
         }
 
@@ -327,6 +287,71 @@
     
     return cell;
 }
+
+- (void)addSliderToCell:(STGTSettingsTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    
+    cell.detailTextLabel.text = [self valueForIndexPath:indexPath];
+    UISlider *slider = [[UISlider alloc] initWithFrame:CGRectMake(25, 38, 270, 24)];
+    slider.maximumValue = [[self maxForIndexPath:indexPath] doubleValue];
+    slider.minimumValue = [[self minForIndexPath:indexPath] doubleValue];
+    [self setSlider:slider value:[[self valueForIndexPath:indexPath] doubleValue] forSettingName:[self settingNameForIndexPath:indexPath]];
+    
+    [slider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    [slider addTarget:self action:@selector(sliderValueChangeFinished:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [cell.contentView addSubview:slider];
+    cell.slider = slider;
+
+}
+
+- (void)addSwitchToCell:(STGTSettingsTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    
+    UISwitch *senderSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(230, 9, 80, 27)];
+    [senderSwitch setOn:[[self valueForIndexPath:indexPath] boolValue] animated:NO];
+    [senderSwitch addTarget:self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
+    [cell.contentView addSubview:senderSwitch];
+    cell.senderSwitch = senderSwitch;
+
+}
+
+- (void)addTextFieldToCell:(STGTSettingsTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+
+    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(25, 38, 270, 24)];
+    textField.text = [self valueForIndexPath:indexPath];
+    textField.font = [UIFont systemFontOfSize:14];
+    textField.keyboardType = UIKeyboardTypeURL;
+    textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    textField.delegate = self;
+    [cell.contentView addSubview:textField];
+    cell.textField = textField;
+
+}
+
+- (void)addSegmentedControlToCell:(STGTSettingsTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    
+    int i = [[self minForIndexPath:indexPath] intValue];
+    int ii = [[self maxForIndexPath:indexPath] intValue];
+    int step = [[self stepForIndexPath:indexPath] intValue];
+    
+    NSMutableArray *segments = [NSMutableArray array];
+    while (i <= ii) {
+        NSString *segmentTitle = [NSString stringWithFormat:@"%@_%d", [self settingNameForIndexPath:indexPath], i];
+        [segments addObject:NSLocalizedString(segmentTitle, @"")];
+        i += step;
+    }
+    
+    UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:segments];
+    segmentedControl.frame = CGRectMake(110, 7, 200, 30);
+    segmentedControl.segmentedControlStyle = UISegmentedControlStylePlain;
+    NSDictionary *textAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:12], UITextAttributeFont, nil];
+    [segmentedControl setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
+    [segmentedControl addTarget:self action:@selector(segmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
+    segmentedControl.selectedSegmentIndex = [[self valueForIndexPath:indexPath] integerValue];
+    [cell.contentView addSubview:segmentedControl];
+    cell.segmentedControl = segmentedControl;
+
+}
+
 
 #pragma mark - show changes in situ
 
