@@ -10,4 +10,6 @@
 
 @interface STGTMapController : NSObject
 
+@property (nonatomic, strong) UIViewController *mapVC;
+
 @end

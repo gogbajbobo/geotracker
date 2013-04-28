@@ -11,6 +11,7 @@
 #import "STSessionManager.h"
 #import "STGTInfoViewController.h"
 #import "STGTSettingsTableViewController.h"
+#import "STGTMapController.h"
 
 @interface STGTMainViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *startButton;
@@ -28,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *todaySummaryLabel;
 @property (weak, nonatomic) IBOutlet UILabel *syncLabel;
 @property (weak, nonatomic) IBOutlet STGTRoundedCornerView *todaySummaryView;
+@property (weak, nonatomic) IBOutlet STGTRoundedCornerView *currentTrackView;
 
 
 @end
@@ -222,6 +224,11 @@
     [self.navigationController pushViewController:trackTVC animated:YES];
 }
 
+- (void)currentTrackTap {
+    STGTMapController *mapController = [[STGTMapController alloc] init];
+    [self.navigationController pushViewController:mapController.mapVC animated:YES];
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     if ([segue.identifier isEqualToString:@"showInfoView"]) {
@@ -251,6 +258,7 @@
 - (void)initViews {
     UIGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(todaySummaryTap)];
     [self.todaySummaryView addGestureRecognizer:tap];
+    [self.currentTrackView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(currentTrackTap)]];
 }
 
 - (void)initButtonsImage {
@@ -406,6 +414,7 @@
     self.todaySummaryLabel = nil;
     self.syncLabel = nil;
     self.todaySummaryView = nil;
+    self.currentTrackView = nil;
 }
 
 @end

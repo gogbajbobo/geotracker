@@ -196,6 +196,7 @@
                         <outlet property="batteryIndicatorView" destination="FZm-JH-uPi" id="f5w-Uy-b9N"/>
                         <outlet property="currentTrackInfo" destination="so3-1a-onN" id="Rlc-uC-SQQ"/>
                         <outlet property="currentTrackStartTime" destination="m1T-Tg-MrL" id="pte-rd-ayi"/>
+                        <outlet property="currentTrackView" destination="RLo-SS-MYh" id="OFJ-gq-D68"/>
                         <outlet property="geoIndicatorView" destination="Q6Y-ix-75G" id="kkO-91-cbD"/>
                         <outlet property="infoButton" destination="EEz-uT-fyT" id="9wY-Ia-vJN"/>
                         <outlet property="logButton" destination="itW-Q5-2Ei" id="viu-oV-nPc"/>

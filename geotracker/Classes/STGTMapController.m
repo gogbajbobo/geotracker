@@ -10,4 +10,16 @@
 
 @implementation STGTMapController
 
+- (id)init {
+    self = [super init];
+    if (self) {
+        [self customInit];
+    }
+    return self;
+}
+
+- (void)customInit {
+    self.mapVC = [[UIViewController alloc] init];
+}
+
 @end
