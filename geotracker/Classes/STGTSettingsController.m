@@ -10,6 +10,9 @@
 #import "STGTSettings.h"
 #import "STSession.h"
 
+#define mapYandex 0
+#define mapApple 1
+
 @interface STGTSettingsController() <NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedSettingsResultController;
@@ -43,6 +46,7 @@
     [mapSettings setValue:[NSString stringWithFormat:@"%d", MKUserTrackingModeNone] forKey:@"mapHeading"];
     [mapSettings setValue:[NSString stringWithFormat:@"%d", MKMapTypeStandard] forKey:@"mapType"];
     [mapSettings setValue:@"1.5" forKey:@"trackScale"];
+    [mapSettings setValue:[NSString stringWithFormat:@"%d", mapYandex] forKey:@"mapProvider"];
     
     [defaultSettings setValue:mapSettings forKey:@"map"];
     
@@ -105,6 +109,12 @@
     } else if ([key isEqualToString:@"mapHeading"] || [key isEqualToString:@"mapType"]) {
         double iValue = [value doubleValue];
         if (iValue == 0 || iValue == 1 || iValue == 2) {
+            return [NSString stringWithFormat:@"%.f", iValue];
+        }
+        
+    } else if ([key isEqualToString:@"mapProvider"]) {
+        double iValue = [value doubleValue];
+        if (iValue == 0 || iValue == 1) {
             return [NSString stringWithFormat:@"%.f", iValue];
         }
         

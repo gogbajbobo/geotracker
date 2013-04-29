@@ -47,6 +47,7 @@
 "xmlNamespace" = "xmlNamespace";
 "mapHeading" = "компас";
 "mapType" = "вид";
+"mapProvider" = "карты";
 "trackScale" = "масштаб треков";
 
 "YES" = "Да";
@@ -64,12 +65,14 @@
 "SETTINGlocation" = "геотрекинг";
 "SETTINGsyncer" = "синхронизация";
 
-"mapHeading_1" = "Выкл.";
-"mapHeading_2" = "Следить";
-"mapHeading_3" = "Компас";
-"mapType_1" = "Обычная";
-"mapType_2" = "Спутник";
-"mapType_3" = "Гибрид";
+"mapHeading_0" = "Выкл.";
+"mapHeading_1" = "Следить";
+"mapHeading_2" = "Компас";
+"mapType_0" = "Обычная";
+"mapType_1" = "Спутник";
+"mapType_2" = "Гибрид";
+"mapProvider_0" = "Yandex";
+"mapProvider_1" = "Apple";
 
 
 //"CLEAR DATABASE" = "Очистка базы данных";

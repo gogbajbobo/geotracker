@@ -47,6 +47,7 @@
 "xmlNamespace" = "xmlNamespace";
 "mapHeading" = "mapHeading";
 "mapType" = "mapType";
+"mapProvider" = "mapProvider";
 "trackScale" = "trackScale";
 
 "NO" = "No";
@@ -64,12 +65,14 @@
 "SETTINGlocation" = "location";
 "SETTINGsyncer" = "syncer";
 
-"mapHeading_1" = "None";
-"mapHeading_2" = "Follow";
-"mapHeading_3" = "Heading";
-"mapType_1" = "Standard";
-"mapType_2" = "Satellite";
-"mapType_3" = "Hybrid";
+"mapHeading_0" = "None";
+"mapHeading_1" = "Follow";
+"mapHeading_2" = "Heading";
+"mapType_0" = "Standard";
+"mapType_1" = "Satellite";
+"mapType_2" = "Hybrid";
+"mapProvider_0" = "Yandex";
+"mapProvider_1" = "Apple";
 
 //"CLEAR DATABASE" = "Clear database";
 //"OBJECT TO DELETE" = "Choose objects to delete:";

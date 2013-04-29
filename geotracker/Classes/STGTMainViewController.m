@@ -133,9 +133,7 @@
 }
 
 - (void)trackControllerDidChangeContent {
-
     [self updateLabels];
-    
 }
 
 - (void)updateLabels {
