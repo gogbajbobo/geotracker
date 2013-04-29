@@ -32,10 +32,12 @@ PODS:
   - UDPushAuth (0.2.1):
     - GData (~> 1.9.1)
     - Reachability (~> 3.1.0)
+  - YandexMapKit (1.0.4)
 
 DEPENDENCIES:
   - GData (~> 1.9.1)
   - UDPushAuth (from `https://github.com/Unact/UDPushAuth.git`, branch `dev`)
+  - YandexMapKit (~> 1.0.4)
 
 EXTERNAL SOURCES:
   UDPushAuth:
@@ -49,5 +51,6 @@ SPEC CHECKSUMS:
   Reachability: ba94ecd4eaa037be3d0588b38956672588530c5b
   SBJson: 4971016670e7b3fa04a36d4e72ab0fb1ad3a9f69
   UDPushAuth: 7df52124c241a6ba2646968a49cdd8670642b0bd
+  YandexMapKit: 69db16c8ae6ab219c6ef67eb8feebb5fa4c4ef39
 
 COCOAPODS: 0.18.1
