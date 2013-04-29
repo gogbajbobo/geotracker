@@ -12,6 +12,9 @@
 #import <CoreLocation/CoreLocation.h>
 #import "STSessionManagement.h"
 
+#define mapYandex 0
+#define mapApple 1
+
 @interface STGTSettingsController : NSObject <STGTSettingsController>
 
 + (NSDictionary *)defaultSettings;

@@ -7,9 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "STSession.h"
 
 @interface STGTMapController : NSObject
 
 @property (nonatomic, strong) UIViewController *mapVC;
+@property (nonatomic, strong) STSession *currentSession;
 
 @end

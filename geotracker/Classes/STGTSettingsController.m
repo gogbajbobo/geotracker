@@ -10,9 +10,6 @@
 #import "STGTSettings.h"
 #import "STSession.h"
 
-#define mapYandex 0
-#define mapApple 1
-
 @interface STGTSettingsController() <NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedSettingsResultController;

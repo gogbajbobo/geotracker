@@ -224,6 +224,7 @@
 
 - (void)currentTrackTap {
     STGTMapController *mapController = [[STGTMapController alloc] init];
+    mapController.currentSession = self.currentSession;
     [self.navigationController pushViewController:mapController.mapVC animated:YES];
 }
 
