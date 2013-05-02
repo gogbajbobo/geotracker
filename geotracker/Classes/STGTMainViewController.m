@@ -11,7 +11,7 @@
 #import "STSessionManager.h"
 #import "STGTInfoViewController.h"
 #import "STGTSettingsTableViewController.h"
-#import "STGTMapController.h"
+#import "STGTMapViewController.h"
 
 @interface STGTMainViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *startButton;
@@ -223,9 +223,9 @@
 }
 
 - (void)currentTrackTap {
-    STGTMapController *mapController = [[STGTMapController alloc] init];
+    STGTMapViewController *mapController = [[STGTMapViewController alloc] init];
     mapController.currentSession = self.currentSession;
-    [self.navigationController pushViewController:mapController.mapVC animated:YES];
+    [self.navigationController pushViewController:mapController animated:YES];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
