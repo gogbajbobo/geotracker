@@ -11,6 +11,7 @@
 
 @interface YMKMapView (custom) <STMapViewControllable>
 
-//- (void)test;
+- (void)showsUserLocation:(BOOL)showsUserLocation;
+- (void)drawPathWithCoordinates:(CLLocationCoordinate2D *)coordinates count:(NSUInteger)count;
 
 @end

@@ -10,4 +10,8 @@
 
 @protocol STMapViewControllable <NSObject>
 
+- (void)showsUserLocation:(BOOL)showsUserLocation;
+
+- (void)drawPathWithCoordinates:(CLLocationCoordinate2D *)coordinates count:(NSUInteger)count;
+
 @end

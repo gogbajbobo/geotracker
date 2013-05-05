@@ -9,6 +9,9 @@
 #import <MapKit/MapKit.h>
 #import "Protocols/STMapViewControllable.h"
 
-@interface MKMapView (custom) <STMapViewControllable>
+@interface MKMapView (custom) <STMapViewControllable, MKMapViewDelegate>
+
+- (void)showsUserLocation:(BOOL)showsUserLocation;
+- (void)drawPathWithCoordinates:(CLLocationCoordinate2D *)coordinates count:(NSUInteger)count;
 
 @end

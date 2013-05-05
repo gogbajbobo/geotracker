@@ -10,8 +10,12 @@
 
 @implementation YMKMapView (custom)
 
-//- (void)test {
-//    NSLog(@"test");
-//}
+- (void)showsUserLocation:(BOOL)showsUserLocation {
+    self.showsUserLocation = showsUserLocation;
+}
+
+- (void)drawPathWithCoordinates:(CLLocationCoordinate2D *)coordinates count:(NSUInteger)count {
+    
+}
 
 @end
