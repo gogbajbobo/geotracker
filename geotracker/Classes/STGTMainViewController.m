@@ -207,9 +207,13 @@
 - (void)restartAnimation {
     if (!self.syncButton.imageView.layer.animationKeys && self.currentSession.syncer.syncing) {
         [self startAnimationOfSyncer:self.syncButton.imageView];
-    } else if (!self.geoIndicatorView.layer.animationKeys && self.currentSession.locationTracker.tracking) {
+    }
+    
+    if (!self.geoIndicatorView.layer.animationKeys && self.currentSession.locationTracker.tracking) {
         [self startAnimationOfView:self.geoIndicatorView];
-    } else if (!self.batteryIndicatorView.layer.animationKeys && self.currentSession.batteryTracker.tracking) {
+    }
+    
+    if (!self.batteryIndicatorView.layer.animationKeys && self.currentSession.batteryTracker.tracking) {
         [self startAnimationOfView:self.batteryIndicatorView];
     }
 }
