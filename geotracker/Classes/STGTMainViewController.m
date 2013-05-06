@@ -205,11 +205,11 @@
 }
 
 - (void)restartAnimation {
-    if (self.currentSession.syncer.syncing) {
+    if (!self.syncButton.imageView.layer.animationKeys && self.currentSession.syncer.syncing) {
         [self startAnimationOfSyncer:self.syncButton.imageView];
-    } else if (self.currentSession.locationTracker.tracking) {
+    } else if (!self.geoIndicatorView.layer.animationKeys && self.currentSession.locationTracker.tracking) {
         [self startAnimationOfView:self.geoIndicatorView];
-    } else if (self.currentSession.batteryTracker.tracking) {
+    } else if (!self.batteryIndicatorView.layer.animationKeys && self.currentSession.batteryTracker.tracking) {
         [self startAnimationOfView:self.batteryIndicatorView];
     }
 }
