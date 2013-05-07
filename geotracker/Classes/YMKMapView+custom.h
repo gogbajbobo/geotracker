@@ -9,9 +9,9 @@
 #import <YandexMapKit/YandexMapKit.h>
 #import "Protocols/STMapViewControllable.h"
 
-@interface YMKMapView (custom) <STMapViewControllable>
+@interface YMKMapView (custom) //<STMapViewControllable>
 
 - (void)showsUserLocation:(BOOL)showsUserLocation;
-- (void)drawPathWithCoordinates:(CLLocationCoordinate2D *)coordinates count:(NSUInteger)count;
+- (void)drawPathWithCoordinates:(CLLocationCoordinate2D *)coordinates count:(NSUInteger)count title:(NSString *)title;
 
 @end

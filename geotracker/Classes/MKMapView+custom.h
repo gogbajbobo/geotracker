@@ -12,6 +12,6 @@
 @interface MKMapView (custom) <STMapViewControllable, MKMapViewDelegate>
 
 - (void)showsUserLocation:(BOOL)showsUserLocation;
-- (void)drawPathWithCoordinates:(CLLocationCoordinate2D *)coordinates count:(NSUInteger)count;
+- (void)drawPathWithCoordinates:(CLLocationCoordinate2D *)coordinates count:(NSUInteger)count title:(NSString *)title;
 
 @end

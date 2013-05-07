@@ -22,11 +22,15 @@
     self.showsUserLocation = showsUserLocation;
 }
 
-- (void)drawPathWithCoordinates:(CLLocationCoordinate2D *)coordinates count:(NSUInteger)count {
+- (void)drawPathWithCoordinates:(CLLocationCoordinate2D *)coordinates count:(NSUInteger)count title:(NSString *)title {
 
     MKPolyline *pathLine = [MKPolyline polylineWithCoordinates:coordinates count:count];
-    pathLine.title = @"allTracks";
-    [self addOverlay:(id<MKOverlay>)pathLine];
+    pathLine.title = title;
+    if ([title isEqualToString:@"track"]) {
+        [self insertOverlay:(id<MKOverlay>)pathLine atIndex:self.overlays.count];
+    } else if ([title isEqualToString:@"allTracks"]) {
+        [self insertOverlay:(id<MKOverlay>)pathLine atIndex:0];
+    }
 
 }
 
@@ -35,11 +39,11 @@
 - (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay {
     
     MKPolylineView *pathView = [[MKPolylineView alloc] initWithPolyline:overlay];
-    if ([overlay.title isEqualToString:@"currentTrack"]) {
-        pathView.strokeColor = [UIColor blueColor];
+    if ([overlay.title isEqualToString:@"track"]) {
+        pathView.strokeColor = [UIColor yellowColor];
         pathView.lineWidth = 4.0;
     } else if ([overlay.title isEqualToString:@"allTracks"]) {
-        pathView.strokeColor = [UIColor grayColor];
+        pathView.strokeColor = [UIColor darkGrayColor];
         pathView.lineWidth = 2.0;
     } else if ([overlay.title isEqualToString:@"route"]) {
         pathView.strokeColor = [UIColor greenColor];

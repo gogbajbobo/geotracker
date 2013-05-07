@@ -14,7 +14,7 @@
     self.showsUserLocation = showsUserLocation;
 }
 
-- (void)drawPathWithCoordinates:(CLLocationCoordinate2D *)coordinates count:(NSUInteger)count {
+- (void)drawPathWithCoordinates:(CLLocationCoordinate2D *)coordinates count:(NSUInteger)count title:(NSString *)title {
     
 }
 
