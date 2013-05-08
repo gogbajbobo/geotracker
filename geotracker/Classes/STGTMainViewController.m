@@ -236,8 +236,8 @@
 
 - (void)showMapWithSelectedTrack:(STGTTrack *)selectedTrack {
     STGTMapViewController *mapController = [[STGTMapViewController alloc] init];
-    mapController.currentSession = self.currentSession;
     mapController.selectedTrack = selectedTrack;
+    mapController.currentSession = self.currentSession;
     [self.navigationController pushViewController:mapController animated:YES];
 }
 

@@ -18,6 +18,10 @@
     return self;
 }
 
+- (CLLocationCoordinate2D) currentUserLocation {
+    return self.userLocation.location.coordinate;
+}
+
 - (void)showsUserLocation:(BOOL)showsUserLocation {
     self.showsUserLocation = showsUserLocation;
 }
@@ -35,6 +39,11 @@
     }
 
 }
+
+- (void)scaleMapToRegion:(MKCoordinateRegion)region {
+    [self setRegion:region animated:YES];
+}
+
 
 #pragma mark - MKMapViewDelegate
 
