@@ -12,5 +12,6 @@
 @interface STGTMapViewController : UIViewController
 
 @property (nonatomic, strong) STSession *currentSession;
+@property (nonatomic, strong) STGTTrack *selectedTrack;
 
 @end

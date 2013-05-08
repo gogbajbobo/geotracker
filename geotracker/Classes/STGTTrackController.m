@@ -8,6 +8,7 @@
 
 #import "STGTTrackController.h"
 #import "STGTLocation.h"
+#import "STGTMapViewController.h"
 
 @interface STGTTrackController() <NSFetchedResultsControllerDelegate>
 
@@ -381,6 +382,9 @@
     trackNumber = trackNumber + indexPath.row;
     //    self.selectedTrackNumber = trackNumber;
     //    self.locationsArray = [self locationsArrayForTrack:trackNumber];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"trackSelected" object:self userInfo:[NSDictionary dictionaryWithObject:[self.resultsController.fetchedObjects objectAtIndex:trackNumber] forKey:@"selectedTrack"]];
+
     return indexPath;
     
 }

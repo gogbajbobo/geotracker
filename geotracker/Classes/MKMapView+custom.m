@@ -28,6 +28,8 @@
     pathLine.title = title;
     if ([title isEqualToString:@"track"]) {
         [self insertOverlay:(id<MKOverlay>)pathLine atIndex:self.overlays.count];
+    } else if ([title isEqualToString:@"selectedTrack"]) {
+        [self insertOverlay:(id<MKOverlay>)pathLine atIndex:self.overlays.count];
     } else if ([title isEqualToString:@"allTracks"]) {
         [self insertOverlay:(id<MKOverlay>)pathLine atIndex:0];
     }
@@ -41,6 +43,9 @@
     MKPolylineView *pathView = [[MKPolylineView alloc] initWithPolyline:overlay];
     if ([overlay.title isEqualToString:@"track"]) {
         pathView.strokeColor = [UIColor yellowColor];
+        pathView.lineWidth = 4.0;
+    } else if ([overlay.title isEqualToString:@"selectedTrack"]) {
+        pathView.strokeColor = [UIColor blueColor];
         pathView.lineWidth = 4.0;
     } else if ([overlay.title isEqualToString:@"allTracks"]) {
         pathView.strokeColor = [UIColor darkGrayColor];

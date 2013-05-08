@@ -227,8 +227,17 @@
 }
 
 - (void)currentTrackTap {
+    [self showMapWithSelectedTrack:self.trackController.currentTrack];
+}
+
+- (void)trackSelected:(NSNotification *)notification {
+    [self showMapWithSelectedTrack:[notification.userInfo objectForKey:@"selectedTrack"]];
+}
+
+- (void)showMapWithSelectedTrack:(STGTTrack *)selectedTrack {
     STGTMapViewController *mapController = [[STGTMapViewController alloc] init];
     mapController.currentSession = self.currentSession;
+    mapController.selectedTrack = selectedTrack;
     [self.navigationController pushViewController:mapController animated:YES];
 }
 
@@ -383,6 +392,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncerErrorLogMessageRecieved) name:@"syncerErrorLogMessageRecieved" object:self.currentSession.logger];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncerErrorLogMessageGone) name:@"syncerErrorLogMessageGone" object:self.currentSession.logger];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(trackSelected:) name:@"trackSelected" object:self.trackController];
+
 }
 
 - (void)removeNotificationsObservers {
@@ -399,6 +410,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"syncerErrorLogMessageRecieved" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"syncerErrorLogMessageGone" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"trackSelected" object:nil];
 }
 
 - (void)releaseWeakProperties {
