@@ -62,6 +62,7 @@
 		2CA12907170B23E700FBD8F3 /* STGTBatteryStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CA12906170B23E700FBD8F3 /* STGTBatteryStatus.m */; };
 		2CD05D661735067C00B6B766 /* YMKMapView+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD05D651735067C00B6B766 /* YMKMapView+custom.m */; };
 		2CD05D69173507AD00B6B766 /* MKMapView+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD05D68173507AD00B6B766 /* MKMapView+custom.m */; };
+		2CD05D6D173A61A800B6B766 /* STGTLogMessage+dayAsString.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD05D6C173A61A800B6B766 /* STGTLogMessage+dayAsString.m */; };
 		2CE75FC1170C630600807B27 /* STGTBatteryTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE75FC0170C630600807B27 /* STGTBatteryTracker.m */; };
 		2CE75FCA170DB98F00807B27 /* STGTMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE75FC9170DB98F00807B27 /* STGTMainViewController.m */; };
 		2CE75FCD170DBBA400807B27 /* STGTRoundedCornerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE75FCC170DBBA400807B27 /* STGTRoundedCornerView.m */; };
@@ -181,6 +182,8 @@
 		2CD05D67173507AD00B6B766 /* MKMapView+custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+custom.h"; sourceTree = "<group>"; };
 		2CD05D68173507AD00B6B766 /* MKMapView+custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+custom.m"; sourceTree = "<group>"; };
 		2CD05D6A1735085700B6B766 /* STMapViewControllable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STMapViewControllable.h; sourceTree = "<group>"; };
+		2CD05D6B173A61A800B6B766 /* STGTLogMessage+dayAsString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "STGTLogMessage+dayAsString.h"; sourceTree = "<group>"; };
+		2CD05D6C173A61A800B6B766 /* STGTLogMessage+dayAsString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "STGTLogMessage+dayAsString.m"; sourceTree = "<group>"; };
 		2CE75FBF170C630600807B27 /* STGTBatteryTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTBatteryTracker.h; sourceTree = "<group>"; };
 		2CE75FC0170C630600807B27 /* STGTBatteryTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTBatteryTracker.m; sourceTree = "<group>"; };
 		2CE75FC8170DB98F00807B27 /* STGTMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTMainViewController.h; sourceTree = "<group>"; };
@@ -375,6 +378,8 @@
 				2C171BE017193C7400426992 /* STGTSettings.m */,
 				2C1879E617106D3600F6EFF9 /* STGTLogMessage.h */,
 				2C1879E717106D3600F6EFF9 /* STGTLogMessage.m */,
+				2CD05D6B173A61A800B6B766 /* STGTLogMessage+dayAsString.h */,
+				2CD05D6C173A61A800B6B766 /* STGTLogMessage+dayAsString.m */,
 				2CA12905170B23E700FBD8F3 /* STGTBatteryStatus.h */,
 				2CA12906170B23E700FBD8F3 /* STGTBatteryStatus.m */,
 				2CA128FF170B23E600FBD8F3 /* STGTNetworkImage.h */,
@@ -615,6 +620,7 @@
 				2C6DFB0B17327F6C0035A082 /* STGTMapViewController.m in Sources */,
 				2CD05D661735067C00B6B766 /* YMKMapView+custom.m in Sources */,
 				2CD05D69173507AD00B6B766 /* MKMapView+custom.m in Sources */,
+				2CD05D6D173A61A800B6B766 /* STGTLogMessage+dayAsString.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
