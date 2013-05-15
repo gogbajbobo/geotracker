@@ -18,4 +18,12 @@
     
 }
 
+- (CLLocationCoordinate2D) currentUserLocation {
+    return self.userLocation.location.coordinate;
+}
+
+- (void)scaleMapToRegion:(MKCoordinateRegion)region {
+    
+}
+
 @end
