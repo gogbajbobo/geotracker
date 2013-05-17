@@ -175,7 +175,7 @@
     } else if (type == NSFetchedResultsChangeUpdate) {
         
         //        NSLog(@"NSFetchedResultsChangeUpdate");
-        
+
     }
     
 }

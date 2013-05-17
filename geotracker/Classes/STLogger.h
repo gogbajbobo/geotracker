@@ -12,7 +12,7 @@
 @interface STLogger : NSObject <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) id <STSession> session;
-@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, weak) UITableView *tableView;
 
 - (void)saveLogMessageWithText:(NSString *)text type:(NSString *)type;
 
