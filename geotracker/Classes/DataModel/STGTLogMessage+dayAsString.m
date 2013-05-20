@@ -18,7 +18,7 @@
         formatter.dateFormat = @"yyyy/MM/dd";
     });
     
-    return [formatter stringFromDate:self.ts];
+    return [formatter stringFromDate:self.cts];
 }
 
 

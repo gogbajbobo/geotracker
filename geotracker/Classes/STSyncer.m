@@ -227,7 +227,7 @@
         
         if (count == 0) {
             [[(STSession *)self.session logger] saveLogMessageWithText:@"Syncer no data to sync" type:@""];
-            [self sendData:nil toServer:self.syncServerURI];
+//            [self sendData:nil toServer:self.syncServerURI];
         } else {
             
 //            for (NSManagedObject *object in self.resultsController.fetchedObjects) {
@@ -237,13 +237,94 @@
             NSUInteger len = count < self.fetchLimit ? count : self.fetchLimit;
             NSRange range = NSMakeRange(0, len);
             NSArray *dataForSyncing = [self.resultsController.fetchedObjects subarrayWithRange:range];
-            [self sendData:[self xmlFrom:dataForSyncing] toServer:self.syncServerURI];
+            NSData *JSONData = [self JSONFrom:dataForSyncing];
+            NSLog(@"JSONData %@", JSONData);
+//            [self sendData:[self xmlFrom:dataForSyncing] toServer:self.syncServerURI];
         }
     }
 
 }
 
 - (NSData *)xmlFrom:(NSArray *)dataForSyncing {
+    return nil;
+}
+
+- (NSData *)JSONFrom:(NSArray *)dataForSyncing {
+    
+    NSMutableArray *syncDataArray = [NSMutableArray array];
+    
+    for (NSManagedObject *object in dataForSyncing) {
+        [object setPrimitiveValue:[NSDate date] forKey:@"sts"];
+        
+        NSString *objectName = [[object entity] name];
+        NSString *objectXid = [NSString stringWithFormat:@"%@", [object valueForKey:@"xid"]];
+        NSLog(@"objectXid %@", objectXid);
+        
+        NSMutableDictionary *objectDictionary = [NSMutableDictionary dictionary];
+        [objectDictionary setObject:objectName forKey:@"name"];
+        [objectDictionary setObject:objectXid forKey:@"xid"];
+        
+        NSEntityDescription *entityDescription = [NSEntityDescription entityForName:objectName inManagedObjectContext:self.document.managedObjectContext];
+        NSArray *entityProperties = [entityDescription.propertiesByName allKeys];
+
+        NSMutableDictionary *propertiesDictionary = [NSMutableDictionary dictionary];
+
+        for (NSString *propertyName in entityProperties) {
+            
+            if (!([propertyName isEqualToString:@"xid"]||[propertyName isEqualToString:@"sqts"]||[propertyName isEqualToString:@"lts"])) {
+                id value = [object valueForKey:propertyName];
+                if (value) {
+                    NSString *stringValue;
+                    
+                    if ([value isKindOfClass:[NSString class]] ||
+                        [value isKindOfClass:[NSDate class]] ||
+                        [value isKindOfClass:[NSNumber class]] ||
+                        [value isKindOfClass:[NSData class]]) {
+                        
+                        stringValue = [NSString stringWithFormat:@"%@", value];
+
+                    } else if ([value isKindOfClass:[NSManagedObject class]]) {
+                        if ([value valueForKey:@"xid"]) {
+                            stringValue = @"";
+//                            GDataXMLElement *propertyNode = [GDataXMLElement elementWithName:@"d"];
+//                            [propertyNode addAttribute:[GDataXMLNode attributeWithName:@"name" stringValue:[[value entity] name]]];
+//                            [propertyNode addAttribute:[GDataXMLNode attributeWithName:@"xid" stringValue:[value valueForKey:@"xid"]]];
+//                            [dNode addChild:propertyNode];
+                        }
+                    } else if ([value isKindOfClass:[NSSet class]]) {
+                        //                            NSLog(@"propertyName %@", propertyName);
+
+                        stringValue = @"";
+
+                        NSRelationshipDescription *inverseRelationship = [[entityDescription.relationshipsByName objectForKey:propertyName] inverseRelationship];
+                        //                            NSLog(@"inverseRelationship isToMany %d", [inverseRelationship isToMany]);
+                        if ([inverseRelationship isToMany]) {
+                            for (NSManagedObject *childObject in value) {
+//                                GDataXMLElement *childNode = [GDataXMLElement elementWithName:@"d"];
+//                                [childNode addAttribute:[GDataXMLNode attributeWithName:@"name" stringValue:object.entity.name]];
+//                                [childNode addAttribute:[GDataXMLNode attributeWithName:@"xid" stringValue:[object valueForKey:@"xid"]]];
+//                                [dNode addChild:childNode];
+                            }
+                        }
+                    }
+                    
+                    [propertiesDictionary setObject:stringValue forKey:propertyName];
+                    
+                }
+
+            }
+        }
+        
+        [objectDictionary setObject:propertiesDictionary forKey:@"properties"];
+        [syncDataArray addObject:objectDictionary];
+    }
+    
+    NSError *error;
+    NSData *JSONData = [NSJSONSerialization dataWithJSONObject:syncDataArray options:nil error:&error];
+    
+    NSLog(@"JSONData %@", JSONData);
+
+    
     return nil;
 }
 
