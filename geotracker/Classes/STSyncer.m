@@ -227,7 +227,7 @@
         
         if (count == 0) {
             [[(STSession *)self.session logger] saveLogMessageWithText:@"Syncer no data to sync" type:@""];
-//            [self sendData:nil toServer:self.syncServerURI];
+            [self sendData:nil toServer:self.syncServerURI];
         } else {
             
 //            for (NSManagedObject *object in self.resultsController.fetchedObjects) {
@@ -238,7 +238,7 @@
             NSRange range = NSMakeRange(0, len);
             NSArray *dataForSyncing = [self.resultsController.fetchedObjects subarrayWithRange:range];
             NSData *JSONData = [self JSONFrom:dataForSyncing];
-//            [self sendData:[self xmlFrom:dataForSyncing] toServer:self.syncServerURI];
+            [self sendData:JSONData toServer:self.syncServerURI];
         }
     }
 
@@ -249,9 +249,6 @@
 }
 
 - (NSData *)JSONFrom:(NSArray *)dataForSyncing {
-    NSLog(@"dataForSyncing %@", dataForSyncing);
-    NSLog(@"dataForSyncing.count %d", dataForSyncing.count);
-    
     NSMutableArray *syncDataArray = [NSMutableArray array];
     
     for (NSManagedObject *object in dataForSyncing) {
@@ -265,28 +262,27 @@
     
     NSError *error;
     NSData *JSONData = [NSJSONSerialization dataWithJSONObject:syncDataArray options:nil error:&error];
-    
     NSLog(@"JSONData %@", JSONData);
 
     return JSONData;
 }
 
 - (NSMutableDictionary *)dictionaryForObject:(NSManagedObject *)object {
+    
     NSString *name = [[object entity] name];
     NSString *xid = [NSString stringWithFormat:@"%@", [object valueForKey:@"xid"]];
     NSCharacterSet *charsToRemove = [NSCharacterSet characterSetWithCharactersInString:@"< >"];
     xid = [[xid stringByTrimmingCharactersInSet:charsToRemove] stringByReplacingOccurrencesOfString:@" " withString:@""];
     
     return [NSMutableDictionary dictionaryWithObjectsAndKeys:name, @"name", xid, @"xid", nil];
+
 }
 
 - (NSMutableDictionary *)propertiesDictionaryForObject:(NSManagedObject *)object {
-
+    
     NSMutableDictionary *propertiesDictionary = [NSMutableDictionary dictionary];
-
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:object.entity.name inManagedObjectContext:self.document.managedObjectContext];
     NSArray *entityProperties = [entityDescription.propertiesByName allKeys];
-    
     for (NSString *propertyName in entityProperties) {
         
         if (!([propertyName isEqualToString:@"xid"]||[propertyName isEqualToString:@"sqts"]||[propertyName isEqualToString:@"lts"])) {
@@ -316,15 +312,12 @@
                 } else {
                     value = [NSNull null];
                 }
-                
                 [propertiesDictionary setObject:value forKey:propertyName];
-                
             }
-            
         }
     }
     return propertiesDictionary;
-
+    
 }
 
 - (void)sendData:(NSData *)requestData toServer:(NSString *)serverUrlString {

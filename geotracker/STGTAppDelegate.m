@@ -41,7 +41,7 @@
                                      @"20", @"timeFilter",
                                      @"180", @"trackDetectionTime",
                                      @"1", @"localAccessToSettings",
-                                     @"1", @"fetchLimit",
+                                     @"20", @"fetchLimit",
                                      nil];
     
     [[STSessionManager sharedManager] startSessionForUID:@"1" authDelegate:[STAuthBasic sharedOAuth] settings:sessionSettings];
