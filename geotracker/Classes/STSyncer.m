@@ -21,6 +21,8 @@
 @property (nonatomic, strong) NSTimer *syncTimer;
 @property (nonatomic, strong) NSFetchedResultsController *resultsController;
 @property (nonatomic) BOOL running;
+@property (nonatomic, strong) NSMutableData *responseData;
+@property (nonatomic, strong) NSManagedObject *syncObject;
 
 @end
 
@@ -249,6 +251,7 @@
 }
 
 - (NSData *)JSONFrom:(NSArray *)dataForSyncing {
+    
     NSMutableArray *syncDataArray = [NSMutableArray array];
     
     for (NSManagedObject *object in dataForSyncing) {
@@ -260,9 +263,11 @@
         [syncDataArray addObject:objectDictionary];
     }
     
+    NSDictionary *dataDictionary = [NSDictionary dictionaryWithObject:syncDataArray forKey:@"data"];
+    
     NSError *error;
-    NSData *JSONData = [NSJSONSerialization dataWithJSONObject:syncDataArray options:nil error:&error];
-    NSLog(@"JSONData %@", JSONData);
+    NSData *JSONData = [NSJSONSerialization dataWithJSONObject:dataDictionary options:NSJSONWritingPrettyPrinted error:&error];
+//    NSLog(@"JSONData %@", JSONData);
 
     return JSONData;
 }
@@ -330,20 +335,305 @@
         //        NSLog(@"POST");
         [request setHTTPMethod:@"POST"];
         [request setHTTPBody:requestData];
-        [request setValue:@"text/xml" forHTTPHeaderField:@"Content-type"];
+        [request setValue:@"application/json" forHTTPHeaderField:@"Content-type"];
     }
     
-    request = [[self.authDelegate authenticateRequest:(NSURLRequest *) request] mutableCopy];
+//    request = [[self.authDelegate authenticateRequest:(NSURLRequest *) request] mutableCopy];
+    [request setValue:@"393763d6-c20b-46ad-be8a-1d911eb8ddbe" forHTTPHeaderField:@"Authorization"];
     if ([request valueForHTTPHeaderField:@"Authorization"]) {
         NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
         if (!connection) {
         [[(STSession *)self.session logger] saveLogMessageWithText:@"Syncer no connection" type:@"error"];
             self.syncing = NO;
+        } else {
+
         }
     } else {
         [[(STSession *)self.session logger] saveLogMessageWithText:@"Syncer no authorization header" type:@"error"];
         self.syncing = NO;
     }
 }
+
+
+#pragma mark - NSURLConnectionDataDelegate
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    self.syncing = NO;
+    NSString *errorMessage = [NSString stringWithFormat:@"connection did fail with error: %@", error];
+    [[(STSession *)self.session logger] saveLogMessageWithText:errorMessage type:@"error"];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    self.responseData = [NSMutableData data];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    [self.responseData appendData:data];
+}
+
+
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    
+//    NSString *responseString = [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding];
+//    NSLog(@"connectionDidFinishLoading responseData %@", responseString);
+    
+    NSError *error;
+    id responseJSON = [NSJSONSerialization JSONObjectWithData:self.responseData options:nil error:&error];
+
+    if (![responseJSON isKindOfClass:[NSDictionary class]]) {
+        
+        [[(STSession *)self.session logger] saveLogMessageWithText:@"Response is not dictionary" type:@"error"];
+        self.syncing = NO;
+        
+    } else {
+        
+        NSString *errorString = [(NSDictionary *)responseJSON valueForKey:@"error"];
+        
+        if (![errorString isEqualToString:@"ok"]) {
+            
+            [[(STSession *)self.session logger] saveLogMessageWithText:[NSString stringWithFormat:@"Response error: %@", errorString] type:@"error"];
+            self.syncing = NO;
+            
+        } else {
+            
+            id objectsArray = [(NSDictionary *)responseJSON valueForKey:@"data"];
+            
+            if ([objectsArray isKindOfClass:[NSArray class]]) {
+                
+                for (id object in (NSArray *)objectsArray) {
+                    
+                    NSLog(@"object %@", object);
+                    if (![object isKindOfClass:[NSDictionary class]]) {
+                        
+                        [[(STSession *)self.session logger] saveLogMessageWithText:@"Object is not dictionary" type:@"error"];
+                        self.syncing = NO;
+                        break;
+                        
+                    } else {
+                        
+                        [self syncObject:(NSDictionary *)object];
+                        
+                    }
+                    
+                }
+                
+            }
+            
+        }
+        
+    }
+
+    
+    
+
+//            [self.document saveToURL:self.document.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success) {
+//                //                NSLog(@"setSynced UIDocumentSaveForOverwriting success");
+//                if ([self.session isKindOfClass:[STGTSession class]]) {
+//                    [[(STGTSession *)self.session tracker] setTrackerStatus:@""];
+//                }
+//                //                self.tracker.trackerStatus = @"";
+                self.syncing = NO;
+//
+//                if (![[[connection currentRequest] HTTPMethod] isEqualToString:@"GET"]) {
+//                    if (self.resultsController.fetchedObjects.count > 0) {
+//                        //                        NSLog(@"fetchedObjects.count > 0");
+//                        [self dataSyncing];
+//                    } else {
+//                        //                        NSLog(@"fetchedObjects.count <= 0");
+//                        self.syncing = YES;
+//                        [self sendData:nil toServer:self.settings.syncServerURI];
+//                    }
+//                } else {
+//                    if ([[(STGTSession *)self.session status] isEqualToString:@"finishing"]) {
+//                        if (self.resultsController.fetchedObjects.count == 0) {
+//                            [self stopSyncer];
+//                            [[STGTSessionManager sharedManager] sessionCompletionFinished:self.session];
+//                        } else {
+//                            [self dataSyncing];
+//                        }
+//                    }
+//                }
+//                
+//            }];
+//            
+//        }
+//        
+//    }
+//    
+//    
+    
+}
+
+- (void)syncObject:(NSDictionary *)object {
+    
+    NSString *result = [(NSDictionary *)object valueForKey:@"result"];
+    NSString *name = [(NSDictionary *)object valueForKey:@"name"];
+    NSString *xid = [(NSDictionary *)object valueForKey:@"xid"];
+    
+    if (![result isEqualToString:@"ok"]) {
+        
+        [[(STSession *)self.session logger] saveLogMessageWithText:[NSString stringWithFormat:@"result not ok xid: %@", xid] type:@"error"];
+        
+    } else {
+        
+        NSString *xidString = [xid stringByReplacingOccurrencesOfString:@"-" withString:@""];
+        NSMutableData *xidData = [NSMutableData data];
+        int i;
+        for (i = 0; i+2 <= xidString.length; i+=2) {
+            NSRange range = NSMakeRange(i, 2);
+            NSString* hexString = [xidString substringWithRange:range];
+            NSScanner* scanner = [NSScanner scannerWithString:hexString];
+            unsigned int intValue;
+            [scanner scanHexInt:&intValue];
+            [xidData appendBytes:&intValue length:1];
+        }
+
+        
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:name];
+        request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"ts" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
+        if ([name isEqualToString:@"STSettings"]) {
+            request.predicate = nil;
+        } else {
+            request.predicate = [NSPredicate predicateWithFormat:@"SELF.xid == %@", xidData];
+        }
+        
+        NSError *error;
+        NSArray *fetchResult = [self.document.managedObjectContext executeFetchRequest:request error:&error];
+        
+        if ([fetchResult lastObject]) {
+            
+            self.syncObject = [fetchResult lastObject];
+            [self.syncObject setValue:[self.syncObject valueForKey:@"sts"] forKey:@"lts"];
+            NSLog(@"xid %@", xid);
+            
+        } else {
+            
+            self.syncObject = [NSEntityDescription insertNewObjectForEntityForName:name inManagedObjectContext:self.document.managedObjectContext];
+            [self.syncObject setValue:xid forKey:@"xid"];
+            [self.syncObject setValue:[NSDate dateWithTimeIntervalSince1970:0] forKey:@"lts"];
+            NSLog(@"insertNewObjectForEntity");
+            
+        }
+        
+        
+    }
+    
+}
+
+
+//
+//                    if ([entityName isEqualToString:@"STGTSpot"]) {
+//                        STGTSpot *spot = (STGTSpot *)self.syncObject;
+//                        NSArray *itemProperties = [entityItem nodesForXPath:@"./ns:d" namespaces:namespaces error:nil];
+//
+//                        for (GDataXMLElement *itemProperty in itemProperties) {
+//                            //                    NSLog(@"itemProperty %@", itemProperty);
+//                            NSString *propertyName = [[[itemProperty nodesForXPath:@"./@name" error:nil] lastObject] stringValue];
+//                            NSString *propertyXid = [[[itemProperty nodesForXPath:@"./@xid" error:nil] lastObject] stringValue];
+//
+//                            NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:propertyName];
+//                            request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"ts" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
+//                            request.predicate = [NSPredicate predicateWithFormat:@"SELF.xid == %@", propertyXid];
+//                            NSArray *result = [self.document.managedObjectContext executeFetchRequest:request error:&error];
+//                            NSManagedObject *property;
+//
+//                            if ([result lastObject]) {
+//                                property = [result lastObject];
+//                                //                        NSLog(@"result lastObject");
+//                            } else {
+//                                property = [NSEntityDescription insertNewObjectForEntityForName:propertyName inManagedObjectContext:self.document.managedObjectContext];
+//                                [property setValue:propertyXid forKey:@"xid"];
+//                                [property setValue:[NSDate dateWithTimeIntervalSince1970:0] forKey:@"lts"];
+//                                //                        NSLog(@"insertNewObjectForEntity");
+//                            }
+//
+//                            if ([propertyName isEqualToString:@"STGTInterest"]) {
+//                                [spot addInterestsObject:(STGTInterest *)property];
+//                            } else if ([propertyName isEqualToString:@"STGTNetwork"]) {
+//                                [spot addNetworksObject:(STGTNetwork *)property];
+//                            }
+//
+//                        }
+//                    }
+//
+//
+//                    //                    NSString *timestamp = [[[entityItem nodesForXPath:@"./ns:date[@name='ts']" namespaces:namespaces error:nil] lastObject] stringValue];
+//                    //
+//                    //                    if (timestamp) {
+//
+//                    //                        NSLog(@"server.timestamp %@", timestamp);
+//
+//                    //                        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//                    //                        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss Z"];
+//                    //                        NSDate *serverDate = [dateFormatter dateFromString:timestamp];
+//                    //                        NSDate *localDate = [self.syncObject valueForKey:@"lts"];
+//                    NSDate *lts = [self.syncObject valueForKey:@"lts"];
+//                    NSDate *ts = [self.syncObject valueForKey:@"ts"];
+//
+//                    //                    NSLog(@"lts %@, ts %@", lts, ts);
+//
+//                    //            NSLog(@"serverDate %@", serverDate);
+//                    //            NSLog(@"localDate %@", localDate);
+//
+//                    if (!lts || [lts compare:ts] == NSOrderedDescending) {
+//
+//                        //                        NSLog(@"lts > ts");
+//
+//                        NSArray *entityItemProperties = [entityItem nodesForXPath:@"./ns:*" namespaces:namespaces error:nil];
+//                        for (GDataXMLElement *entityItemProperty in entityItemProperties) {
+//                            //                    NSLog(@"entityItemProperty %@", [entityItemProperty name]);
+//
+//                            NSString *type = [entityItemProperty name];
+//                            NSString *name = [[[entityItemProperty nodesForXPath:@"./@name" error:nil] lastObject] stringValue];
+//                            NSString *value = entityItemProperty.stringValue;
+//
+//                            if ([[self.syncObject.entity.propertiesByName allKeys] containsObject:name]) {
+//
+//                                if ([type isEqualToString:@"string"]) {
+//                                    [self.syncObject setValue:value forKey:name];
+//                                } else if ([type isEqualToString:@"double"]) {
+//                                    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+//                                    [numberFormatter setDecimalSeparator:@"."];
+//                                    NSNumber *number = [numberFormatter numberFromString:value];
+//                                    [self.syncObject setValue:number forKey:name];
+//                                } else if ([type isEqualToString:@"png"] && ![value isEqualToString:@"text too large"]) {
+//                                    NSCharacterSet *charsToRemove = [NSCharacterSet characterSetWithCharactersInString:@"< >"];
+//                                    NSString *dataString = [[value stringByTrimmingCharactersInSet:charsToRemove] stringByReplacingOccurrencesOfString:@" " withString:@""];
+//                                    //                        NSLog(@"dataString %@", dataString);
+//                                    NSMutableData *data = [NSMutableData data];
+//                                    int i;
+//                                    for (i = 0; i+2 <= dataString.length; i+=2) {
+//                                        NSRange range = NSMakeRange(i, 2);
+//                                        NSString* hexString = [dataString substringWithRange:range];
+//                                        NSScanner* scanner = [NSScanner scannerWithString:hexString];
+//                                        unsigned int intValue;
+//                                        [scanner scanHexInt:&intValue];
+//                                        [data appendBytes:&intValue length:1];
+//                                    }
+//                                    [self.syncObject setValue:data forKey:name];
+//                                }
+//
+//                            }
+//
+//                        }
+//                        //                        [self.syncObject setValue:[NSDate date] forKey:@"ts"];
+//                        [self.syncObject setValue:[NSDate date] forKey:@"lts"];
+//
+//                    } else {
+//                        //                        NSLog(@"lts <= ts");
+//                    }
+//
+//                    //                    }
+//
+//
+//                    //                    [self.syncObject setValue:[NSDate date] forKey:@"lts"];
+//
+//
+//                    //                    NSLog(@"self.syncObject after %@", self.syncObject);
+//
+//                }
+//            }
+
 
 @end

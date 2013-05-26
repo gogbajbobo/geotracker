@@ -41,7 +41,8 @@
                                      @"20", @"timeFilter",
                                      @"180", @"trackDetectionTime",
                                      @"1", @"localAccessToSettings",
-                                     @"20", @"fetchLimit",
+                                     @"2", @"fetchLimit",
+                                     @"https://system.unact.ru/utils/chest2json.php", @"syncServerURI",
                                      nil];
     
     [[STSessionManager sharedManager] startSessionForUID:@"1" authDelegate:[STAuthBasic sharedOAuth] settings:sessionSettings];
