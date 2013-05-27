@@ -292,6 +292,7 @@
         
         if (!([propertyName isEqualToString:@"xid"]||[propertyName isEqualToString:@"sqts"]||[propertyName isEqualToString:@"lts"])) {
             id value = [object valueForKey:propertyName];
+            NSLog(@"value %@", value);
             if (value) {
                 if ([value isKindOfClass:[NSString class]] || [value isKindOfClass:[NSNumber class]]) {
                     //                        value = value;
@@ -313,6 +314,9 @@
                             [childrenArray addObject:[self dictionaryForObject:childObject]];
                         }
                         value = childrenArray;
+                        NSLog(@"value %@", value);
+                    } else {
+                        value = [NSNull null];
                     }
                 } else {
                     value = [NSNull null];
@@ -339,7 +343,9 @@
     }
     
 //    request = [[self.authDelegate authenticateRequest:(NSURLRequest *) request] mutableCopy];
-    [request setValue:@"393763d6-c20b-46ad-be8a-1d911eb8ddbe" forHTTPHeaderField:@"Authorization"];
+//    [request setValue:@"393763d6-c20b-46ad-be8a-1d911eb8ddbe" forHTTPHeaderField:@"Authorization"];
+    [request setValue:@"f2c11688-1374-4b27-8b29-844589d50ca3" forHTTPHeaderField:@"Authorization"];
+//    NSLog(@"valueForHTTPHeaderField:Authorization %@", [request valueForHTTPHeaderField:@"Authorization"]);
     if ([request valueForHTTPHeaderField:@"Authorization"]) {
         NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
         if (!connection) {
@@ -375,48 +381,70 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     
+//    NSString *dataPath = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"json"];
+//    self.responseData = [NSData dataWithContentsOfFile:dataPath];
+//
 //    NSString *responseString = [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding];
 //    NSLog(@"connectionDidFinishLoading responseData %@", responseString);
+
     
     NSError *error;
     id responseJSON = [NSJSONSerialization JSONObjectWithData:self.responseData options:nil error:&error];
 
     if (![responseJSON isKindOfClass:[NSDictionary class]]) {
-        
-        [[(STSession *)self.session logger] saveLogMessageWithText:@"Response is not dictionary" type:@"error"];
+        [[(STSession *)self.session logger] saveLogMessageWithText:@"Sync: response is not dictionary" type:@"error"];
         self.syncing = NO;
         
     } else {
-        
         NSString *errorString = [(NSDictionary *)responseJSON valueForKey:@"error"];
         
         if (![errorString isEqualToString:@"ok"]) {
-            
-            [[(STSession *)self.session logger] saveLogMessageWithText:[NSString stringWithFormat:@"Response error: %@", errorString] type:@"error"];
+            [[(STSession *)self.session logger] saveLogMessageWithText:[NSString stringWithFormat:@"Sync: response error: %@", errorString] type:@"error"];
             self.syncing = NO;
             
         } else {
-            
             id objectsArray = [(NSDictionary *)responseJSON valueForKey:@"data"];
-            
             if ([objectsArray isKindOfClass:[NSArray class]]) {
-                
                 for (id object in (NSArray *)objectsArray) {
-                    
-                    NSLog(@"object %@", object);
                     if (![object isKindOfClass:[NSDictionary class]]) {
-                        
-                        [[(STSession *)self.session logger] saveLogMessageWithText:@"Object is not dictionary" type:@"error"];
+                        [[(STSession *)self.session logger] saveLogMessageWithText:@"Sync: object is not dictionary" type:@"error"];
                         self.syncing = NO;
                         break;
                         
                     } else {
-                        
+                        NSLog(@"object %@", object);
                         [self syncObject:(NSDictionary *)object];
-                        
                     }
-                    
                 }
+                [[(STSession *)self.session document] saveDocument:^(BOOL success) {
+                    if (success) {
+                        NSLog(@"save response success");
+                    }
+                }];
+                [[(STSession *)self.session logger] saveLogMessageWithText:@"Sync done" type:@""];
+                
+                self.syncing = NO;
+                
+                if (![[[connection currentRequest] HTTPMethod] isEqualToString:@"GET"]) {
+                    if (self.resultsController.fetchedObjects.count > 0) {
+                        //                        NSLog(@"fetchedObjects.count > 0");
+                        [self syncData];
+                    } else {
+                        //                        NSLog(@"fetchedObjects.count <= 0");
+                        self.syncing = YES;
+                        [self sendData:nil toServer:self.syncServerURI];
+                    }
+                } else {
+                    if ([[(STSession *)self.session status] isEqualToString:@"finishing"]) {
+                        if (self.resultsController.fetchedObjects.count == 0) {
+                            [self stopSyncer];
+                            [[STSessionManager sharedManager] sessionCompletionFinished:self.session];
+                        } else {
+                            [self syncData];
+                        }
+                    }
+                }
+
                 
             }
             
@@ -424,45 +452,6 @@
         
     }
 
-    
-    
-
-//            [self.document saveToURL:self.document.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success) {
-//                //                NSLog(@"setSynced UIDocumentSaveForOverwriting success");
-//                if ([self.session isKindOfClass:[STGTSession class]]) {
-//                    [[(STGTSession *)self.session tracker] setTrackerStatus:@""];
-//                }
-//                //                self.tracker.trackerStatus = @"";
-                self.syncing = NO;
-//
-//                if (![[[connection currentRequest] HTTPMethod] isEqualToString:@"GET"]) {
-//                    if (self.resultsController.fetchedObjects.count > 0) {
-//                        //                        NSLog(@"fetchedObjects.count > 0");
-//                        [self dataSyncing];
-//                    } else {
-//                        //                        NSLog(@"fetchedObjects.count <= 0");
-//                        self.syncing = YES;
-//                        [self sendData:nil toServer:self.settings.syncServerURI];
-//                    }
-//                } else {
-//                    if ([[(STGTSession *)self.session status] isEqualToString:@"finishing"]) {
-//                        if (self.resultsController.fetchedObjects.count == 0) {
-//                            [self stopSyncer];
-//                            [[STGTSessionManager sharedManager] sessionCompletionFinished:self.session];
-//                        } else {
-//                            [self dataSyncing];
-//                        }
-//                    }
-//                }
-//                
-//            }];
-//            
-//        }
-//        
-//    }
-//    
-//    
-    
 }
 
 - (void)syncObject:(NSDictionary *)object {
@@ -470,170 +459,98 @@
     NSString *result = [(NSDictionary *)object valueForKey:@"result"];
     NSString *name = [(NSDictionary *)object valueForKey:@"name"];
     NSString *xid = [(NSDictionary *)object valueForKey:@"xid"];
+    NSDictionary *properties = [(NSDictionary *)object valueForKey:@"properties"];
     
-    if (![result isEqualToString:@"ok"]) {
+    if (result && ![result isEqualToString:@"ok"]) {
         
-        [[(STSession *)self.session logger] saveLogMessageWithText:[NSString stringWithFormat:@"result not ok xid: %@", xid] type:@"error"];
+        [[(STSession *)self.session logger] saveLogMessageWithText:[NSString stringWithFormat:@"Sync result not ok xid: %@", xid] type:@"error"];
         
     } else {
         
-        NSString *xidString = [xid stringByReplacingOccurrencesOfString:@"-" withString:@""];
-        NSMutableData *xidData = [NSMutableData data];
-        int i;
-        for (i = 0; i+2 <= xidString.length; i+=2) {
-            NSRange range = NSMakeRange(i, 2);
-            NSString* hexString = [xidString substringWithRange:range];
-            NSScanner* scanner = [NSScanner scannerWithString:hexString];
-            unsigned int intValue;
-            [scanner scanHexInt:&intValue];
-            [xidData appendBytes:&intValue length:1];
+        if (!properties) {
+
+            NSString *xidString = [xid stringByReplacingOccurrencesOfString:@"-" withString:@""];
+            NSData *xidData = [self dataFromString:xidString];
+            
+            NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:name];
+            request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"ts" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
+            request.predicate = [NSPredicate predicateWithFormat:@"SELF.xid == %@", xidData];
+            
+            NSError *error;
+            NSArray *fetchResult = [self.document.managedObjectContext executeFetchRequest:request error:&error];
+            
+            if ([fetchResult lastObject]) {
+                
+                self.syncObject = [fetchResult lastObject];
+                [self.syncObject setValue:[self.syncObject valueForKey:@"sts"] forKey:@"lts"];
+                NSLog(@"xid %@", xid);
+                NSLog(@"ts %@", [self.syncObject valueForKey:@"ts"]);
+                NSLog(@"lts %@", [self.syncObject valueForKey:@"lts"]);
+                
+            } else {
+                
+                [[(STSession *)self.session logger] saveLogMessageWithText:[NSString stringWithFormat:@"Sync: object wrong xid: %@", xid] type:@"error"];
+                
+            }
+
+        } else {
+            
+            if ([name isEqualToString:@"STGTSettings"]) {
+                
+                NSString *settingGroup = [properties valueForKey:@"group"];
+                NSString *settingName = [properties valueForKey:@"name"];
+                NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:name];
+                request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"ts" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
+                request.predicate = [NSPredicate predicateWithFormat:@"SELF.group == %@ && SELF.name == %@", settingGroup, settingName];
+                
+                NSError *error;
+                NSArray *fetchResult = [self.document.managedObjectContext executeFetchRequest:request error:&error];
+                
+                if ([fetchResult lastObject]) {
+                    
+                    self.syncObject = [fetchResult lastObject];
+                
+                    NSString *oldValue = [self.syncObject valueForKey:@"value"];
+                    NSString *newValue = [properties valueForKey:@"value"];
+                    
+                    if (![newValue isEqualToString:oldValue]) {
+                        
+                        NSString *newValue = [STGTSettingsController normalizeValue:[properties valueForKey:@"value"] forKey:settingName];
+                        
+                        if (newValue) {
+                            
+                            [self.syncObject setValue:newValue forKey:@"value"];
+                            
+                        }
+
+                    }
+
+                }
+
+            } else {
+                
+            }
+            
         }
 
-        
-        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:name];
-        request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"ts" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
-        if ([name isEqualToString:@"STSettings"]) {
-            request.predicate = nil;
-        } else {
-            request.predicate = [NSPredicate predicateWithFormat:@"SELF.xid == %@", xidData];
-        }
-        
-        NSError *error;
-        NSArray *fetchResult = [self.document.managedObjectContext executeFetchRequest:request error:&error];
-        
-        if ([fetchResult lastObject]) {
-            
-            self.syncObject = [fetchResult lastObject];
-            [self.syncObject setValue:[self.syncObject valueForKey:@"sts"] forKey:@"lts"];
-            NSLog(@"xid %@", xid);
-            
-        } else {
-            
-            self.syncObject = [NSEntityDescription insertNewObjectForEntityForName:name inManagedObjectContext:self.document.managedObjectContext];
-            [self.syncObject setValue:xid forKey:@"xid"];
-            [self.syncObject setValue:[NSDate dateWithTimeIntervalSince1970:0] forKey:@"lts"];
-            NSLog(@"insertNewObjectForEntity");
-            
-        }
-        
         
     }
     
 }
 
-
-//
-//                    if ([entityName isEqualToString:@"STGTSpot"]) {
-//                        STGTSpot *spot = (STGTSpot *)self.syncObject;
-//                        NSArray *itemProperties = [entityItem nodesForXPath:@"./ns:d" namespaces:namespaces error:nil];
-//
-//                        for (GDataXMLElement *itemProperty in itemProperties) {
-//                            //                    NSLog(@"itemProperty %@", itemProperty);
-//                            NSString *propertyName = [[[itemProperty nodesForXPath:@"./@name" error:nil] lastObject] stringValue];
-//                            NSString *propertyXid = [[[itemProperty nodesForXPath:@"./@xid" error:nil] lastObject] stringValue];
-//
-//                            NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:propertyName];
-//                            request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"ts" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
-//                            request.predicate = [NSPredicate predicateWithFormat:@"SELF.xid == %@", propertyXid];
-//                            NSArray *result = [self.document.managedObjectContext executeFetchRequest:request error:&error];
-//                            NSManagedObject *property;
-//
-//                            if ([result lastObject]) {
-//                                property = [result lastObject];
-//                                //                        NSLog(@"result lastObject");
-//                            } else {
-//                                property = [NSEntityDescription insertNewObjectForEntityForName:propertyName inManagedObjectContext:self.document.managedObjectContext];
-//                                [property setValue:propertyXid forKey:@"xid"];
-//                                [property setValue:[NSDate dateWithTimeIntervalSince1970:0] forKey:@"lts"];
-//                                //                        NSLog(@"insertNewObjectForEntity");
-//                            }
-//
-//                            if ([propertyName isEqualToString:@"STGTInterest"]) {
-//                                [spot addInterestsObject:(STGTInterest *)property];
-//                            } else if ([propertyName isEqualToString:@"STGTNetwork"]) {
-//                                [spot addNetworksObject:(STGTNetwork *)property];
-//                            }
-//
-//                        }
-//                    }
-//
-//
-//                    //                    NSString *timestamp = [[[entityItem nodesForXPath:@"./ns:date[@name='ts']" namespaces:namespaces error:nil] lastObject] stringValue];
-//                    //
-//                    //                    if (timestamp) {
-//
-//                    //                        NSLog(@"server.timestamp %@", timestamp);
-//
-//                    //                        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//                    //                        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss Z"];
-//                    //                        NSDate *serverDate = [dateFormatter dateFromString:timestamp];
-//                    //                        NSDate *localDate = [self.syncObject valueForKey:@"lts"];
-//                    NSDate *lts = [self.syncObject valueForKey:@"lts"];
-//                    NSDate *ts = [self.syncObject valueForKey:@"ts"];
-//
-//                    //                    NSLog(@"lts %@, ts %@", lts, ts);
-//
-//                    //            NSLog(@"serverDate %@", serverDate);
-//                    //            NSLog(@"localDate %@", localDate);
-//
-//                    if (!lts || [lts compare:ts] == NSOrderedDescending) {
-//
-//                        //                        NSLog(@"lts > ts");
-//
-//                        NSArray *entityItemProperties = [entityItem nodesForXPath:@"./ns:*" namespaces:namespaces error:nil];
-//                        for (GDataXMLElement *entityItemProperty in entityItemProperties) {
-//                            //                    NSLog(@"entityItemProperty %@", [entityItemProperty name]);
-//
-//                            NSString *type = [entityItemProperty name];
-//                            NSString *name = [[[entityItemProperty nodesForXPath:@"./@name" error:nil] lastObject] stringValue];
-//                            NSString *value = entityItemProperty.stringValue;
-//
-//                            if ([[self.syncObject.entity.propertiesByName allKeys] containsObject:name]) {
-//
-//                                if ([type isEqualToString:@"string"]) {
-//                                    [self.syncObject setValue:value forKey:name];
-//                                } else if ([type isEqualToString:@"double"]) {
-//                                    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
-//                                    [numberFormatter setDecimalSeparator:@"."];
-//                                    NSNumber *number = [numberFormatter numberFromString:value];
-//                                    [self.syncObject setValue:number forKey:name];
-//                                } else if ([type isEqualToString:@"png"] && ![value isEqualToString:@"text too large"]) {
-//                                    NSCharacterSet *charsToRemove = [NSCharacterSet characterSetWithCharactersInString:@"< >"];
-//                                    NSString *dataString = [[value stringByTrimmingCharactersInSet:charsToRemove] stringByReplacingOccurrencesOfString:@" " withString:@""];
-//                                    //                        NSLog(@"dataString %@", dataString);
-//                                    NSMutableData *data = [NSMutableData data];
-//                                    int i;
-//                                    for (i = 0; i+2 <= dataString.length; i+=2) {
-//                                        NSRange range = NSMakeRange(i, 2);
-//                                        NSString* hexString = [dataString substringWithRange:range];
-//                                        NSScanner* scanner = [NSScanner scannerWithString:hexString];
-//                                        unsigned int intValue;
-//                                        [scanner scanHexInt:&intValue];
-//                                        [data appendBytes:&intValue length:1];
-//                                    }
-//                                    [self.syncObject setValue:data forKey:name];
-//                                }
-//
-//                            }
-//
-//                        }
-//                        //                        [self.syncObject setValue:[NSDate date] forKey:@"ts"];
-//                        [self.syncObject setValue:[NSDate date] forKey:@"lts"];
-//
-//                    } else {
-//                        //                        NSLog(@"lts <= ts");
-//                    }
-//
-//                    //                    }
-//
-//
-//                    //                    [self.syncObject setValue:[NSDate date] forKey:@"lts"];
-//
-//
-//                    //                    NSLog(@"self.syncObject after %@", self.syncObject);
-//
-//                }
-//            }
+- (NSData *)dataFromString:(NSString *)string {
+    NSMutableData *data = [NSMutableData data];
+    int i;
+    for (i = 0; i+2 <= string.length; i+=2) {
+        NSRange range = NSMakeRange(i, 2);
+        NSString* hexString = [string substringWithRange:range];
+        NSScanner* scanner = [NSScanner scannerWithString:hexString];
+        unsigned int intValue;
+        [scanner scanHexInt:&intValue];
+        [data appendBytes:&intValue length:1];
+    }
+    return data;
+}
 
 
 @end

@@ -46,6 +46,7 @@
 		2C2ACAA816EE2719001E333A /* STManagedDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2ACAA716EE2719001E333A /* STManagedDocument.m */; };
 		2C2ACAAB16EE2741001E333A /* STSyncer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2ACAAA16EE2741001E333A /* STSyncer.m */; };
 		2C2ACAAE16EE2762001E333A /* STGTTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2ACAAD16EE2762001E333A /* STGTTracker.m */; };
+		2C345CE917535356006AB1E0 /* test.json in Resources */ = {isa = PBXBuildFile; fileRef = 2C345CE817535356006AB1E0 /* test.json */; };
 		2C3B88AE170C547B0045EC6D /* STGTLocationTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B88AD170C547B0045EC6D /* STGTLocationTracker.m */; };
 		2C6DFB0B17327F6C0035A082 /* STGTMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C6DFB0A17327F6C0035A082 /* STGTMapViewController.m */; };
 		2CA1286D1709C88200FBD8F3 /* STGTDatum+Init.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CA1286C1709C88200FBD8F3 /* STGTDatum+Init.m */; };
@@ -149,6 +150,7 @@
 		2C2ACAAD16EE2762001E333A /* STGTTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTTracker.m; sourceTree = "<group>"; };
 		2C2CB56316FF3D6600D682C5 /* STSessionManagement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STSessionManagement.h; sourceTree = "<group>"; };
 		2C2CB56516FF3EAA00D682C5 /* STRequestAuthenticatable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRequestAuthenticatable.h; sourceTree = "<group>"; };
+		2C345CE817535356006AB1E0 /* test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test.json; sourceTree = "<group>"; };
 		2C3B88AC170C547B0045EC6D /* STGTLocationTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTLocationTracker.h; sourceTree = "<group>"; };
 		2C3B88AD170C547B0045EC6D /* STGTLocationTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTLocationTracker.m; sourceTree = "<group>"; };
 		2C6DFB0917327F6C0035A082 /* STGTMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTMapViewController.h; sourceTree = "<group>"; };
@@ -413,6 +415,7 @@
 		2CE75FD0170DC79200807B27 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2C345CE817535356006AB1E0 /* test.json */,
 				2C181331170F215D00A36CBB /* Localizable.strings */,
 				2C18131C170DD67C00A36CBB /* battery.png */,
 				2C18131D170DD67C00A36CBB /* geo.png */,
@@ -522,6 +525,7 @@
 				2C181322170DD67C00A36CBB /* ok.png in Resources */,
 				2C18132F170F215D00A36CBB /* Localizable.strings in Resources */,
 				2C1AA5921716DDE8007F3BDF /* warning.png in Resources */,
+				2C345CE917535356006AB1E0 /* test.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

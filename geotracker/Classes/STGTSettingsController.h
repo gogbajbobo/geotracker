@@ -21,6 +21,8 @@
 
 + (STGTSettingsController *)initWithSettings:(NSDictionary *)startSettings;
 
++ (NSString *)normalizeValue:(NSString *)value forKey:(NSString *)key;
+
 - (NSString *)applyNewSettings:(NSDictionary *)newSettings;
 
 - (NSArray *)currentSettings;
