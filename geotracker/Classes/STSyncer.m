@@ -228,7 +228,7 @@
         NSUInteger count = self.resultsController.fetchedObjects.count;
         
         if (count == 0) {
-            [[(STSession *)self.session logger] saveLogMessageWithText:@"Syncer no data to sync" type:@""];
+//            [[(STSession *)self.session logger] saveLogMessageWithText:@"Syncer no data to sync" type:@""];
             [self sendData:nil toServer:self.syncServerURI];
         } else {
             
@@ -292,7 +292,7 @@
         
         if (!([propertyName isEqualToString:@"xid"]||[propertyName isEqualToString:@"sqts"]||[propertyName isEqualToString:@"lts"])) {
             id value = [object valueForKey:propertyName];
-            NSLog(@"value %@", value);
+//            NSLog(@"value %@", value);
             if (value) {
                 if ([value isKindOfClass:[NSString class]] || [value isKindOfClass:[NSNumber class]]) {
                     //                        value = value;
@@ -314,7 +314,7 @@
                             [childrenArray addObject:[self dictionaryForObject:childObject]];
                         }
                         value = childrenArray;
-                        NSLog(@"value %@", value);
+//                        NSLog(@"value %@", value);
                     } else {
                         value = [NSNull null];
                     }
@@ -412,7 +412,7 @@
                         break;
                         
                     } else {
-                        NSLog(@"object %@", object);
+//                        NSLog(@"object %@", object);
                         [self syncObject:(NSDictionary *)object];
                     }
                 }
@@ -421,7 +421,7 @@
                         NSLog(@"save response success");
                     }
                 }];
-                [[(STSession *)self.session logger] saveLogMessageWithText:@"Sync done" type:@""];
+//                [[(STSession *)self.session logger] saveLogMessageWithText:@"Sync done" type:@""];
                 
                 self.syncing = NO;
                 
@@ -483,9 +483,9 @@
                 
                 self.syncObject = [fetchResult lastObject];
                 [self.syncObject setValue:[self.syncObject valueForKey:@"sts"] forKey:@"lts"];
-                NSLog(@"xid %@", xid);
-                NSLog(@"ts %@", [self.syncObject valueForKey:@"ts"]);
-                NSLog(@"lts %@", [self.syncObject valueForKey:@"lts"]);
+//                NSLog(@"xid %@", xid);
+//                NSLog(@"ts %@", [self.syncObject valueForKey:@"ts"]);
+//                NSLog(@"lts %@", [self.syncObject valueForKey:@"lts"]);
                 
             } else {
                 
