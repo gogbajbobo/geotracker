@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "STSession.h"
+#import "STGTTrack.h"
 
 @interface STGTMapViewController : UIViewController
 

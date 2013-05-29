@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 Maxim Grigoriev. All rights reserved.
 //
 
-#import "STGTTracker.h"
+#import <STManagedTracker/STTracker.h>
 #import "STGTTrack.h"
 
-@interface STGTLocationTracker : STGTTracker
+@interface STGTLocationTracker : STTracker
 
 - (void)startNewTrack;
 - (void)deleteTrack:(STGTTrack *)track;

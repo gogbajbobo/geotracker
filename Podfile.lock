@@ -29,17 +29,21 @@ PODS:
     - SBJson
   - Reachability (3.1.0)
   - SBJson (3.2)
+  - STManagedTracker (0.0.1)
   - UDPushAuth (0.2.1):
     - GData (~> 1.9.1)
     - Reachability (~> 3.1.0)
   - YandexMapKit (1.0.4)
 
 DEPENDENCIES:
-  - GData (~> 1.9.1)
+  - STManagedTracker (from `https://github.com/sys-team/STManagedTracker.git`, branch `dev`)
   - UDPushAuth (from `https://github.com/Unact/UDPushAuth.git`, branch `master`)
   - YandexMapKit (~> 1.0.4)
 
 EXTERNAL SOURCES:
+  STManagedTracker:
+    :branch: dev
+    :git: https://github.com/sys-team/STManagedTracker.git
   UDPushAuth:
     :branch: master
     :git: https://github.com/Unact/UDPushAuth.git
@@ -50,6 +54,7 @@ SPEC CHECKSUMS:
   GTMHTTPFetcher: 99f026c2d7afbcf2a051a64a3e81dcaedd060135
   Reachability: ba94ecd4eaa037be3d0588b38956672588530c5b
   SBJson: e60b4dc22448c2ae1e754b523a4ab53408e85c8d
+  STManagedTracker: c6ce38d2efb4a8a064d6dd4e490b87a82a74a604
   UDPushAuth: 7df52124c241a6ba2646968a49cdd8670642b0bd
   YandexMapKit: 69db16c8ae6ab219c6ef67eb8feebb5fa4c4ef39
 

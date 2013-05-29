@@ -9,7 +9,7 @@
 #import <UDPushAuth/UDOAuthBasicAbstract.h>
 #import "STRequestAuthenticatable.h"
 
-@interface STAuthBasic : UDOAuthBasicAbstract <STRequestAuthenticatable>
+@interface STGTAuthBasic : UDOAuthBasicAbstract <STRequestAuthenticatable>
 
 - (NSString *) reachabilityServer;
 + (id) tokenRetrieverMaker;

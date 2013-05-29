@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Maxim Grigoriev. All rights reserved.
 //
 
+#import <STManagedTracker/STSettingsController.h>
 #import "STGTSettingsTableViewController.h"
-#import "STGTSettingsController.h"
 #import "STSession.h"
 
 @interface STGTSettingsTableViewController () <UITextFieldDelegate, NSFetchedResultsControllerDelegate>
@@ -112,7 +112,7 @@
     return _controlsSettings;
 }
 
-- (STGTSettings *)settingObjectForIndexPath:(NSIndexPath *)indexPath {
+- (STSettings *)settingObjectForIndexPath:(NSIndexPath *)indexPath {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.group == %@ && SELF.name == %@", [[self groupNames] objectAtIndex:indexPath.section], [self settingNameForIndexPath:indexPath]];
     return [[[[(STSession *)self.session settingsController] currentSettings] filteredArrayUsingPredicate:predicate] lastObject];
 }
@@ -388,7 +388,9 @@
     if ([settingName isEqualToString:@"desiredAccuracy"]) {
         value = [self desiredAccuracyValueFrom:rint(slider.value)];
     }
-    [[(STSession *)self.session settingsController] applyNewSettings:[NSDictionary dictionaryWithObjectsAndKeys:value, settingName, nil]];
+    NSString *groupName = [[self groupNames] objectAtIndex:indexPath.section];
+    [[(STSession *)self.session settingsController] addNewSettings:[NSDictionary dictionaryWithObjectsAndKeys:value, settingName, nil] forGroup:groupName];
+
 }
 
 - (NSString *)desiredAccuracyValueFrom:(int)index {
@@ -406,7 +408,8 @@
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     NSString *settingName = [self settingNameForIndexPath:indexPath];
     NSString *value = [NSString stringWithFormat:@"%d", senderSwitch.on];
-    [[(STSession *)self.session settingsController] applyNewSettings:[NSDictionary dictionaryWithObjectsAndKeys:value, settingName, nil]];
+    NSString *groupName = [[self groupNames] objectAtIndex:indexPath.section];
+    [[(STSession *)self.session settingsController] addNewSettings:[NSDictionary dictionaryWithObjectsAndKeys:value, settingName, nil] forGroup:groupName];
 }
 
 - (void)segmentedControlValueChanged:(UISegmentedControl *)segmentedControl {
@@ -414,7 +417,8 @@
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     NSString *settingName = [self settingNameForIndexPath:indexPath];
     NSString *value = [NSString stringWithFormat:@"%d", segmentedControl.selectedSegmentIndex];
-    [[(STSession *)self.session settingsController] applyNewSettings:[NSDictionary dictionaryWithObjectsAndKeys:value, settingName, nil]];
+    NSString *groupName = [[self groupNames] objectAtIndex:indexPath.section];
+    [[(STSession *)self.session settingsController] addNewSettings:[NSDictionary dictionaryWithObjectsAndKeys:value, settingName, nil] forGroup:groupName];
 }
 
 #pragma mark - UITextFieldDelegate
@@ -428,7 +432,9 @@
     STGTSettingsTableViewCell *cell = (STGTSettingsTableViewCell *)textField.superview.superview;
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     NSString *settingName = [self settingNameForIndexPath:indexPath];
-    textField.text = [[(STSession *)self.session settingsController] applyNewSettings:[NSDictionary dictionaryWithObjectsAndKeys:textField.text, settingName, nil]];
+    NSString *groupName = [[self groupNames] objectAtIndex:indexPath.section];
+    textField.text = [[(STSession *)self.session settingsController] addNewSettings:[NSDictionary dictionaryWithObjectsAndKeys:textField.text, settingName, nil] forGroup:groupName];
+
     return YES;
 }
 

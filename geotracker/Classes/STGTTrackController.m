@@ -9,6 +9,7 @@
 #import "STGTTrackController.h"
 #import "STGTLocation.h"
 #import "STGTMapViewController.h"
+#import "STGTLocationTracker.h"
 
 @interface STGTTrackController() <NSFetchedResultsControllerDelegate>
 
@@ -362,11 +363,11 @@
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         if (indexPath.section == 0 && indexPath.row == 0 && self.currentTrack.locations.count != 0) {
-            [self.currentSession.locationTracker splitTrack];
+            [(STGTLocationTracker *)self.currentSession.locationTracker splitTrack];
         } else {
             id <NSFetchedResultsSectionInfo> sectionInfo = [[self.resultsController sections] objectAtIndex:indexPath.section];
             STGTTrack *track = (STGTTrack *)[[sectionInfo objects] objectAtIndex:indexPath.row];
-            [self.currentSession.locationTracker deleteTrack:track];
+            [(STGTLocationTracker *)self.currentSession.locationTracker deleteTrack:track];
         }
     }
     

@@ -2,25 +2,18 @@
 //  STGTLocation.h
 //  geotracker
 //
-//  Created by Maxim Grigoriev on 4/2/13.
+//  Created by Maxim Grigoriev on 5/29/13.
 //  Copyright (c) 2013 Maxim Grigoriev. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "STGTDatum.h"
+#import "STLocation.h"
 
 @class STGTTrack;
 
-@interface STGTLocation : STGTDatum
+@interface STGTLocation : STLocation
 
-@property (nonatomic, retain) NSNumber * altitude;
-@property (nonatomic, retain) NSNumber * course;
-@property (nonatomic, retain) NSNumber * horizontalAccuracy;
-@property (nonatomic, retain) NSNumber * latitude;
-@property (nonatomic, retain) NSNumber * longitude;
-@property (nonatomic, retain) NSNumber * speed;
-@property (nonatomic, retain) NSNumber * verticalAccuracy;
 @property (nonatomic, retain) STGTTrack *track;
 
 @end
