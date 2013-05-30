@@ -160,7 +160,9 @@
         if ([currentLocation distanceFromLocation:self.lastLocation] < self.trackSeparationDistance) {
             NSDate *ts = [NSDate date];
             [self.currentTrack setStartTime:ts];
-            [self.currentTrack addLocationsObject:[self locationObjectFromCLLocation:self.lastLocation]];
+            STGTLocation *lastLocation = [self locationObjectFromCLLocation:self.lastLocation];
+            lastLocation.timestamp = currentLocation.timestamp;
+            [self.currentTrack addLocationsObject:lastLocation];
             //            NSLog(@"copy lastLocation to new Track as first location");
         } else {
             //            NSLog(@"no");
@@ -229,6 +231,7 @@
     [locationObject setCourse:[NSNumber numberWithDouble:location.course]];
     [locationObject setAltitude:[NSNumber numberWithDouble:location.altitude]];
     [locationObject setVerticalAccuracy:[NSNumber numberWithDouble:location.verticalAccuracy]];
+    [locationObject setTimestamp:location.timestamp];
     return locationObject;
 }
 
@@ -240,7 +243,7 @@
                                           verticalAccuracy:[locationObject.verticalAccuracy doubleValue]
                                                     course:[locationObject.course doubleValue]
                                                      speed:[locationObject.speed doubleValue]
-                                                 timestamp:locationObject.cts];
+                                                 timestamp:locationObject.timestamp];
     return location;
 }
 

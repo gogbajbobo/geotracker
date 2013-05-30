@@ -60,6 +60,7 @@
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="speed" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="verticalAccuracy" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
     </entity>
     <entity name="STLogMessage" representedClassName="STLogMessage" parentEntity="STDatum" syncable="YES">
@@ -77,14 +78,14 @@
         <element name="STGTImage" positionX="-810" positionY="-495" width="128" height="58"/>
         <element name="STGTInterest" positionX="-684" positionY="-108" width="128" height="88"/>
         <element name="STGTInterestImage" positionX="-486" positionY="-148" width="128" height="58"/>
-        <element name="STLocation" positionX="-873" positionY="-126" width="128" height="148"/>
-        <element name="STLogMessage" positionX="-1044" positionY="-414" width="128" height="73"/>
+        <element name="STGTLocation" positionX="-1044" positionY="-45" width="128" height="58"/>
         <element name="STGTNetwork" positionX="-441" positionY="-315" width="128" height="88"/>
         <element name="STGTNetworkImage" positionX="-648" positionY="-432" width="128" height="58"/>
-        <element name="STSettings" positionX="-990" positionY="-558" width="128" height="88"/>
         <element name="STGTSpot" positionX="-452" positionY="-553" width="128" height="163"/>
         <element name="STGTSpotImage" positionX="-641" positionY="-522" width="128" height="58"/>
         <element name="STGTTrack" positionX="-1089" positionY="-180" width="128" height="88"/>
-        <element name="STGTLocation" positionX="-1044" positionY="-45" width="128" height="58"/>
+        <element name="STLocation" positionX="-873" positionY="-126" width="128" height="163"/>
+        <element name="STLogMessage" positionX="-1044" positionY="-414" width="128" height="73"/>
+        <element name="STSettings" positionX="-990" positionY="-558" width="128" height="88"/>
     </elements>
 </model>

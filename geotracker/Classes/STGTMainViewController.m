@@ -12,6 +12,7 @@
 #import "STGTInfoViewController.h"
 #import "STGTSettingsTableViewController.h"
 #import "STGTMapViewController.h"
+#import "STGTCheckTVC.h"
 
 @interface STGTMainViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *startButton;
@@ -231,7 +232,8 @@
 }
 
 - (void)trackSelected:(NSNotification *)notification {
-    [self showMapWithSelectedTrack:[notification.userInfo objectForKey:@"selectedTrack"]];
+//    [self showMapWithSelectedTrack:[notification.userInfo objectForKey:@"selectedTrack"]];
+    [self showCheckTVCWithSelectedTrack:[notification.userInfo objectForKey:@"selectedTrack"]];
 }
 
 - (void)showMapWithSelectedTrack:(STGTTrack *)selectedTrack {
@@ -240,6 +242,14 @@
     mapController.currentSession = self.currentSession;
     [self.navigationController pushViewController:mapController animated:YES];
 }
+
+- (void)showCheckTVCWithSelectedTrack:(STGTTrack *)selectedTrack {
+    STGTCheckTVC *checkTVC = [[STGTCheckTVC alloc] init];
+    checkTVC.track = selectedTrack;
+    checkTVC.session = self.currentSession;
+    [self.navigationController pushViewController:checkTVC animated:YES];
+}
+
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     

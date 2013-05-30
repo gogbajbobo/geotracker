@@ -12,6 +12,9 @@
 		2C103A511700512500BC46B4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C103A501700512500BC46B4 /* MapKit.framework */; };
 		2C103A531700512C00BC46B4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C103A521700512C00BC46B4 /* CoreLocation.framework */; };
 		2C171BE41719489800426992 /* STGTSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C171BE31719489800426992 /* STGTSettingsTableViewController.m */; };
+		2C17F65F17573FC100ABFF28 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C17F65E17573FC000ABFF28 /* Icon.png */; };
+		2C17F66117573FC300ABFF28 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C17F66017573FC300ABFF28 /* Icon@2x.png */; };
+		2C17F6641757403600ABFF28 /* STGTCheckTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C17F6631757403600ABFF28 /* STGTCheckTVC.m */; };
 		2C181320170DD67C00A36CBB /* battery.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C18131C170DD67C00A36CBB /* battery.png */; };
 		2C181321170DD67C00A36CBB /* geo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C18131D170DD67C00A36CBB /* geo.png */; };
 		2C181322170DD67C00A36CBB /* ok.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C18131E170DD67C00A36CBB /* ok.png */; };
@@ -81,6 +84,10 @@
 		2C103A521700512C00BC46B4 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		2C171BE21719489700426992 /* STGTSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTSettingsTableViewController.h; sourceTree = "<group>"; };
 		2C171BE31719489800426992 /* STGTSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTSettingsTableViewController.m; sourceTree = "<group>"; };
+		2C17F65E17573FC000ABFF28 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../../Icon.png; sourceTree = "<group>"; };
+		2C17F66017573FC300ABFF28 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../../Icon@2x.png"; sourceTree = "<group>"; };
+		2C17F6621757403600ABFF28 /* STGTCheckTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTCheckTVC.h; sourceTree = "<group>"; };
+		2C17F6631757403600ABFF28 /* STGTCheckTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTCheckTVC.m; sourceTree = "<group>"; };
 		2C18131C170DD67C00A36CBB /* battery.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = battery.png; sourceTree = "<group>"; };
 		2C18131D170DD67C00A36CBB /* geo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = geo.png; sourceTree = "<group>"; };
 		2C18131E170DD67C00A36CBB /* ok.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ok.png; sourceTree = "<group>"; };
@@ -297,6 +304,8 @@
 				2C1813341710116A00A36CBB /* STGTInfoViewController.m */,
 				2CE75FCB170DBBA400807B27 /* STGTRoundedCornerView.h */,
 				2CE75FCC170DBBA400807B27 /* STGTRoundedCornerView.m */,
+				2C17F6621757403600ABFF28 /* STGTCheckTVC.h */,
+				2C17F6631757403600ABFF28 /* STGTCheckTVC.m */,
 			);
 			name = Classes;
 			path = geotracker/Classes;
@@ -341,6 +350,8 @@
 		2CE75FD0170DC79200807B27 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2C17F66017573FC300ABFF28 /* Icon@2x.png */,
+				2C17F65E17573FC000ABFF28 /* Icon.png */,
 				2C345CE817535356006AB1E0 /* test.json */,
 				2C181331170F215D00A36CBB /* Localizable.strings */,
 				2C18131C170DD67C00A36CBB /* battery.png */,
@@ -452,6 +463,8 @@
 				2C18132F170F215D00A36CBB /* Localizable.strings in Resources */,
 				2C1AA5921716DDE8007F3BDF /* warning.png in Resources */,
 				2C345CE917535356006AB1E0 /* test.json in Resources */,
+				2C17F65F17573FC100ABFF28 /* Icon.png in Resources */,
+				2C17F66117573FC300ABFF28 /* Icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -537,6 +550,7 @@
 				2C6E45661756471800309982 /* STGTInterestImage.m in Sources */,
 				2C6E456F1756480100309982 /* STGTLocation.m in Sources */,
 				2C6E45721756480100309982 /* STGTTrack.m in Sources */,
+				2C17F6641757403600ABFF28 /* STGTCheckTVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
