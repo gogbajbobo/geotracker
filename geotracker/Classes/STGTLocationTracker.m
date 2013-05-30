@@ -178,9 +178,11 @@
     self.lastLocation = currentLocation;
     
     [self.document saveDocument:^(BOOL success) {
-        NSLog(@"save newLocation");
+//        NSLog(@"save newLocation");
         if (success) {
             NSLog(@"save newLocation success");
+        } else {
+            NSLog(@"save newLocation NOT success");
         }
     }];
     
@@ -192,9 +194,11 @@
     self.currentTrack = track;
     //    NSLog(@"track %@", track);
     [self.document saveDocument:^(BOOL success) {
-        NSLog(@"save newTrack");
+//        NSLog(@"save newTrack");
         if (success) {
             NSLog(@"save newTrack success");
+        } else {
+            NSLog(@"save newTrack NOT success");
         }
     }];
 }
