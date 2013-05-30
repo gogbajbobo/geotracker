@@ -7,9 +7,10 @@
 //
 
 #import "STGTAppDelegate.h"
-#import "STSessionManager.h"
-#import "STAuthBasic.h"
+#import <STManagedTracker/STSessionManager.h>
+#import "STGTAuthBasic.h"
 #import <UDPushAuth/UDAuthTokenRetriever.h>
+#import "STGTLocationTracker.h"
 
 @implementation STGTAppDelegate
 
@@ -18,11 +19,11 @@
     
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     
-    [[STAuthBasic sharedOAuth] checkToken];
+    [[STGTAuthBasic sharedOAuth] checkToken];
     
     self.pushNotificatonCenter = [UDPushNotificationCenter sharedPushNotificationCenter];
-    self.authCodeRetriever = (UDPushAuthCodeRetriever *)[(UDAuthTokenRetriever *)[[STAuthBasic sharedOAuth] tokenRetriever] codeDelegate];
-    self.reachability = [Reachability reachabilityWithHostname:[[STAuthBasic sharedOAuth] reachabilityServer]];
+    self.authCodeRetriever = (UDPushAuthCodeRetriever *)[(UDAuthTokenRetriever *)[[STGTAuthBasic sharedOAuth] tokenRetriever] codeDelegate];
+    self.reachability = [Reachability reachabilityWithHostname:[[STGTAuthBasic sharedOAuth] reachabilityServer]];
     self.reachability.reachableOnWWAN = YES;
     [self.reachability startNotifier];
 
@@ -41,10 +42,16 @@
                                      @"20", @"timeFilter",
                                      @"180", @"trackDetectionTime",
                                      @"1", @"localAccessToSettings",
+                                     @"20", @"fetchLimit",
+                                     @"https://system.unact.ru/utils/chest2json.php", @"syncServerURI",
+                                     @"STGTDataModel", @"dataModelName",
                                      nil];
     
-    [[STSessionManager sharedManager] startSessionForUID:@"1" authDelegate:[STAuthBasic sharedOAuth] settings:sessionSettings];
-//    [[STSessionManager sharedManager] startSessionForUID:@"1" authDelegate:nil settings:sessionSettings];
+    NSDictionary *trackers = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [[STGTLocationTracker alloc] init], @"locationTracker",
+                              nil];
+    
+    [[STSessionManager sharedManager] startSessionForUID:@"1" authDelegate:[STGTAuthBasic sharedOAuth] trackers:trackers settings:sessionSettings];
 
     return YES;
 }

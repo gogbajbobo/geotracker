@@ -46,18 +46,28 @@
 
 - (MKPolyline *)startLineForSegmentFrom:(CLLocationCoordinate2D)firstPoint to:(CLLocationCoordinate2D)secondPoint {
     
+    MKMapPoint fpoint = MKMapPointForCoordinate(firstPoint);
+    MKMapPoint spoint = MKMapPointForCoordinate(secondPoint);
+    
     double d = 0.001;
-    double k = (secondPoint.latitude - firstPoint.latitude) / (secondPoint.longitude - firstPoint.longitude);
+    double k = (spoint.x - fpoint.x) / (spoint.y - fpoint.y);
     double x = d / (2 * sqrt(pow(k,2) + 1));
     double y = k * x;
-    
+
+    NSLog(@"fpoint.x, fpoint.y, spoint.x, spoint.y %f %f %f %f", fpoint.x, fpoint.y, spoint.x, spoint.y);
     NSLog(@"d %f, k %f, x %f, y %f", d, k, x, y);
     
     CLLocationCoordinate2D coordinates[2];
+    
+    MKMapPoint points[2];
+    points[0] = MKMapPointMake(fpoint.x - x, fpoint.y - y);
+    points[1] = MKMapPointMake(fpoint.x + x, fpoint.y + y);
+    
     coordinates[0] = CLLocationCoordinate2DMake(firstPoint.latitude - x, firstPoint.longitude - y);
     coordinates[1] = CLLocationCoordinate2DMake(firstPoint.latitude + x, firstPoint.longitude + y);
     
-    MKPolyline *startLine = [MKPolyline polylineWithCoordinates:coordinates count:2];
+//    MKPolyline *startLine = [MKPolyline polylineWithCoordinates:coordinates count:2];
+    MKPolyline *startLine = [MKPolyline polylineWithPoints:points count:2];
     startLine.title = @"startLine";
     
     return startLine;

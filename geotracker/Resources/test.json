@@ -1,0 +1,16 @@
+{
+  "xmlns":"https:\/\/github.com\/sys-team\/ASA.chest",
+  "ts":"2013-05-27 12:42:53.140",
+  "error":"ok",
+  "data" : [
+    {
+      "xid" : "4e11d893fd404210879c0adea95bea9a",
+      "name" : "STGTSettings",
+      "properties" : {
+        "name" : "timeFilter",
+        "group" : "location",
+        "value" : "-1",
+      }
+    }
+  ]
+}

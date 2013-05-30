@@ -6,16 +6,18 @@
 //  Copyright (c) 2013 Maxim Grigoriev. All rights reserved.
 //
 
-#import "STAuthBasic.h"
+#import "STGTAuthBasic.h"
 #import <UDPushAuth/UDAuthTokenRetriever.h>
 #import <UDPushAuth/UDPushAuthCodeRetriever.h>
 #import <UDPushAuth/UDPushAuthRequestBasic.h>
 
 #define TOKEN_SERVER_URL @"system.unact.ru"
-#define AUTH_SERVICE_URI @"https://uoauth.unact.ru/a/UPushAuth/"
-#define AUTH_SERVICE_PARAMETERS @"app_id=geotracking-dev"
+//#define AUTH_SERVICE_URI @"https://uoauth.unact.ru/a/UPushAuth/"
+//#define AUTH_SERVICE_PARAMETERS @"app_id=geotracking-dev"
+#define AUTH_SERVICE_URI @"https://system.unact.ru/asa/"
+#define AUTH_SERVICE_PARAMETERS @"_host=uoauth&app_id=geotracking-dev&_svc=a/upushauth/"
 
-@implementation STAuthBasic
+@implementation STGTAuthBasic
 
 - (NSString *) reachabilityServer{
     return TOKEN_SERVER_URL;
