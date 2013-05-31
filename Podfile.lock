@@ -36,13 +36,13 @@ PODS:
   - YandexMapKit (1.0.4)
 
 DEPENDENCIES:
-  - STManagedTracker (from `https://github.com/sys-team/STManagedTracker.git`, branch `dev`)
+  - STManagedTracker (from `https://github.com/sys-team/STManagedTracker.git`, branch `settings`)
   - UDPushAuth (from `https://github.com/Unact/UDPushAuth.git`, branch `master`)
   - YandexMapKit (~> 1.0.4)
 
 EXTERNAL SOURCES:
   STManagedTracker:
-    :branch: dev
+    :branch: settings
     :git: https://github.com/sys-team/STManagedTracker.git
   UDPushAuth:
     :branch: master

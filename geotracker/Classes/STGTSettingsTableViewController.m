@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Maxim Grigoriev. All rights reserved.
 //
 
-#import <STManagedTracker/STSettingsController.h>
+#import "STGTSettingsController.h"
 #import "STGTSettingsTableViewController.h"
 #import "STSession.h"
 

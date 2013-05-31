@@ -52,6 +52,7 @@
 		2C6E45661756471800309982 /* STGTInterestImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E45651756471800309982 /* STGTInterestImage.m */; };
 		2C6E456F1756480100309982 /* STGTLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E456E1756480100309982 /* STGTLocation.m */; };
 		2C6E45721756480100309982 /* STGTTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E45711756480100309982 /* STGTTrack.m */; };
+		2C6E457B1758CD2B00309982 /* STGTSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E457A1758CD2B00309982 /* STGTSettingsController.m */; };
 		2CD05D661735067C00B6B766 /* YMKMapView+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD05D651735067C00B6B766 /* YMKMapView+custom.m */; };
 		2CD05D69173507AD00B6B766 /* MKMapView+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD05D68173507AD00B6B766 /* MKMapView+custom.m */; };
 		2CE75FCA170DB98F00807B27 /* STGTMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE75FC9170DB98F00807B27 /* STGTMainViewController.m */; };
@@ -146,6 +147,8 @@
 		2C6E456E1756480100309982 /* STGTLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTLocation.m; sourceTree = "<group>"; };
 		2C6E45701756480100309982 /* STGTTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTTrack.h; sourceTree = "<group>"; };
 		2C6E45711756480100309982 /* STGTTrack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTTrack.m; sourceTree = "<group>"; };
+		2C6E45791758CD2B00309982 /* STGTSettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTSettingsController.h; sourceTree = "<group>"; };
+		2C6E457A1758CD2B00309982 /* STGTSettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTSettingsController.m; sourceTree = "<group>"; };
 		2CD05D641735067C00B6B766 /* YMKMapView+custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YMKMapView+custom.h"; sourceTree = "<group>"; };
 		2CD05D651735067C00B6B766 /* YMKMapView+custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "YMKMapView+custom.m"; sourceTree = "<group>"; };
 		2CD05D67173507AD00B6B766 /* MKMapView+custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+custom.h"; sourceTree = "<group>"; };
@@ -282,6 +285,8 @@
 		2C2ACA9F16EE24A0001E333A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2C6E45791758CD2B00309982 /* STGTSettingsController.h */,
+				2C6E457A1758CD2B00309982 /* STGTSettingsController.m */,
 				2C2CB56A16FF44DC00D682C5 /* DataModel */,
 				2C2CB56616FF3F1600D682C5 /* Protocols */,
 				2C187A451715371600F6EFF9 /* STGTAuthBasic.h */,
@@ -551,6 +556,7 @@
 				2C6E456F1756480100309982 /* STGTLocation.m in Sources */,
 				2C6E45721756480100309982 /* STGTTrack.m in Sources */,
 				2C17F6641757403600ABFF28 /* STGTCheckTVC.m in Sources */,
+				2C6E457B1758CD2B00309982 /* STGTSettingsController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

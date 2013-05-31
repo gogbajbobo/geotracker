@@ -11,6 +11,7 @@
 #import "STGTAuthBasic.h"
 #import <UDPushAuth/UDAuthTokenRetriever.h>
 #import "STGTLocationTracker.h"
+#import "STGTSettingsController.h"
 
 @implementation STGTAppDelegate
 
@@ -49,6 +50,7 @@
     
     NSDictionary *trackers = [NSDictionary dictionaryWithObjectsAndKeys:
                               [[STGTLocationTracker alloc] init], @"locationTracker",
+                              [[STGTSettingsController alloc] init], @"settingsController",
                               nil];
     
     [[STSessionManager sharedManager] startSessionForUID:@"1" authDelegate:[STGTAuthBasic sharedOAuth] trackers:trackers settings:sessionSettings];
