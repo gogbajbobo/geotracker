@@ -8,6 +8,7 @@
 
 #import "STGTLocationTracker.h"
 #import "STGTLocation.h"
+#import <STManagedTracker/STSession.h>
 
 @interface STGTLocationTracker() <CLLocationManagerDelegate>
 
@@ -21,6 +22,7 @@
 @property (nonatomic) NSTimeInterval timeFilter;
 @property (nonatomic) NSTimeInterval trackDetectionTime;
 @property (nonatomic) CLLocationDistance trackSeparationDistance;
+@property (nonatomic) CLLocationSpeed maxSpeedThreshold;
 
 
 @end
@@ -75,6 +77,10 @@
 
 - (CLLocationDistance)trackSeparationDistance {
     return [[self.settings valueForKey:@"trackSeparationDistance"] doubleValue];
+}
+
+- (CLLocationSpeed)maxSpeedThreshold {
+    return [[self.settings valueForKey:@"maxSpeedThreshold"] doubleValue];
 }
 
 - (STGTTrack *)currentTrack {
@@ -137,12 +143,28 @@
     
     CLLocation *newLocation = [locations lastObject];
     NSTimeInterval locationAge = -[newLocation.timestamp timeIntervalSinceNow];
+    
     if (locationAge < 5.0 &&
+        
         newLocation.horizontalAccuracy > 0 &&
         newLocation.horizontalAccuracy <= self.requiredAccuracy) {
-        if (!self.lastLocation || [newLocation.timestamp timeIntervalSinceDate:self.lastLocation.timestamp] > self.timeFilter) {
-            [self addLocation:newLocation];
+        
+        CLLocationDistance distance = [self.lastLocation distanceFromLocation:newLocation];
+        NSTimeInterval time = [newLocation.timestamp timeIntervalSinceDate:self.lastLocation.timestamp];
+        CLLocationSpeed speed = 3.6 * distance / time;
+        
+        if (speed > self.maxSpeedThreshold) {
+            
+            [[(STSession *)self.session logger] saveLogMessageWithText:@"maxSpeedThreshold exceeded" type:@""];
+            
+        } else {
+
+            if (!self.lastLocation || time > self.timeFilter) {
+                [self addLocation:newLocation];
+            }
+
         }
+        
     }
     
 }
