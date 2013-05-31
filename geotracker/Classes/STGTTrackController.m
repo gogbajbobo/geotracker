@@ -262,6 +262,15 @@
     return [NSString stringWithFormat:@"%@ - %d %@ - %d%@", [sectionInfo name], [sectionInfo numberOfObjects], NSLocalizedString(keyString, @""), idistance, NSLocalizedString(@"M", @"")];
 }
 
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    NSMutableArray *titles = [NSMutableArray array];
+    for (int i = 0; i < [self numberOfSectionsInTableView:tableView]; i++) {
+        [titles addObject:[NSString stringWithFormat:@"%d", i]];
+//        [titles addObject:@"."];
+    }
+    return titles;
+}
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

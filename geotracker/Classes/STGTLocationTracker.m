@@ -157,18 +157,27 @@
     NSDate *timestamp = currentLocation.timestamp;
     if ([currentLocation.timestamp timeIntervalSinceDate:self.lastLocation.timestamp] > self.trackDetectionTime && self.currentTrack.locations.count != 0) {
         [self startNewTrack];
+        
+        
+// Will cause speed calculation error, may be shouldn't use
+        
+        
         if ([currentLocation distanceFromLocation:self.lastLocation] < self.trackSeparationDistance) {
             NSDate *ts = [NSDate date];
             [self.currentTrack setStartTime:ts];
             STGTLocation *lastLocation = [self locationObjectFromCLLocation:self.lastLocation];
-            lastLocation.timestamp = currentLocation.timestamp;
+            lastLocation.timestamp = ts;
             [self.currentTrack addLocationsObject:lastLocation];
             //            NSLog(@"copy lastLocation to new Track as first location");
         } else {
             //            NSLog(@"no");
-            self.lastLocation = currentLocation;
+//            self.lastLocation = currentLocation;
         }
-        timestamp = [NSDate date];
+        
+// ____________________________________________________
+        
+        
+//        timestamp = [NSDate date];
     }
         
     if (self.currentTrack.locations.count == 0) {
