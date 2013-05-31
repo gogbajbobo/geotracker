@@ -25,15 +25,16 @@
     [locationTrackerSettings setValue:[NSString stringWithFormat:@"%d", NO] forKey:@"locationTrackerAutoStart"];
     [locationTrackerSettings setValue:@"8.0" forKey:@"locationTrackerStartTime"];
     [locationTrackerSettings setValue:@"20.0" forKey:@"locationTrackerFinishTime"];
+    [locationTrackerSettings setValue:@"100.0" forKey:@"maxSpeedThreshold"];
 
 // Temporarily add for HippoTracker
 
-    [locationTrackerSettings setValue:@"100.0" forKey:@"HTCheckpointInterval"];
-    [locationTrackerSettings setValue:@"0.7" forKey:@"HTSlowdownValue"];
-    [locationTrackerSettings setValue:@"5" forKey:@"HTStartSpeedThreshold"];
-    [locationTrackerSettings setValue:@"10" forKey:@"HTFinishSpeedThreshold"];
-    [locationTrackerSettings setValue:@"0.1" forKey:@"deviceMotionUpdateInterval"];
-    [locationTrackerSettings setValue:[NSString stringWithFormat:@"%d", NO] forKey:@"deviceMotionUpdate"];
+//    [locationTrackerSettings setValue:@"100.0" forKey:@"HTCheckpointInterval"];
+//    [locationTrackerSettings setValue:@"0.7" forKey:@"HTSlowdownValue"];
+//    [locationTrackerSettings setValue:@"5" forKey:@"HTStartSpeedThreshold"];
+//    [locationTrackerSettings setValue:@"10" forKey:@"HTFinishSpeedThreshold"];
+//    [locationTrackerSettings setValue:@"0.1" forKey:@"deviceMotionUpdateInterval"];
+//    [locationTrackerSettings setValue:[NSString stringWithFormat:@"%d", NO] forKey:@"deviceMotionUpdate"];
 
 
 // ___________________ HippoTracker
@@ -98,7 +99,7 @@
             return [NSString stringWithFormat:@"%f", dValue];
         }
 
-    } else if ([key isEqualToString:@"timeFilter"] || [key isEqualToString:@"HTStartSpeedThreshold"] || [key isEqualToString:@"HTFinishSpeedThreshold"]) {
+    } else if ([key isEqualToString:@"timeFilter"] || [key isEqualToString:@"maxSpeedThreshold"]) {
         double dValue = [value doubleValue];
         if (dValue >= 0) {
             return [NSString stringWithFormat:@"%f", dValue];

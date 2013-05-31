@@ -62,7 +62,8 @@
     [locationTrackerSettings addObject:@[@"switch", @"", @"", @"", @"locationTrackerAutoStart"]];
     [locationTrackerSettings addObject:@[@"slider", @"0", @"24", @"0.5", @"locationTrackerStartTime"]];
     [locationTrackerSettings addObject:@[@"slider", @"0", @"24", @"0.5", @"locationTrackerFinishTime"]];
-    
+    [locationTrackerSettings addObject:@[@"slider", @"0", @"120", @"20", @"maxSpeedThreshold"]];
+
     [controlsSettings setValue:locationTrackerSettings forKey:@"location"];
     
     
