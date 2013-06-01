@@ -232,8 +232,8 @@
 }
 
 - (void)trackSelected:(NSNotification *)notification {
-//    [self showMapWithSelectedTrack:[notification.userInfo objectForKey:@"selectedTrack"]];
-    [self showCheckTVCWithSelectedTrack:[notification.userInfo objectForKey:@"selectedTrack"]];
+    [self showMapWithSelectedTrack:[notification.userInfo objectForKey:@"selectedTrack"]];
+//    [self showCheckTVCWithSelectedTrack:[notification.userInfo objectForKey:@"selectedTrack"]];
 }
 
 - (void)showMapWithSelectedTrack:(STGTTrack *)selectedTrack {
