@@ -43,7 +43,7 @@
                                      @"20", @"timeFilter",
                                      @"180", @"trackDetectionTime",
                                      @"1", @"localAccessToSettings",
-                                     @"20", @"fetchLimit",
+                                     @"200", @"fetchLimit",
                                      @"https://system.unact.ru/utils/chest2json.php", @"syncServerURI",
                                      @"STGTDataModel", @"dataModelName",
                                      nil];

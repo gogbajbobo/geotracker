@@ -23,6 +23,7 @@
 @property (nonatomic) NSTimeInterval trackDetectionTime;
 @property (nonatomic) CLLocationDistance trackSeparationDistance;
 @property (nonatomic) CLLocationSpeed maxSpeedThreshold;
+@property (nonatomic) BOOL getLocationsWithNegativeSpeed;
 
 
 @end
@@ -81,6 +82,10 @@
 
 - (CLLocationSpeed)maxSpeedThreshold {
     return [[self.settings valueForKey:@"maxSpeedThreshold"] doubleValue];
+}
+
+- (BOOL)getLocationsWithNegativeSpeed {
+    return [[self.settings valueForKey:@"getLocationsWithNegativeSpeed"] boolValue];
 }
 
 - (STGTTrack *)currentTrack {
@@ -149,20 +154,26 @@
         newLocation.horizontalAccuracy > 0 &&
         newLocation.horizontalAccuracy <= self.requiredAccuracy) {
         
-        CLLocationDistance distance = [self.lastLocation distanceFromLocation:newLocation];
-        NSTimeInterval time = [newLocation.timestamp timeIntervalSinceDate:self.lastLocation.timestamp];
-        CLLocationSpeed speed = 3.6 * distance / time;
+        if (!self.getLocationsWithNegativeSpeed && newLocation.speed < 0) {
+            [[(STSession *)self.session logger] saveLogMessageWithText:@"location w/negative speed recieved" type:@""];
         
-        if (speed > self.maxSpeedThreshold) {
-            
-            [[(STSession *)self.session logger] saveLogMessageWithText:@"maxSpeedThreshold exceeded" type:@""];
-            
         } else {
-
-            if (!self.lastLocation || time > self.timeFilter) {
-                [self addLocation:newLocation];
+            CLLocationDistance distance = [self.lastLocation distanceFromLocation:newLocation];
+            NSTimeInterval time = [newLocation.timestamp timeIntervalSinceDate:self.lastLocation.timestamp];
+            CLLocationSpeed speed = 3.6 * distance / time;
+            
+            if (speed > self.maxSpeedThreshold) {
+                
+                [[(STSession *)self.session logger] saveLogMessageWithText:@"maxSpeedThreshold exceeded" type:@""];
+                
+            } else {
+                
+                if (!self.lastLocation || time > self.timeFilter) {
+                    [self addLocation:newLocation];
+                }
+                
             }
-
+            
         }
         
     }

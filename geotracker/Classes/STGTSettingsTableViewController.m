@@ -59,10 +59,11 @@
     [locationTrackerSettings addObject:@[@"slider", @"1", @"60", @"5", @"timeFilter"]];
     [locationTrackerSettings addObject:@[@"slider", @"0", @"600", @"30", @"trackDetectionTime"]];
     [locationTrackerSettings addObject:@[@"slider", @"1", @"1000", @"100", @"trackSeparationDistance"]];
+    [locationTrackerSettings addObject:@[@"slider", @"0", @"120", @"20", @"maxSpeedThreshold"]];
+    [locationTrackerSettings addObject:@[@"switch", @"", @"", @"", @"getLocationsWithNegativeSpeed"]];
     [locationTrackerSettings addObject:@[@"switch", @"", @"", @"", @"locationTrackerAutoStart"]];
     [locationTrackerSettings addObject:@[@"slider", @"0", @"24", @"0.5", @"locationTrackerStartTime"]];
     [locationTrackerSettings addObject:@[@"slider", @"0", @"24", @"0.5", @"locationTrackerFinishTime"]];
-    [locationTrackerSettings addObject:@[@"slider", @"0", @"120", @"20", @"maxSpeedThreshold"]];
 
     [controlsSettings setValue:locationTrackerSettings forKey:@"location"];
     

@@ -26,6 +26,7 @@
     [locationTrackerSettings setValue:@"8.0" forKey:@"locationTrackerStartTime"];
     [locationTrackerSettings setValue:@"20.0" forKey:@"locationTrackerFinishTime"];
     [locationTrackerSettings setValue:@"100.0" forKey:@"maxSpeedThreshold"];
+    [locationTrackerSettings setValue:[NSString stringWithFormat:@"%d", NO] forKey:@"getLocationsWithNegativeSpeed"];
 
 // Temporarily add for HippoTracker
 
@@ -111,7 +112,7 @@
             return [NSString stringWithFormat:@"%f", dValue];
         }
 
-    } else  if ([key hasSuffix:@"TrackerAutoStart"] || [key isEqualToString:@"localAccessToSettings"] || [key isEqualToString:@"deviceMotionUpdate"]) {
+    } else  if ([key hasSuffix:@"TrackerAutoStart"] || [key isEqualToString:@"localAccessToSettings"] || [key isEqualToString:@"deviceMotionUpdate"] || [key isEqualToString:@"getLocationsWithNegativeSpeed"]) {
         if ([self isBool:value]) {
             return [NSString stringWithFormat:@"%d", [value boolValue]];
         }
