@@ -193,7 +193,7 @@
         
         
 // Will cause speed calculation error, may be shouldn't use
-        
+/*
         
         if ([currentLocation distanceFromLocation:self.lastLocation] < self.trackSeparationDistance) {
             NSDate *ts = [NSDate date];
@@ -206,7 +206,7 @@
             //            NSLog(@"no");
 //            self.lastLocation = currentLocation;
         }
-        
+*/        
 // ____________________________________________________
         
         

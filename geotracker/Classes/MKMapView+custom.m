@@ -90,7 +90,7 @@
     
     MKMapPoint fp = {0, 0};
     MKMapPoint sp = {0, minSize};
-    CLLocationDistance radius = MKMetersBetweenMapPoints(fp, sp) / 6;
+    CLLocationDistance radius = MKMetersBetweenMapPoints(fp, sp) / 8;
     
     MKCircle *circle = [MKCircle circleWithCenterCoordinate:coordinate radius:radius];
     circle.title = @"finishPoint";
@@ -120,7 +120,7 @@
             pathView.strokeColor = [UIColor blueColor];
             pathView.lineWidth = 4.0;
         } else if ([overlay.title isEqualToString:@"startLine"]) {
-            pathView.strokeColor = [UIColor redColor];
+            pathView.strokeColor = [UIColor blueColor];
             pathView.lineWidth = 8.0;
         } else if ([overlay.title isEqualToString:@"allTracks"]) {
             pathView.strokeColor = [UIColor grayColor];
@@ -134,8 +134,8 @@
     } else if ([overlay isKindOfClass:[MKCircle class]]) {
         MKCircleView *circleView = [[MKCircleView alloc] initWithOverlay:overlay];
         if ([overlay.title isEqualToString:@"finishPoint"]) {
-            circleView.strokeColor = [UIColor redColor];
-            circleView.fillColor = [UIColor redColor];
+            circleView.strokeColor = [UIColor blueColor];
+            circleView.fillColor = [UIColor blueColor];
             circleView.lineWidth = 8.0;
         }
         overlayView = circleView;
