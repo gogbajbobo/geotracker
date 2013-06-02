@@ -14,15 +14,19 @@
     self.showsUserLocation = showsUserLocation;
 }
 
-- (void)drawPathWithCoordinates:(CLLocationCoordinate2D *)coordinates count:(NSUInteger)count title:(NSString *)title {
-    
-}
-
 - (CLLocationCoordinate2D) currentUserLocation {
     return self.userLocation.location.coordinate;
 }
 
 - (void)scaleMapToRegion:(MKCoordinateRegion)region {
+    
+}
+
+- (void)drawPathWithCoordinates:(CLLocationCoordinate2D *)coordinates count:(NSUInteger)count title:(NSString *)title {
+    
+}
+
+- (void)removePathWithTitle:(NSString *)pathTitle {
     
 }
 
