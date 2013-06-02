@@ -20,6 +20,10 @@
 
 - (void)scaleMapToRegion:(MKCoordinateRegion)region {
     
+    YMKMapRegionSize span = {region.span.latitudeDelta, region.span.longitudeDelta};
+    YMKMapRegion YRegion = YMKMapRegionMake(region.center, span);
+    
+    [self setRegion:YRegion animated:YES];
 }
 
 - (void)drawPathWithCoordinates:(CLLocationCoordinate2D *)coordinates count:(NSUInteger)count title:(NSString *)title {
