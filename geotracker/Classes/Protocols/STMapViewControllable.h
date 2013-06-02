@@ -13,7 +13,10 @@
 
 - (CLLocationCoordinate2D) currentUserLocation;
 - (void)showsUserLocation:(BOOL)showsUserLocation;
-- (void)drawPathWithCoordinates:(CLLocationCoordinate2D *)coordinates count:(NSUInteger)count title:(NSString *)title;
 - (void)scaleMapToRegion:(MKCoordinateRegion)region;
+
+- (void)drawPathWithCoordinates:(CLLocationCoordinate2D *)coordinates count:(NSUInteger)count title:(NSString *)title;
+- (void)removePathWithTitle:(NSString *)pathTitle;
+
 
 @end

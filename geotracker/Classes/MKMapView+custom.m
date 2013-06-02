@@ -26,24 +26,44 @@
     self.showsUserLocation = showsUserLocation;
 }
 
+- (void)removePathWithTitle:(NSString *)pathTitle {
+
+    [self removeOverlayWithTitle:pathTitle];
+    
+    if ([pathTitle isEqualToString:@"selectedTrack"]) {
+        
+        [self removeOverlayWithTitle:@"startLine"];
+        [self removeOverlayWithTitle:@"finishPoint"];
+
+    }
+}
+
+- (void)removeOverlayWithTitle:(NSString *)title {
+
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.title == %@", title];
+    id <MKOverlay> overlayToRemove = (id <MKOverlay>)[[self.overlays filteredArrayUsingPredicate:predicate] lastObject];
+    [self removeOverlay:overlayToRemove];
+
+}
+
 - (void)drawPathWithCoordinates:(CLLocationCoordinate2D *)coordinates count:(NSUInteger)count title:(NSString *)title {
 
     MKPolyline *pathLine = [MKPolyline polylineWithCoordinates:coordinates count:count];
     pathLine.title = title;
     if ([title isEqualToString:@"track"]) {
-        [self insertOverlay:(id<MKOverlay>)pathLine atIndex:self.overlays.count];
+        [self insertOverlay:(id <MKOverlay>)pathLine atIndex:self.overlays.count];
         
     } else if ([title isEqualToString:@"selectedTrack"]) {
-        [self insertOverlay:(id<MKOverlay>)pathLine atIndex:self.overlays.count];
+        [self insertOverlay:(id <MKOverlay>)pathLine atIndex:self.overlays.count];
 
         MKPolyline *startLine = [self startLineForSegmentFrom:coordinates[0] to:coordinates[1]];
-        [self insertOverlay:(id<MKOverlay>)startLine atIndex:self.overlays.count];
+        [self insertOverlay:(id <MKOverlay>)startLine atIndex:self.overlays.count];
 
         MKCircle *finishPoint = [self finishPointFor:coordinates[count-1]];
-        [self insertOverlay:(id<MKOverlay>)finishPoint atIndex:self.overlays.count];
+        [self insertOverlay:(id <MKOverlay>)finishPoint atIndex:self.overlays.count];
         
     } else if ([title isEqualToString:@"allTracks"]) {
-        [self insertOverlay:(id<MKOverlay>)pathLine atIndex:0];
+        [self insertOverlay:(id <MKOverlay>)pathLine atIndex:0];
     }
 
 }
@@ -53,8 +73,6 @@
     MKMapPoint fpoint = MKMapPointForCoordinate(firstPoint);
     MKMapPoint spoint = MKMapPointForCoordinate(secondPoint);
     
-//    NSLog(@"self.visibleMapRect.size %f %f", self.visibleMapRect.size.height, self.visibleMapRect.size.width);
-
     MKMapSize size = self.visibleMapRect.size;
     double minSize = size.height < size.width ? size.height : size.width;
         
@@ -62,9 +80,6 @@
     double k = (spoint.x - fpoint.x) / (spoint.y - fpoint.y);
     double x = d / (2 * sqrt(pow(k,2) + 1));
     double y = k * x;
-
-//    NSLog(@"fpoint.x, fpoint.y, spoint.x, spoint.y %f %f %f %f", fpoint.x, fpoint.y, spoint.x, spoint.y);
-//    NSLog(@"d %f, k %f, x %f, y %f", d, k, x, y);
     
     CLLocationCoordinate2D coordinates[2];
     
@@ -75,7 +90,6 @@
     coordinates[0] = CLLocationCoordinate2DMake(firstPoint.latitude - x, firstPoint.longitude - y);
     coordinates[1] = CLLocationCoordinate2DMake(firstPoint.latitude + x, firstPoint.longitude + y);
     
-//    MKPolyline *startLine = [MKPolyline polylineWithCoordinates:coordinates count:2];
     MKPolyline *startLine = [MKPolyline polylineWithPoints:points count:2];
     startLine.title = @"startLine";
     
