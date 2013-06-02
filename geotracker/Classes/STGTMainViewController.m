@@ -232,8 +232,13 @@
 }
 
 - (void)trackSelected:(NSNotification *)notification {
-    [self showMapWithSelectedTrack:[notification.userInfo objectForKey:@"selectedTrack"]];
-//    [self showCheckTVCWithSelectedTrack:[notification.userInfo objectForKey:@"selectedTrack"]];
+    
+    BOOL showLocations = [[[self.currentSession.settingsController currentSettingsForGroup:@"map"] valueForKey:@"showLocationInsteadOfMap"] boolValue];
+    if (showLocations) {
+        [self showCheckTVCWithSelectedTrack:[notification.userInfo objectForKey:@"selectedTrack"]];
+    } else {
+        [self showMapWithSelectedTrack:[notification.userInfo objectForKey:@"selectedTrack"]];
+    }
 }
 
 - (void)showMapWithSelectedTrack:(STGTTrack *)selectedTrack {

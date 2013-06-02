@@ -69,6 +69,7 @@
     
     
     NSMutableArray *mapSettings = [NSMutableArray array];
+    [mapSettings addObject:@[@"switch", @"", @"", @"", @"showLocationInsteadOfMap"]];
     [mapSettings addObject:@[@"segmentedControl", @"0", @"2", @"1", @"mapHeading"]];
     [mapSettings addObject:@[@"segmentedControl", @"0", @"2", @"1", @"mapType"]];
     [mapSettings addObject:@[@"segmentedControl", @"0", @"1", @"1", @"mapProvider"]];

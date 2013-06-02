@@ -48,6 +48,7 @@
     [mapSettings setValue:[NSString stringWithFormat:@"%d", MKMapTypeStandard] forKey:@"mapType"];
     [mapSettings setValue:@"1.5" forKey:@"trackScale"];
     [mapSettings setValue:[NSString stringWithFormat:@"%d", mapApple] forKey:@"mapProvider"];
+    [mapSettings setValue:[NSString stringWithFormat:@"%d", NO] forKey:@"showLocationInsteadOfMap"];
 
     [defaultSettings setValue:mapSettings forKey:@"map"];
 
@@ -112,7 +113,7 @@
             return [NSString stringWithFormat:@"%f", dValue];
         }
 
-    } else  if ([key hasSuffix:@"TrackerAutoStart"] || [key isEqualToString:@"localAccessToSettings"] || [key isEqualToString:@"deviceMotionUpdate"] || [key isEqualToString:@"getLocationsWithNegativeSpeed"]) {
+    } else  if ([key hasSuffix:@"TrackerAutoStart"] || [key isEqualToString:@"localAccessToSettings"] || [key isEqualToString:@"deviceMotionUpdate"] || [key isEqualToString:@"getLocationsWithNegativeSpeed"] || [key isEqualToString:@"showLocationInsteadOfMap"]) {
         if ([self isBool:value]) {
             return [NSString stringWithFormat:@"%d", [value boolValue]];
         }
