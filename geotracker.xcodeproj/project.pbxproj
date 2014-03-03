@@ -53,6 +53,10 @@
 		2C6E456F1756480100309982 /* STGTLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E456E1756480100309982 /* STGTLocation.m */; };
 		2C6E45721756480100309982 /* STGTTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E45711756480100309982 /* STGTTrack.m */; };
 		2C6E457B1758CD2B00309982 /* STGTSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E457A1758CD2B00309982 /* STGTSettingsController.m */; };
+		2C6E4590175B849500309982 /* YandexBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E458A175B849500309982 /* YandexBase64.m */; };
+		2C6E4591175B849500309982 /* YandexMapKitRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E458D175B849500309982 /* YandexMapKitRoute.m */; };
+		2C6E4592175B849500309982 /* YandexMapKitRouteDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E458F175B849500309982 /* YandexMapKitRouteDelegate.m */; };
+		2C6E4595175CE8E800309982 /* STYMKRouteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E4594175CE8E700309982 /* STYMKRouteView.m */; };
 		2CD05D661735067C00B6B766 /* YMKMapView+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD05D651735067C00B6B766 /* YMKMapView+custom.m */; };
 		2CD05D69173507AD00B6B766 /* MKMapView+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD05D68173507AD00B6B766 /* MKMapView+custom.m */; };
 		2CE75FCA170DB98F00807B27 /* STGTMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE75FC9170DB98F00807B27 /* STGTMainViewController.m */; };
@@ -149,11 +153,21 @@
 		2C6E45711756480100309982 /* STGTTrack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTTrack.m; sourceTree = "<group>"; };
 		2C6E45791758CD2B00309982 /* STGTSettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTSettingsController.h; sourceTree = "<group>"; };
 		2C6E457A1758CD2B00309982 /* STGTSettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTSettingsController.m; sourceTree = "<group>"; };
+		2C6E4589175B849500309982 /* YandexBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YandexBase64.h; sourceTree = "<group>"; };
+		2C6E458A175B849500309982 /* YandexBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YandexBase64.m; sourceTree = "<group>"; };
+		2C6E458B175B849500309982 /* YandexMapKitRoute-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YandexMapKitRoute-Prefix.pch"; sourceTree = "<group>"; };
+		2C6E458C175B849500309982 /* YandexMapKitRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YandexMapKitRoute.h; sourceTree = "<group>"; };
+		2C6E458D175B849500309982 /* YandexMapKitRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YandexMapKitRoute.m; sourceTree = "<group>"; };
+		2C6E458E175B849500309982 /* YandexMapKitRouteDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YandexMapKitRouteDelegate.h; sourceTree = "<group>"; };
+		2C6E458F175B849500309982 /* YandexMapKitRouteDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YandexMapKitRouteDelegate.m; sourceTree = "<group>"; };
+		2C6E4593175CE8E500309982 /* STYMKRouteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STYMKRouteView.h; sourceTree = "<group>"; };
+		2C6E4594175CE8E700309982 /* STYMKRouteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STYMKRouteView.m; sourceTree = "<group>"; };
 		2CD05D641735067C00B6B766 /* YMKMapView+custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YMKMapView+custom.h"; sourceTree = "<group>"; };
 		2CD05D651735067C00B6B766 /* YMKMapView+custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "YMKMapView+custom.m"; sourceTree = "<group>"; };
 		2CD05D67173507AD00B6B766 /* MKMapView+custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+custom.h"; sourceTree = "<group>"; };
 		2CD05D68173507AD00B6B766 /* MKMapView+custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+custom.m"; sourceTree = "<group>"; };
 		2CD05D6A1735085700B6B766 /* STMapViewControllable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STMapViewControllable.h; sourceTree = "<group>"; };
+		2CE1A01018C4CE5000361AE2 /* YMapKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMapKey.h; sourceTree = "<group>"; };
 		2CE75FC8170DB98F00807B27 /* STGTMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTMainViewController.h; sourceTree = "<group>"; };
 		2CE75FC9170DB98F00807B27 /* STGTMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STGTMainViewController.m; sourceTree = "<group>"; };
 		2CE75FCB170DBBA400807B27 /* STGTRoundedCornerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STGTRoundedCornerView.h; sourceTree = "<group>"; };
@@ -222,6 +236,7 @@
 		2C2ACA6016EE2453001E333A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2C6E4588175B849500309982 /* YandexMapKitRoute */,
 				2CE75FCE170DBC1E00807B27 /* QuartzCore.framework */,
 				2C103A521700512C00BC46B4 /* CoreLocation.framework */,
 				2C103A501700512500BC46B4 /* MapKit.framework */,
@@ -291,6 +306,7 @@
 				2C2CB56616FF3F1600D682C5 /* Protocols */,
 				2C187A451715371600F6EFF9 /* STGTAuthBasic.h */,
 				2C187A461715371600F6EFF9 /* STGTAuthBasic.m */,
+				2CE1A01018C4CE5000361AE2 /* YMapKey.h */,
 				2C3B88AC170C547B0045EC6D /* STGTLocationTracker.h */,
 				2C3B88AD170C547B0045EC6D /* STGTLocationTracker.m */,
 				2C181325170F054F00A36CBB /* STGTTrackController.h */,
@@ -299,6 +315,8 @@
 				2C6DFB0A17327F6C0035A082 /* STGTMapViewController.m */,
 				2CD05D641735067C00B6B766 /* YMKMapView+custom.h */,
 				2CD05D651735067C00B6B766 /* YMKMapView+custom.m */,
+				2C6E4593175CE8E500309982 /* STYMKRouteView.h */,
+				2C6E4594175CE8E700309982 /* STYMKRouteView.m */,
 				2CD05D67173507AD00B6B766 /* MKMapView+custom.h */,
 				2CD05D68173507AD00B6B766 /* MKMapView+custom.m */,
 				2CE75FC8170DB98F00807B27 /* STGTMainViewController.h */,
@@ -350,6 +368,21 @@
 				2C181329170F06F900A36CBB /* STGTTrack+dayAsString.m */,
 			);
 			path = DataModel;
+			sourceTree = "<group>";
+		};
+		2C6E4588175B849500309982 /* YandexMapKitRoute */ = {
+			isa = PBXGroup;
+			children = (
+				2C6E4589175B849500309982 /* YandexBase64.h */,
+				2C6E458A175B849500309982 /* YandexBase64.m */,
+				2C6E458B175B849500309982 /* YandexMapKitRoute-Prefix.pch */,
+				2C6E458C175B849500309982 /* YandexMapKitRoute.h */,
+				2C6E458D175B849500309982 /* YandexMapKitRoute.m */,
+				2C6E458E175B849500309982 /* YandexMapKitRouteDelegate.h */,
+				2C6E458F175B849500309982 /* YandexMapKitRouteDelegate.m */,
+			);
+			name = YandexMapKitRoute;
+			path = ../YandexMapRouteKit/YandexMapKitRoute;
 			sourceTree = "<group>";
 		};
 		2CE75FD0170DC79200807B27 /* Resources */ = {
@@ -557,6 +590,10 @@
 				2C6E45721756480100309982 /* STGTTrack.m in Sources */,
 				2C17F6641757403600ABFF28 /* STGTCheckTVC.m in Sources */,
 				2C6E457B1758CD2B00309982 /* STGTSettingsController.m in Sources */,
+				2C6E4590175B849500309982 /* YandexBase64.m in Sources */,
+				2C6E4591175B849500309982 /* YandexMapKitRoute.m in Sources */,
+				2C6E4592175B849500309982 /* YandexMapKitRouteDelegate.m in Sources */,
+				2C6E4595175CE8E800309982 /* STYMKRouteView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
