@@ -14,3 +14,7 @@ geotracker.xcodeproj/project.xcworkspace/xcuserdata/grimax.xcuserdatad/UserInter
 geotracker.xcodeproj/xcuserdata/grimax.xcuserdatad/xcdebugger/Breakpoints.xcbkptlist
 
 geotracker.xcodeproj/project.xcworkspace/xcuserdata/grimax.xcuserdatad/WorkspaceSettings.xcsettings
+
+geotracker.xcworkspace/xcshareddata/geotracker.xccheckout
+
+geotracker/Classes/YMapKey.h
